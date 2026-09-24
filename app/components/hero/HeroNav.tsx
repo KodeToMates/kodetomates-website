@@ -34,7 +34,7 @@ export default function HeroNav() {
 
           <div className="flex items-center gap-4">
             <Link href="#build" className="inline-flex items-center gap-2 bg-[var(--color-brand-deep-forest)] text-[#FAF6EF] text-[0.875rem] font-semibold px-6 py-2.5 rounded-full shadow-md hover:-translate-y-0.5 hover:bg-[#112820] transition-all group">
-              <span>Let's Build</span>
+              <span>Let&apos;s Build</span>
               <svg className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
                 <polyline points="12 5 19 12 12 19"></polyline>

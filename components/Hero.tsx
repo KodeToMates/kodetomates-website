@@ -8,7 +8,8 @@ export function Hero() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    setMounted(true);
+    const timeoutId = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(timeoutId);
   }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -72,7 +73,7 @@ export function Hero() {
               <div className="flex -space-x-3">
                 {[1, 2, 3, 4].map((i) => (
                   <div key={i} className="w-10 h-10 rounded-full bg-[var(--color-brand-tan)] border-2 border-[var(--color-brand-cream)] shadow-sm flex items-center justify-center overflow-hidden">
-                    <img src={`https://api.dicebear.com/9.x/notionists/svg?seed=${i}&backgroundColor=FEFBF7`} alt={`Avatar ${i}`} className="w-full h-full object-cover" />
+                    <Image src={`https://api.dicebear.com/9.x/notionists/svg?seed=${i}&backgroundColor=FEFBF7`} alt={`Avatar ${i}`} width={40} height={40} className="w-full h-full object-cover" unoptimized />
                   </div>
                 ))}
                 <div className="w-10 h-10 rounded-full bg-[var(--color-brand-light-sage)] border-2 border-[var(--color-brand-cream)] shadow-sm flex items-center justify-center text-xs font-bold text-white">

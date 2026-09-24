@@ -2,22 +2,23 @@
 
 import React, { useEffect, useRef, useState } from "react";
 
-interface RevealProps {
+interface RevealProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   delay?: number;
-  className?: string;
 }
 
-export function Reveal({ children, delay = 0, className = "" }: RevealProps) {
+export function Reveal({ children, delay = 0, className = "", style, ...props }: RevealProps) {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    let fallbackTimeout: NodeJS.Timeout;
+
     // Respect prefers-reduced-motion
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (mediaQuery.matches) {
-      setIsVisible(true);
-      return;
+      fallbackTimeout = setTimeout(() => setIsVisible(true), 0);
+      return () => clearTimeout(fallbackTimeout);
     }
 
     const observer = new IntersectionObserver(
@@ -33,14 +34,16 @@ export function Reveal({ children, delay = 0, className = "" }: RevealProps) {
       }
     );
 
-    if (ref.current) {
-      observer.observe(ref.current);
+    const currentRef = ref.current;
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
+      if (fallbackTimeout) clearTimeout(fallbackTimeout);
     };
   }, []);
 
@@ -50,7 +53,8 @@ export function Reveal({ children, delay = 0, className = "" }: RevealProps) {
       className={`transition-all duration-700 ease-out ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
       } ${className}`}
-      style={{ transitionDelay: `${delay}ms` }}
+      style={{ transitionDelay: `${delay}ms`, ...style }}
+      {...props}
     >
       {children}
     </div>

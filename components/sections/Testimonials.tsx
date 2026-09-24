@@ -19,7 +19,7 @@ export function Testimonials() {
           {TESTIMONIALS.map((testimonial, i) => (
             <Reveal key={i} delay={i * 150} className="flex">
               <div className="bg-white rounded-3xl p-8 border border-[var(--color-brand-tan)]/40 shadow-sm flex flex-col h-full relative">
-                <div className="text-[var(--color-brand-clay)] text-4xl font-serif absolute top-6 left-6 opacity-20">"</div>
+                <div className="text-[var(--color-brand-clay)] text-4xl font-serif absolute top-6 left-6 opacity-20">&quot;</div>
                 
                 <div className="flex gap-1 text-[var(--color-brand-sage)] mb-6 z-10">
                   {"★★★★★".split("").map((star, idx) => (
@@ -28,7 +28,7 @@ export function Testimonials() {
                 </div>
                 
                 <p className="text-[var(--color-brand-deep-green)]/80 text-lg mb-8 italic z-10 flex-1">
-                  "{testimonial.quote}"
+                  &quot;{testimonial.quote}&quot;
                 </p>
                 
                 <div className="flex items-center gap-4 border-t border-[var(--color-brand-light-sage)]/20 pt-6">
