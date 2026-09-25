@@ -77,7 +77,7 @@ export default function HeroVisual() {
           <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-brand-lime)]"></span>
           <span className="ml-1">pairProgram.ts</span>
         </div>
-        <span className="block whitespace-nowrap"><span className="text-[var(--color-brand-coral)]">const</span> mate = <span className="text-[var(--color-brand-sky)]">pair</span>({`{`} mode: <span className="text-[var(--color-brand-lime)]">'ship'</span> {`}`});</span>
+        <span className="block whitespace-nowrap"><span className="text-[var(--color-brand-coral)]">const</span> mate = <span className="text-[var(--color-brand-sky)]">pair</span>({`{`} mode: <span className="text-[var(--color-brand-lime)]">&apos;ship&apos;</span> {`}`});</span>
         <span className="block whitespace-nowrap"><span className="text-[var(--color-brand-coral)]">await</span> mate.<span className="text-[var(--color-brand-sky)]">buildTogether</span>();</span>
       </div>
 

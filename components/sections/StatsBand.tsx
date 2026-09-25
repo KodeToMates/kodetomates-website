@@ -10,11 +10,12 @@ function Counter({ endValue, label, suffix }: { endValue: number; label: string;
 
   useEffect(() => {
     let hasStarted = false;
+    let fallbackTimeout: NodeJS.Timeout;
 
     // Fast finish for prefers-reduced-motion
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setCount(endValue);
-      return;
+      fallbackTimeout = setTimeout(() => setCount(endValue), 0);
+      return () => clearTimeout(fallbackTimeout);
     }
 
     const observer = new IntersectionObserver(([entry]) => {
@@ -37,10 +38,12 @@ function Counter({ endValue, label, suffix }: { endValue: number; label: string;
       }
     }, { threshold: 0.1 });
 
-    if (ref.current) observer.observe(ref.current);
+    const currentRef = ref.current;
+    if (currentRef) observer.observe(currentRef);
     
     return () => {
-      if (ref.current) observer.unobserve(ref.current);
+      if (currentRef) observer.unobserve(currentRef);
+      if (fallbackTimeout) clearTimeout(fallbackTimeout);
     };
   }, [endValue]);
 
