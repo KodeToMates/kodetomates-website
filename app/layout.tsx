@@ -10,6 +10,11 @@ const outfit = Outfit({
 export const metadata: Metadata = {
   title: "KodeToMates — Premium Creative Technology Studio",
   description: "Build together. Learn together. Grow as mates.",
+  icons: {
+    icon: "/icon.png",
+    shortcut: "/icon.png",
+    apple: "/icon.png",
+  },
   openGraph: {
     title: "KodeToMates",
     description: "Build together. Learn together. Grow as mates.",
@@ -33,8 +38,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${outfit.variable} h-full antialiased`}>
-      <body className="h-full overflow-x-hidden flex flex-col justify-between selection:bg-[var(--color-brand-tan)]/40 selection:text-current">
+    <html lang="en" className={`${outfit.variable} antialiased`}>
+      <body className="min-h-screen overflow-x-hidden flex flex-col bg-[#F8F7F4] text-[#17202A] selection:bg-[var(--color-brand-primary)]/20 selection:text-[var(--color-brand-primary)]">
         {children}
       </body>
     </html>

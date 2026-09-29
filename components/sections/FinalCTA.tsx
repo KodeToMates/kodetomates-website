@@ -8,17 +8,17 @@ export function FinalCTA() {
     <Section background="cream">
       <Container>
         <Reveal>
-          <div className="relative w-full bg-gradient-to-br from-[var(--color-brand-sage)] to-[var(--color-brand-deep-green)] rounded-[3rem] p-10 md:p-20 text-center overflow-hidden shadow-2xl">
+          <div className="relative w-full bg-gradient-to-br from-[var(--color-brand-primary)] to-[var(--color-brand-primary-hover)] rounded-[3rem] p-10 md:p-20 text-center overflow-hidden shadow-2xl shadow-[var(--color-brand-primary)]/20">
             
             {/* Drifting Background Blobs */}
-            <div className="absolute top-0 right-0 w-96 h-96 bg-[var(--color-brand-light-sage)]/20 rounded-full blur-[100px] pointer-events-none animate-float-slow" />
-            <div className="absolute bottom-0 left-0 w-80 h-80 bg-[var(--color-brand-clay)]/20 rounded-full blur-[80px] pointer-events-none animate-float-slow" style={{ animationDelay: '-3s' }} />
+            <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-[100px] pointer-events-none animate-float-slow" />
+            <div className="absolute bottom-0 left-0 w-80 h-80 bg-black/20 rounded-full blur-[80px] pointer-events-none animate-float-slow" style={{ animationDelay: '-3s' }} />
 
             <div className="relative z-10 max-w-2xl mx-auto flex flex-col items-center">
               <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-6">
                 Ready to build with your mates?
               </h2>
-              <p className="text-xl text-[var(--color-brand-cream)]/90 mb-10">
+              <p className="text-xl text-white/90 mb-10">
                 Join 500+ developers shipping real code, reviewing PRs, and landing jobs together.
               </p>
               
@@ -27,14 +27,14 @@ export function FinalCTA() {
                   type="email" 
                   placeholder="Enter your email" 
                   required
-                  className="flex-1 px-6 py-4 rounded-full bg-white/10 border border-white/20 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-tan)] backdrop-blur-sm"
+                  className="flex-1 px-6 py-4 rounded-full bg-black/20 border border-white/25 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/50 backdrop-blur-sm"
                 />
-                <button type="submit" className="px-8 py-4 rounded-full bg-white text-[var(--color-brand-deep-green)] font-bold hover:bg-[var(--color-brand-cream)] transition-all shadow-lg whitespace-nowrap">
+                <button type="submit" className="px-8 py-4 rounded-full bg-[#17202A] text-white font-bold hover:bg-[#17202A]/90 transition-all shadow-xl whitespace-nowrap">
                   Join the waitlist
                 </button>
               </form>
-              <p className="text-[var(--color-brand-cream)]/60 text-sm mt-4 flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-brand-tan)]"></span>
+              <p className="text-white/70 text-sm mt-4 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-white/60"></span>
                 No spam. Unsubscribe anytime.
               </p>
             </div>

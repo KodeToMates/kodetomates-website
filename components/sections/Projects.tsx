@@ -16,7 +16,7 @@ export function Projects() {
             subtext="Real products shipped by our community."
           />
           <Reveal delay={200}>
-            <button className="px-7 py-3.5 rounded-full inline-flex items-center gap-2 font-bold bg-white text-[var(--color-brand-deep-green)] border border-[var(--color-brand-light-sage)]/30 hover:bg-[var(--color-brand-cream)] shadow-sm transition-all whitespace-nowrap">
+            <button className="px-7 py-3.5 rounded-full inline-flex items-center gap-2 font-bold bg-white text-[#17202A] border border-[var(--color-brand-border)] hover:bg-[#F8F7F4] shadow-sm transition-all whitespace-nowrap">
               See all projects &rarr;
             </button>
           </Reveal>
@@ -25,10 +25,10 @@ export function Projects() {
         <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
           {PROJECTS.items.map((project, i) => (
             <Reveal key={i} delay={i * 150} className="flex">
-              <div className="flex flex-col bg-white rounded-3xl border border-[var(--color-brand-tan)]/40 overflow-hidden shadow-sm hover:shadow-md transition-all hover:-translate-y-1.5 w-full">
+              <div className="flex flex-col bg-[var(--color-brand-surface)] rounded-3xl border border-[var(--color-brand-border)] hover:border-[var(--color-brand-primary)]/40 overflow-hidden shadow-sm hover:shadow-md transition-all hover:-translate-y-1.5 w-full">
                 {/* Image Placeholder */}
-                <div className="w-full h-48 bg-gradient-to-br from-[var(--color-brand-light-sage)]/20 to-[var(--color-brand-tan)]/40 relative">
-                  <div className="absolute inset-0 flex items-center justify-center text-[var(--color-brand-sage)] opacity-50">
+                <div className="w-full h-48 bg-gradient-to-br from-[#F8F7F4] to-[#ECE8E0] relative">
+                  <div className="absolute inset-0 flex items-center justify-center text-[var(--color-brand-primary)] opacity-40">
                     <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                       <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
                       <circle cx="8.5" cy="8.5" r="1.5"></circle>
@@ -38,25 +38,25 @@ export function Projects() {
                 </div>
                 
                 <div className="p-6 flex flex-col flex-1">
-                  <h3 className="text-xl font-bold text-[var(--color-brand-deep-green)] mb-2">{project.title}</h3>
-                  <p className="text-[var(--color-brand-deep-green)]/70 mb-6 flex-1">{project.description}</p>
+                  <h3 className="text-xl font-bold text-[#17202A] mb-2">{project.title}</h3>
+                  <p className="text-[var(--color-brand-secondary-text)] mb-6 flex-1">{project.description}</p>
                   
                   <div className="flex flex-wrap gap-2 mb-6">
                     {project.tech.map((tech, idx) => (
-                      <span key={idx} className="text-xs font-bold px-2 py-1 rounded-md bg-[var(--color-brand-light-sage)]/10 text-[var(--color-brand-deep-green)]">
+                      <span key={idx} className="text-xs font-bold px-2 py-1 rounded-md bg-[#17202A]/5 text-[var(--color-brand-secondary-text)]">
                         {tech}
                       </span>
                     ))}
                   </div>
                   
-                  <div className="pt-4 border-t border-[var(--color-brand-light-sage)]/20 flex items-center justify-between">
+                  <div className="pt-4 border-t border-[var(--color-brand-border)] flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <div className="flex -space-x-2">
                         {project.builders.map((_, idx) => (
-                          <div key={idx} className="w-6 h-6 rounded-full bg-[var(--color-brand-sage)] border border-white" />
+                          <div key={idx} className="w-6 h-6 rounded-full bg-[var(--color-brand-primary)] border border-white" />
                         ))}
                       </div>
-                      <span className="text-xs font-medium text-[var(--color-brand-deep-green)]/70">
+                      <span className="text-xs font-medium text-[var(--color-brand-secondary-text)]">
                         {project.builders.join(" & ")}
                       </span>
                     </div>

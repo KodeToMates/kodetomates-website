@@ -51,10 +51,10 @@ function Counter({ endValue, label, suffix }: { endValue: number; label: string;
 
   return (
     <div ref={ref} className="flex flex-col items-center text-center p-4">
-      <div className="text-4xl md:text-5xl font-extrabold text-[var(--color-brand-deep-green)] tracking-tight">
+      <div className="text-4xl md:text-5xl font-extrabold text-[#17202A] tracking-tight">
         {displayValue}{suffix}
       </div>
-      <div className="text-sm md:text-base text-[var(--color-brand-deep-green)]/70 font-medium mt-1">
+      <div className="text-sm md:text-base text-[var(--color-brand-secondary-text)] font-medium mt-1">
         {label}
       </div>
     </div>
@@ -63,9 +63,9 @@ function Counter({ endValue, label, suffix }: { endValue: number; label: string;
 
 export function StatsBand() {
   return (
-    <div className="w-full bg-[var(--color-brand-cream)] border-b border-[#EBE3D6] py-14 md:py-20">
+    <div className="w-full bg-[var(--color-brand-dark-bg)] border-b border-[var(--color-brand-border)] py-14 md:py-20">
       <Container>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-0 divide-x-0 md:divide-x divide-[#EBE3D6]">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-0 divide-x-0 md:divide-x divide-[var(--color-brand-border)]">
           {STATS.map((stat, idx) => (
             <Counter key={idx} endValue={stat.value} label={stat.label} suffix={stat.suffix} />
           ))}

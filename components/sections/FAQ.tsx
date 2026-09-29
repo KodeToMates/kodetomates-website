@@ -29,14 +29,14 @@ export function FAQ() {
               const isOpen = openIndex === i;
               return (
                 <Reveal key={i} delay={i * 100}>
-                  <div className={`bg-white rounded-2xl border transition-colors ${isOpen ? "border-[var(--color-brand-sage)]" : "border-[var(--color-brand-tan)]/40"} overflow-hidden shadow-sm`}>
+                  <div className={`bg-[var(--color-brand-surface)] rounded-2xl border transition-colors ${isOpen ? "border-[var(--color-brand-primary)]" : "border-[var(--color-brand-border)]"} overflow-hidden shadow-sm`}>
                     <button 
                       onClick={() => toggle(i)}
-                      className="w-full px-6 py-5 flex items-center justify-between text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--color-brand-sage)]"
+                      className="w-full px-6 py-5 flex items-center justify-between text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--color-brand-primary)]"
                       aria-expanded={isOpen}
                     >
-                      <span className="font-bold text-lg text-[var(--color-brand-deep-green)]">{item.question}</span>
-                      <span className={`w-8 h-8 rounded-full bg-[var(--color-brand-light-sage)]/10 text-[var(--color-brand-sage)] flex items-center justify-center shrink-0 transition-transform ${isOpen ? "rotate-180" : ""}`}>
+                      <span className="font-bold text-lg text-[#17202A]">{item.question}</span>
+                      <span className={`w-8 h-8 rounded-full bg-[#17202A]/5 text-[var(--color-brand-primary)] flex items-center justify-center shrink-0 transition-transform ${isOpen ? "rotate-180" : ""}`}>
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                           <polyline points="6 9 12 15 18 9"></polyline>
                         </svg>
@@ -46,7 +46,7 @@ export function FAQ() {
                       className="transition-all duration-300 ease-in-out" 
                       style={{ maxHeight: isOpen ? "200px" : "0px", opacity: isOpen ? 1 : 0 }}
                     >
-                      <div className="px-6 pb-6 text-[var(--color-brand-deep-green)]/70">
+                      <div className="px-6 pb-6 text-[var(--color-brand-secondary-text)]">
                         {item.answer}
                       </div>
                     </div>

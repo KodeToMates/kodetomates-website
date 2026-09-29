@@ -9,9 +9,9 @@ interface SectionProps {
 
 export function Section({ children, id, className = "", background = "cream" }: SectionProps) {
   const bgClasses = {
-    "cream": "bg-[var(--color-brand-cream)]",
-    "sage-tint": "bg-[#F4F6F0]",
-    "dark": "bg-[var(--color-brand-deep-green)]",
+    "cream": "bg-[#F8F7F4]",
+    "sage-tint": "bg-[#FFFFFF]",
+    "dark": "bg-[#F3F0EA]",
   };
 
   return (

@@ -124,3 +124,31 @@ Avoid:
 - animation that blocks usability
 
 Respect prefers-reduced-motion.
+
+## Theme & Color Standards
+
+Always strictly follow the design system tokens for both Dark and Light modes:
+
+### Dark Mode (Default)
+- Canvas / Background: `#0F1419`
+- Cards / Surfaces: `#17202A`
+- Elevated Surfaces: `#1F2A37`
+- Headings & Primary Text: `#FFFFFF` / `#F8F7F4`
+- Secondary Text: `#8A929A`
+- Borders & Dividers: `#293139`
+
+### Light Mode
+- Canvas / Background: `#F8F7F4`
+- Cards / Surfaces: `#FFFFFF`
+- Headings & Primary Text: `#17202A` (Main Dark)
+- Secondary Text: `#8A929A`
+- Borders & Dividers: `#293139` (with subtle opacity 10-15%) or `#E2E8F0`
+
+### Brand Elements & Accents (Both Modes)
+- Primary / Logo: `#DD6E42` (CTA buttons, icons, highlights)
+- Hover / Active: `#C95732` (Interactive button hovers)
+- Accent / Soft: `#F2B49D` (Badges, pills, subtle highlights)
+- Approved Gradients:
+  - Orange Gradient: `#DD6E42` -> `#C95732`
+  - Dark Gradient: `#17202A` -> `#0F1419`
+  - Soft Gradient: `#F2B49D` -> `#F8F7F4`

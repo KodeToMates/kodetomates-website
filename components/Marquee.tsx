@@ -11,7 +11,7 @@ const MARQUEE_ITEMS = [
 
 export function Marquee() {
   return (
-    <div className="w-full bg-[var(--color-brand-cream)]/90 border-y border-[#EBE3D6] py-4 select-none relative z-20">
+    <div className="w-full bg-[var(--color-brand-dark-bg)] border-y border-[var(--color-brand-border)] py-4 select-none relative z-20">
       <div className="w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
         <div className="flex whitespace-nowrap min-w-full">
           {/* Double the list for infinite seamless scrolling */}
@@ -20,8 +20,8 @@ export function Marquee() {
               const text = item.replace("✦ ", "");
               return (
                 <React.Fragment key={i}>
-                  <span className="text-[var(--color-brand-tan)] mx-8">✦</span>
-                  <span className="font-semibold text-xs md:text-sm text-[#6F7A66] uppercase tracking-[0.14em]">
+                  <span className="text-[var(--color-brand-primary)] mx-8">✦</span>
+                  <span className="font-semibold text-xs md:text-sm text-[var(--color-brand-secondary-text)] uppercase tracking-[0.14em]">
                     {text}
                   </span>
                 </React.Fragment>
@@ -33,8 +33,8 @@ export function Marquee() {
               const text = item.replace("✦ ", "");
               return (
                 <React.Fragment key={i}>
-                  <span className="text-[var(--color-brand-tan)] mx-8">✦</span>
-                  <span className="font-semibold text-xs md:text-sm text-[#6F7A66] uppercase tracking-[0.14em]">
+                  <span className="text-[var(--color-brand-primary)] mx-8">✦</span>
+                  <span className="font-semibold text-xs md:text-sm text-[var(--color-brand-secondary-text)] uppercase tracking-[0.14em]">
                     {text}
                   </span>
                 </React.Fragment>
