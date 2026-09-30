@@ -33,12 +33,12 @@ export function Hero() {
           
           {/* Left Column: Text */}
           <div className="flex flex-col items-start">
-            <div className="animate-fade-up opacity-0" style={{ animationDelay: "0.1s" }}>
+            {/* <div className="animate-fade-up opacity-0" style={{ animationDelay: "0.1s" }}>
               <div className="inline-flex items-center gap-2 bg-white/70 backdrop-blur-md pl-2 pr-4 py-1.5 rounded-full border border-[var(--color-brand-light-sage)]/30 shadow-sm">
                 <span className="bg-[var(--color-brand-clay)] text-white text-[0.65rem] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full">New</span>
                 <span className="text-sm font-semibold text-[var(--color-brand-deep-green)]">Cohort 03 opens this month</span>
               </div>
-            </div>
+            </div> */}
 
             <h1 className="mt-6 text-4xl sm:text-5xl lg:text-[3.5rem] leading-[1.1] font-extrabold text-[var(--color-brand-deep-green)] tracking-tight animate-fade-up opacity-0" style={{ animationDelay: "0.2s" }}>
               Build together.<br />
