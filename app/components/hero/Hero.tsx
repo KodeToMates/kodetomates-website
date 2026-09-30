@@ -20,7 +20,7 @@ export default function Hero() {
                   <span className="w-2 h-2 rounded-full bg-[var(--color-brand-kode-green)]"></span>
                 </span>
                 <span className="text-[0.68rem] font-bold tracking-[0.11em] uppercase text-[var(--color-brand-deep-forest)] font-mono">
-                  A SMALL TEAM. "00BIG IDEAS.
+                  A SMALL TEAM. BIG IDEAS.
                 </span>
               </div>
 
