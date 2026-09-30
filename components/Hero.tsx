@@ -64,7 +64,7 @@ export function Hero() {
                 Start building &rarr;
               </button>
               <button className="inline-flex items-center gap-2 bg-white hover:bg-[var(--color-brand-cream)] text-[var(--color-brand-deep-green)] font-bold px-7 py-3.5 rounded-full border border-[var(--color-brand-light-sage)]/30 shadow-sm transition-all whitespace-nowrap">
-                Explore programs
+                Explore Our programs
               </button>
             </div>
 
