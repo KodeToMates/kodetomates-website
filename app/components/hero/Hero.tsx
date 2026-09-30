@@ -7,20 +7,20 @@ export default function Hero() {
   return (
     <section className="relative w-full overflow-hidden flex flex-col min-h-[calc(100svh-60px)]">
       <HeroNav />
-      
+
       <div className="relative z-10 w-full flex-grow flex flex-col justify-center pt-4 pb-12">
         <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="w-full grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] items-center gap-12 lg:gap-8 px-5 lg:px-6 text-left">
-            
+
             {/* Left Column: Copy & CTA */}
             <div className="relative z-20 flex flex-col w-full max-w-[600px] mx-auto lg:mx-0">
-              
+
               <div className="inline-flex items-center gap-2.5 self-start px-3.5 py-1.5 bg-white/70 backdrop-blur-md border border-[var(--color-brand-clay)]/30 rounded-full shadow-sm mb-5">
                 <span className="flex items-center justify-center w-5 h-5 rounded-full bg-[var(--color-brand-kode-green)]/15">
                   <span className="w-2 h-2 rounded-full bg-[var(--color-brand-kode-green)]"></span>
                 </span>
                 <span className="text-[0.68rem] font-bold tracking-[0.11em] uppercase text-[var(--color-brand-deep-forest)] font-mono">
-                  A SMALL TEAM. BIG IDEAS.
+                  A SMALL TEAM. "00BIG IDEAS.
                 </span>
               </div>
 
@@ -30,7 +30,7 @@ export default function Hero() {
                 that solve <br className="hidden lg:block" />
                 <span className="text-[var(--color-brand-clay)] relative">real problems
                   <svg className="absolute -left-[2%] -bottom-1 w-[104%] h-2.5 pointer-events-none overflow-visible" viewBox="0 0 240 18" preserveAspectRatio="none">
-                    <path d="M4 11 Q65 3, 125 10 T236 7" className="stroke-[var(--color-brand-warm-sand)] stroke-[5px] fill-none stroke-linecap-round"/>
+                    <path d="M4 11 Q65 3, 125 10 T236 7" className="stroke-[var(--color-brand-warm-sand)] stroke-[5px] fill-none stroke-linecap-round" />
                   </svg>
                 </span>.
               </h1>
@@ -46,7 +46,7 @@ export default function Hero() {
                     <polyline points="9 18 15 12 9 6"></polyline>
                   </svg>
                 </Link>
-                
+
                 <Link href="#mates" className="inline-flex items-center gap-2 px-6 py-3.5 bg-white/80 backdrop-blur-md text-[var(--color-brand-deep-forest)] text-[0.95rem] font-semibold rounded-full border-[1.5px] border-[var(--color-brand-kode-green)]/30 shadow-sm transition-all hover:bg-white/95 hover:border-[var(--color-brand-kode-green)] hover:-translate-y-1 hover:shadow-md group">
                   <span>Meet the Mates</span>
                   <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
