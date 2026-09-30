@@ -9,10 +9,10 @@ const outfit = Outfit({
 
 export const metadata: Metadata = {
   title: "KodeToMates — Premium Creative Technology Studio",
-  description: "Build together. Learn together. Grow as mates.",
+  description: "Build together. Learn together. Grow as dev mates.",
   openGraph: {
     title: "KodeToMates",
-    description: "Build together. Learn together. Grow as mates.",
+    description: "Build together. Learn together. Grow as dev mates.",
     url: "https://kodetomates.com",
     siteName: "KodeToMates",
     images: [
