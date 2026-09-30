@@ -24,6 +24,10 @@ export default function Hero() {
                 </span>
               </div>
 
+              <div>
+                <h2>test</h2>
+              </div>
+
               <h1 className="text-[clamp(2.5rem,4vw,3.75rem)] leading-[1.08] font-extrabold tracking-[-0.03em] text-[var(--color-brand-deep-forest)] mb-5 max-w-[560px]">
                 We build <br className="hidden lg:block" />
                 <span className="text-[var(--color-brand-kode-green)] relative">digital experiences</span> <br className="hidden lg:block" />
