@@ -44,14 +44,14 @@ export function Hero() {
               Build together.<br />
               Learn together.<br />
               <span className="relative inline-block mt-2 text-[var(--color-brand-sage)]">
-                Grow as mates
-                <svg className="absolute -bottom-1 left-0 w-full overflow-visible pointer-events-none" viewBox="0 0 280 16" fill="none">
+                Grow as dev mates
+                {/* <svg className="absolute -bottom-1 left-0 w-full overflow-visible pointer-events-none" viewBox="0 0 280 16" fill="none">
                   <path 
                     d="M5 12C70 4 150 2 275 10" 
                     className="stroke-[var(--color-brand-tan)] stroke-[6px] fill-none animate-draw-underline" 
                     strokeLinecap="round" 
                   />
-                </svg>
+                </svg> */}
               </span>
             </h1>
 
@@ -64,7 +64,7 @@ export function Hero() {
                 Start building &rarr;
               </button>
               <button className="inline-flex items-center gap-2 bg-white hover:bg-[var(--color-brand-cream)] text-[var(--color-brand-deep-green)] font-bold px-7 py-3.5 rounded-full border border-[var(--color-brand-light-sage)]/30 shadow-sm transition-all whitespace-nowrap">
-                Explore programs
+                Explore Our Core programs
               </button>
             </div>
 
