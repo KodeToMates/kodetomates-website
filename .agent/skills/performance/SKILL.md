@@ -1,17 +1,9 @@
 ---
-name: performance
-description: KodeToMates performance optimization rules
+name: Performance
+description: Performance requirements and optimizations.
 ---
-Rules:
 
-- minimize client components
-- optimize images
-- use next/image where appropriate
-- avoid unnecessary JavaScript
-- avoid large animation libraries unless justified
-- lazy-load expensive content
-- avoid layout shift
-- preserve Core Web Vitals
-- avoid unnecessary re-renders
-- use CSS animation for simple decorative motion
-- measure before optimizing complex performance problems
+## Rules
+- **Images**: Use `next/image` exclusively for optimized loading.
+- **Dependencies**: Do not install heavy client-side libraries.
+- **CSS**: Keep animations lightweight and rely on CSS over JS where possible.
