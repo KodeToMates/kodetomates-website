@@ -2,7 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { motion, useReducedMotion } from 'framer-motion'
+import { motion, useReducedMotion, type HTMLMotionProps } from 'framer-motion'
 
 export interface JoinCTAButtonProps {
   href?: string
@@ -111,11 +111,11 @@ export function JoinCTAButton({
     </div>
   )
 
-  const entranceMotionProps = {
+  const entranceMotionProps: HTMLMotionProps<'div'> = {
     initial: shouldReduceMotion ? { opacity: 1 } : { opacity: 0, scale: 0.94 },
     whileInView: { opacity: 1, scale: 1 },
     viewport: { once: true, margin: '-40px' },
-    transition: { duration: 0.6, delay: 0.25, ease: [0.16, 1, 0.3, 1] },
+    transition: { duration: 0.6, delay: 0.25, ease: [0.16, 1, 0.3, 1] as const },
   }
 
   if (href) {

@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
-import { ArrowRight, ArrowLeft, Users, Sparkles, Code2, Globe2, MessageSquare, Terminal, Heart } from 'lucide-react'
+import { ArrowRight, ArrowLeft, Sparkles, Terminal, Heart } from 'lucide-react'
 
 interface CommunityMember {
   id: string
@@ -402,7 +402,6 @@ export function CommunitySection() {
                   {deck.slice(0, 3).map((member, index) => {
                     const isTop = index === 0
                     const isMiddle = index === 1
-                    const isBottom = index === 2
 
                     // Depth transforms for 3D stack fan effect
                     const yOffset = isTop ? 0 : isMiddle ? 16 : 30

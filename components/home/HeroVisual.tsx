@@ -172,7 +172,7 @@ export function HeroVisual({ isMobile = false }: { isMobile?: boolean }) {
       clearInterval(interval)
       clearTimeout(timeout)
     }
-  }, [shouldReduceMotion])
+  }, [shouldReduceMotion, fullCodeLines.length])
 
   // Terminal Typing & Output Sequence
   const [terminalStep, setTerminalStep] = useState(4)

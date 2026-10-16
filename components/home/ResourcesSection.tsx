@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'framer-motion'
-import { ArrowRight, ArrowUpRight, BookOpen, Clock, Sparkles, Layers, Cpu, Terminal, Compass } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Clock, Layers, Cpu, Terminal, Compass } from 'lucide-react'
 
 interface ResourceItem {
   id: string
