@@ -1,1 +1,1 @@
-export type Mate = {};
+export type Mate = Record<string, unknown>;

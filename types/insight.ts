@@ -1,1 +1,1 @@
-export type Insight = {};
+export type Insight = Record<string, unknown>;

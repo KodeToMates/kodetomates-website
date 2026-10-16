@@ -13,6 +13,8 @@
     "prepare": "node -e \"try { require('husky')() } catch (e) {}\""
   },
   "dependencies": {
+    "framer-motion": "^14.1.0",
+    "lucide-react": "^1.55.0",
     "next": "16.3.6",
     "react": "19.2.8",
     "react-dom": "19.2.8"

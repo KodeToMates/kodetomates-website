@@ -1,1 +1,1 @@
-export type Common = {};
+export type Common = Record<string, unknown>;

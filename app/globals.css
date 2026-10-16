@@ -1,3 +1,63 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-background-sand: #F9F8F6;
+  --color-surface-paper: #FFFFFF;
+  --color-surface-dim: #F2EFEA;
+
+  --color-brand-terracotta: #E05D3A;
+  --color-brand-terracotta-dark: #B93C1D;
+  --color-brand-terracotta-light: #EAA491;
+
+  --color-text-primary: #1A1817;
+  --color-text-secondary: #5A5654;
+  --color-text-inverse: #FFFFFF;
+
+  --color-primary-orange: #E4521B;
+  --color-sunset-orange: #FF914D;
+  --color-berry-crimson: #AB003E;
+  --color-primary-sunset: #FF914D;
+  --color-primary-berry: #AB003E;
+  --color-heading-dark: #1A1614;
+  --color-body-gray: #6B645E;
+  --color-terminal-navy: #161B26;
+
+  --font-sans: var(--font-jakarta), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-playfair), Georgia, serif;
+  --font-playfair: var(--font-playfair), Georgia, serif;
+  --font-fraunces: var(--font-playfair), Georgia, serif;
+  --font-outfit: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-space: var(--font-space), monospace, sans-serif;
+  --font-instrument: var(--font-playfair), Georgia, serif;
+  --font-caveat: var(--font-caveat), cursive;
+
+  --text-h1: 4.5rem;
+  --text-h2: 3.5rem;
+  --text-h3: 2.25rem;
+  --text-body: 1.125rem;
+  --text-caption: 0.875rem;
+
+  --spacing-section: 8rem;
+  --spacing-container: 2rem;
+
+}
+
+@layer base {
+  body {
+    @apply bg-background-sand text-text-primary font-sans antialiased;
+    scroll-behavior: smooth;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-playfair), Georgia, serif;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

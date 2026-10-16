@@ -1,1 +1,1 @@
-export type Project = {};
+export type Project = Record<string, unknown>;
