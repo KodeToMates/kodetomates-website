@@ -1,27 +1,10 @@
-# KodeToMates UI Rules
+# UI Rules for KodeToMates
 
-1. Match approved Stitch designs when provided.
-2. Do not redesign approved screens without permission.
-3. Use design tokens.
-4. Use the KodeToMates color system.
-5. Maintain consistent spacing.
-6. Maintain typography hierarchy.
-7. Use semantic HTML.
-8. Support keyboard navigation.
-9. Provide visible focus states.
-10. Support reduced motion.
-11. Never introduce horizontal overflow.
-12. Design mobile intentionally.
-13. Avoid unnecessary animation.
-14. Avoid arbitrary colors.
-15. Avoid unnecessary dependencies.
-16. Reuse existing components.
-17. Do not duplicate components unnecessarily.
-18. Do not modify unrelated areas.
-19. Test desktop and mobile.
-20. Check console errors.
-21. Run lint/typecheck.
-22. Never commit secrets.
-23. Prefer simple maintainable solutions.
-24. Optimize images and assets.
-25. Keep the visual identity warm, modern, human and technical.
+This document serves as the top-level UI architecture and design system reference. All agents modifying this project must adhere to these rules.
+
+## Core Directives
+1. **Design System First**: Use only the tokens defined in `styles/globals.css`. Never use raw hex values or arbitrary Tailwind colors like `text-blue-500` unless explicitly matching a token.
+2. **Component Architecture**: Prefer creating reusable primitives (e.g. Button, Card) over page-specific or duplicated implementations.
+3. **Responsive**: Mobile-first design; use defined breakpoints (`sm`, `md`, `lg`, `xl`, `2xl`) intentionally.
+4. **Accessibility**: All interactive elements need keyboard support and visible focus.
+5. **No Framer Motion (Yet)**: Use pure CSS animations as configured in `globals.css` until a motion library is approved.
