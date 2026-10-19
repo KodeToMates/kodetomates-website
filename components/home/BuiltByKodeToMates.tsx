@@ -1,9 +1,10 @@
 'use client'
 
 import React from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
+import { LazyImage } from '@/components/ui/LazyImage'
 import { motion, useReducedMotion } from 'framer-motion'
+
 import { ArrowRight } from 'lucide-react'
 
 // 4-point sparkle star matching the exact reference image ornament
@@ -66,105 +67,10 @@ export function BuiltByKodeToMates() {
   return (
     <section
       id="built-by-kodetomates"
-      className="relative z-10 w-full pt-14 sm:pt-18 lg:pt-20 pb-20 sm:pb-24 lg:pb-32 overflow-hidden bg-white border-y border-[#F3ECE4]/80 shadow-[0_2px_16px_rgba(0,0,0,0.015)] selection:bg-[#E4521B]/20 selection:text-[#E4521B]"
+      className="relative z-10 w-full min-h-screen min-h-[100svh] flex flex-col justify-center py-12 sm:py-16 lg:py-20 overflow-hidden scroll-mt-28 bg-white border-y border-[#F3ECE4]/80 shadow-[0_2px_16px_rgba(0,0,0,0.015)] selection:bg-[#E4521B]/20 selection:text-[#E4521B]"
       aria-labelledby="built-by-kodetomates-heading"
     >
-      {/* ========================================================
-          BACKGROUND CORNER ORNAMENTS (EXACT REFERENCE PARITY)
-         ======================================================== */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-        {/* TOP-LEFT: Exact Organic Fluid Sunset Wave Blob */}
-        <div className="absolute top-0 left-0 w-[160px] sm:w-[220px] md:w-[260px] h-[130px] sm:h-[170px] md:h-[200px] pointer-events-none select-none z-0">
-          <svg
-            viewBox="0 0 220 170"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-full h-full"
-          >
-            <defs>
-              <linearGradient id="topLeftRefFluidBlob" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#FF5280" />
-                <stop offset="28%" stopColor="#FF6024" />
-                <stop offset="68%" stopColor="#FF7A36" />
-                <stop offset="100%" stopColor="#FFA665" />
-              </linearGradient>
-            </defs>
-            <path
-              d="M 0 0 L 130 0 C 120 12, 105 20, 90 27 C 55 42, 30 68, 15 98 C 5 118, 0 138, 0 150 Z"
-              fill="url(#topLeftRefFluidBlob)"
-            />
-          </svg>
-        </div>
-
-        {/* TOP-RIGHT: Downward Sweeping Curved Contour Lines + Sparkle Star */}
-        <div className="absolute top-0 right-0 w-[220px] sm:w-[280px] md:w-[320px] h-[180px] sm:h-[230px] md:h-[260px] pointer-events-none select-none z-0">
-          <svg
-            viewBox="0 0 280 230"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-full h-full"
-          >
-            {/* Outer downward sweeping line */}
-            <path
-              d="M 130 0 C 118 68, 80 130, 48 175"
-              stroke="#E4521B"
-              strokeWidth="1.5"
-              strokeOpacity="0.8"
-              strokeLinecap="round"
-            />
-            {/* Inner downward sweeping line */}
-            <path
-              d="M 185 0 C 175 55, 142 108, 115 145"
-              stroke="#E4521B"
-              strokeWidth="1.5"
-              strokeOpacity="0.8"
-              strokeLinecap="round"
-            />
-          </svg>
-          {/* Sparkle Star positioned to the right of the lines */}
-          <div className="absolute top-7 sm:top-9 right-8 sm:right-11 text-[#E4521B]">
-            <SparkleStar className="w-5 h-5 sm:w-5.5 sm:h-5.5" />
-          </div>
-        </div>
-
-        {/* BOTTOM-LEFT: Concentric Curved Contour Lines + Sparkle Star */}
-        <svg
-          className="absolute -bottom-6 -left-6 sm:bottom-0 sm:left-0 w-[300px] sm:w-[420px] h-[260px] sm:h-[360px] pointer-events-none"
-          viewBox="0 0 420 360"
-          fill="none"
-        >
-          <path
-            d="M 0 100 C 160 100 270 210 270 360"
-            stroke="#E4521B"
-            strokeWidth="1.25"
-            strokeOpacity="0.32"
-          />
-          <path
-            d="M 0 160 C 120 160 220 250 220 360"
-            stroke="#E4521B"
-            strokeWidth="1.25"
-            strokeOpacity="0.32"
-          />
-        </svg>
-        <div className="absolute bottom-24 sm:bottom-28 left-6 sm:left-12 text-[#E4521B]/80">
-          <SparkleStar className="w-5 h-5 sm:w-6 sm:h-6" />
-        </div>
-
-        {/* BOTTOM-RIGHT: Luminous Sunset-Berry Gradient Aura + Sparkle Star */}
-        <div 
-          className="absolute -bottom-24 -right-24 sm:-bottom-32 sm:-right-32 w-[440px] sm:w-[580px] h-[400px] sm:h-[520px] pointer-events-none"
-          style={{
-            background: 'radial-gradient(circle at 75% 75%, #FF7033 0%, #E44B16 42%, #AB003E 72%, rgba(255,255,255,0) 88%)',
-            filter: 'blur(45px)',
-            opacity: 0.72,
-          }}
-        />
-        <div className="absolute bottom-10 sm:bottom-14 right-10 sm:right-16 text-[#E4521B]/85">
-          <SparkleStar className="w-5 h-5 sm:w-6 sm:h-6" />
-        </div>
-      </div>
-
-      <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+      <div className="relative w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 my-auto">
         {/* ========================================================
             SECTION HEADER: Exact Typography, Spacing & Buttons
            ======================================================== */}
@@ -279,7 +185,7 @@ export function BuiltByKodeToMates() {
               <div>
                 {/* Top Visual Container with Pre-rendered High-Res Mockup */}
                 <div className="relative w-full aspect-[16/10.5] rounded-[18px] sm:rounded-[20px] overflow-hidden bg-[#FAF6F1]">
-                  <Image
+                  <LazyImage
                     src={card.image}
                     alt={card.title}
                     fill

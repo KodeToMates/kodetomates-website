@@ -145,83 +145,10 @@ export function CommunitySection() {
   return (
     <section
       id="community"
-      className="relative z-10 w-full pt-12 sm:pt-16 md:pt-20 pb-18 sm:pb-22 md:pb-30 overflow-hidden bg-gradient-to-b from-[#FEF5EB] via-[#FDF0E2] to-[#FEF5EB] selection:bg-[#E4521B]/20 selection:text-[#E4521B]"
+      className="relative z-10 w-full min-h-screen min-h-[100svh] flex flex-col justify-center py-12 sm:py-16 lg:py-20 overflow-hidden scroll-mt-28 bg-[#FEF5EB] selection:bg-[#E4521B]/20 selection:text-[#E4521B]"
       aria-labelledby="community-heading"
     >
-      {/* ========================================================
-          BACKGROUND CORNER ORNAMENTS & AMBIENT GLOWS
-         ======================================================== */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-        {/* TOP-RIGHT: Layered Organic Sunset Wave + Sweeping Connection Arcs + Sparkle Star */}
-        <div className="absolute top-0 right-0 w-[240px] sm:w-[320px] md:w-[380px] h-[190px] sm:h-[240px] md:h-[280px] pointer-events-none select-none z-0">
-          <svg
-            viewBox="0 0 380 280"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-full h-full"
-          >
-            <defs>
-              <linearGradient id="commTopRightBlobGrad1" x1="100%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#FF6024" stopOpacity="0.4" />
-                <stop offset="50%" stopColor="#FFA665" stopOpacity="0.2" />
-                <stop offset="100%" stopColor="#FDE6D0" stopOpacity="0" />
-              </linearGradient>
-              <linearGradient id="commTopRightBlobGrad2" x1="100%" y1="0%" x2="20%" y2="80%">
-                <stop offset="0%" stopColor="#FF4A7A" stopOpacity="0.3" />
-                <stop offset="70%" stopColor="#FF914D" stopOpacity="0.1" />
-                <stop offset="100%" stopColor="#FDE6D0" stopOpacity="0" />
-              </linearGradient>
-            </defs>
-            {/* Outer soft wave */}
-            <path
-              d="M 380 0 L 160 0 C 180 80, 220 150, 275 195 C 320 230, 350 255, 380 280 Z"
-              fill="url(#commTopRightBlobGrad1)"
-            />
-            {/* Inner secondary wave */}
-            <path
-              d="M 380 0 L 220 0 C 235 60, 265 115, 310 150 C 345 180, 365 205, 380 230 Z"
-              fill="url(#commTopRightBlobGrad2)"
-            />
-            {/* Delicate sweeping community connection arcs */}
-            <path
-              d="M 140 0 C 160 100, 220 190, 300 235 C 335 255, 360 270, 380 280"
-              stroke="#E4521B"
-              strokeWidth="1.6"
-              strokeOpacity="0.4"
-              strokeLinecap="round"
-            />
-            <path
-              d="M 190 0 C 205 75, 255 145, 320 185 C 350 205, 365 215, 380 225"
-              stroke="#E4521B"
-              strokeWidth="1.2"
-              strokeOpacity="0.3"
-              strokeLinecap="round"
-            />
-          </svg>
-          {/* Floating Sparkle Star near connection arcs */}
-          <div className="absolute top-8 sm:top-10 right-14 sm:right-20 text-[#E4521B]">
-            <SparkleStar className="w-5 h-5 sm:w-6 sm:h-6" />
-          </div>
-        </div>
-
-
-
-        {/* Ambient Radial Peach Glows */}
-        <div 
-          className="absolute left-[-5%] top-1/3 w-[650px] h-[500px] rounded-full blur-[110px] opacity-35"
-          style={{
-            background: 'radial-gradient(ellipse at center, #FDC7A2 0%, #FDE4D0 45%, rgba(254,236,220,0) 75%)',
-          }}
-        />
-        <div 
-          className="absolute right-[-5%] bottom-1/3 w-[550px] h-[450px] rounded-full blur-[100px] opacity-25"
-          style={{
-            background: 'radial-gradient(circle, #FDD5B7 0%, rgba(254,240,226,0) 70%)',
-          }}
-        />
-      </div>
-
-      <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+      <div className="relative w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 my-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           
           {/* ========================================================

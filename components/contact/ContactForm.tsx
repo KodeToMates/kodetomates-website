@@ -1,19 +1,17 @@
 'use client'
 
 import React, { useState } from 'react'
+import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-  Send,
   CheckCircle2,
   AlertCircle,
   Loader2,
-  User,
-  Mail,
-  Phone,
-  Building2,
-  Tag,
-  MessageSquare,
+  ChevronDown,
+  ArrowUpRight,
   Sparkles,
+  Copy,
+  Check,
 } from 'lucide-react'
 import { ContactFormData, ContactRequestPayload } from '@/types/contact'
 import { validateContactForm } from '@/lib/validations/contact'
@@ -25,6 +23,16 @@ const SUBJECT_OPTIONS = [
   'Join the Community',
   'Mentorship & Learning',
   'Technical Partnership',
+  'Website / App Development',
+  'Other',
+]
+
+const TIMELINE_OPTIONS = [
+  'Immediate (within 1-2 weeks)',
+  'Within 1 month',
+  '1 - 3 months',
+  'Flexible / Exploring ideas',
+  'Ongoing Collaboration',
 ]
 
 const initialFormData: ContactFormData = {
@@ -38,21 +46,23 @@ const initialFormData: ContactFormData = {
 
 export function ContactForm() {
   const [formData, setFormData] = useState<ContactFormData>(initialFormData)
+  const [timeline, setTimeline] = useState('')
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
   const [errorMessage, setErrorMessage] = useState('')
   const [serverSuccessMessage, setServerSuccessMessage] = useState('')
+  const [copied, setCopied] = useState(false)
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-    if (status === 'error') {
-      setStatus('idle')
-      setErrorMessage('')
-    }
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText('hello@kodetomates.com')
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
   }
 
-  const handleSubjectChipClick = (subject: string) => {
-    setFormData((prev) => ({ ...prev, subject }))
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
     if (status === 'error') {
       setStatus('idle')
       setErrorMessage('')
@@ -74,10 +84,13 @@ export function ContactForm() {
     setErrorMessage('')
 
     // 2. Format payload according to API contract
-    // We prepend the user's selected topic to the message so that it is preserved in the backend CRM lead message
-    const formattedMessage = formData.subject.trim()
-      ? `[Topic: ${formData.subject.trim()}]\n\n${formData.message.trim()}`
-      : formData.message.trim()
+    const formattedMessage = [
+      formData.subject.trim() ? `[Topic: ${formData.subject.trim()}]` : '',
+      timeline.trim() ? `[Timeline: ${timeline.trim()}]` : '',
+      formData.message.trim(),
+    ]
+      .filter(Boolean)
+      .join('\n\n')
 
     const payload: ContactRequestPayload = {
       fullName: formData.name.trim(),
@@ -110,18 +123,32 @@ export function ContactForm() {
 
   const handleReset = () => {
     setFormData(initialFormData)
+    setTimeline('')
     setStatus('idle')
     setErrorMessage('')
     setServerSuccessMessage('')
   }
 
   return (
-    <div className="relative w-full rounded-3xl bg-white/85 backdrop-blur-xl border border-white/90 shadow-[0_20px_50px_rgba(26,24,23,0.06),0_1px_3px_rgba(26,24,23,0.04)] p-7 sm:p-10 lg:p-12 overflow-hidden">
-      {/* Ambient background glass highlight */}
-      <div 
-        className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-[#FF914D]/10 via-[#AB003E]/5 to-transparent rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" 
-        aria-hidden="true" 
-      />
+    <div className="relative w-full rounded-[32px] sm:rounded-[36px] bg-white border border-neutral-200/80 shadow-[0_20px_60px_rgba(0,0,0,0.04),0_1px_3px_rgba(0,0,0,0.02)] p-6 sm:p-10 lg:p-12 overflow-hidden">
+      {/* ========================================================
+          HEADER BAR (Matching Reference Screenshot: Title Left, Text Right)
+         ======================================================== */}
+      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 pb-8 sm:pb-10 border-b border-neutral-100 mb-8 sm:mb-10">
+        <div>
+          {/* Eyebrow badge matching "Plan Trip" in reference */}
+
+          {/* Headline matching "Contact Us" */}
+          <h1 className="font-sans text-[clamp(2.4rem,4.4vw,3.8rem)] font-bold text-[#141210] leading-none tracking-tight">
+            Contact Us
+          </h1>
+        </div>
+
+        {/* Subtitle description right-aligned on desktop */}
+        <p className="font-sans text-[14.5px] sm:text-[15.5px] text-[#6B645E] leading-relaxed max-w-sm lg:text-right">
+          Tell us about your project, idea, or questions and we&apos;ll confirm availability within 24 hours.
+        </p>
+      </div>
 
       <AnimatePresence mode="wait">
         {status === 'success' ? (
@@ -131,7 +158,7 @@ export function ContactForm() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] as const }}
-            className="flex flex-col items-center justify-center text-center py-10 sm:py-14"
+            className="flex flex-col items-center justify-center text-center py-12 sm:py-16"
           >
             {/* Animated Success Badge */}
             <div className="w-18 h-18 sm:w-20 sm:h-20 rounded-full bg-gradient-to-tr from-[#10B981]/20 to-[#34D399]/20 border border-[#10B981]/40 flex items-center justify-center mb-6 shadow-[0_10px_25px_rgba(16,185,129,0.2)] text-[#059669]">
@@ -143,7 +170,7 @@ export function ContactForm() {
             </h3>
 
             <p className="font-sans text-[15.5px] sm:text-[17px] text-[#5A5654] max-w-md mb-8 leading-relaxed">
-              Thank you, <span className="font-semibold text-[#1A1817]">{formData.name}</span>! {serverSuccessMessage}. We’ve received your inquiry regarding <span className="font-semibold text-[#E4521B]">“{formData.subject}”</span> and our team will get back to you at <span className="font-semibold text-[#1A1817]">{formData.email}</span> within 24 hours.
+              Thank you, <span className="font-semibold text-[#1A1817]">{formData.name}</span>! {serverSuccessMessage}. We&apos;ve received your inquiry regarding <span className="font-semibold text-[#E4521B]">“{formData.subject}”</span> and our team will get back to you at <span className="font-semibold text-[#1A1817]">{formData.email}</span> within 24 hours.
             </p>
 
             <button
@@ -156,270 +183,260 @@ export function ContactForm() {
             </button>
           </motion.div>
         ) : (
-          <motion.form
-            key="contact-form"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onSubmit={handleSubmit}
-            className="relative z-10 flex flex-col gap-6"
-            noValidate
-          >
-            {/* Form Title & Introduction */}
-            <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FF914D]/10 border border-[#FF914D]/25 text-[#C2410C] text-xs font-semibold uppercase tracking-wider mb-2.5">
-                <span>Direct Message</span>
-              </div>
-              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#1A1817] tracking-tight">
-                Send us a message
-              </h2>
-              <p className="font-sans text-sm sm:text-[15px] text-[#6B645E] mt-1">
-                Fill in the details below and we&apos;ll be in touch shortly.
-              </p>
-            </div>
-
-            {/* Error Banner */}
-            {status === 'error' && errorMessage && (
-              <motion.div
-                initial={{ opacity: 0, y: -8 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="flex items-center gap-3 p-4 rounded-2xl bg-red-50 border border-red-200/80 text-red-700 text-sm font-medium"
-                role="alert"
-                aria-live="assertive"
-              >
-                <AlertCircle className="w-5 h-5 shrink-0 text-red-600" />
-                <span>{errorMessage}</span>
-              </motion.div>
-            )}
-
-            {/* Row 1: Name & Email */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              {/* Field 1: Name */}
-              <div className="flex flex-col gap-2">
-                <label
-                  htmlFor="contact-name"
-                  className="font-sans font-semibold text-xs sm:text-[13px] text-[#1A1817] tracking-wide flex items-center justify-between"
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-stretch">
+            {/* ========================================================
+                LEFT COLUMN: Interactive Form (Matching Reference Inputs)
+               ======================================================== */}
+            <form
+              onSubmit={handleSubmit}
+              noValidate
+              className="lg:col-span-7 xl:col-span-7 flex flex-col justify-between gap-4 sm:gap-5"
+            >
+              {/* Error Banner */}
+              {status === 'error' && errorMessage && (
+                <motion.div
+                  initial={{ opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex items-center gap-3 p-3.5 rounded-2xl bg-red-50 border border-red-200/80 text-red-700 text-sm font-medium"
+                  role="alert"
                 >
-                  <span className="flex items-center gap-1.5">
-                    <User className="w-3.5 h-3.5 text-[#E4521B]" />
-                    <span>Your Name</span>
-                  </span>
-                  <span className="text-[#A39E98] text-[11px] font-normal">Required</span>
-                </label>
-                <div className="relative">
+                  <AlertCircle className="w-5 h-5 shrink-0 text-red-600" />
+                  <span>{errorMessage}</span>
+                </motion.div>
+              )}
+
+              {/* Row 1: Name & Email */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+                <div className="flex flex-col gap-1.5">
+                  <label
+                    htmlFor="contact-name"
+                    className="font-sans font-semibold text-xs sm:text-[13px] text-[#1A1817]"
+                  >
+                    Name
+                  </label>
                   <input
                     id="contact-name"
                     name="name"
                     type="text"
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="e.g. Alex Morgan"
+                    placeholder="Your full name"
                     required
-                    aria-required="true"
                     disabled={status === 'submitting'}
-                    className="w-full px-4 py-3.5 rounded-2xl bg-[#FBF9F5] border border-[#E9E4DC] text-[#1A1817] text-sm sm:text-[15px] placeholder-[#A8A29D] font-sans transition-all duration-200 focus:outline-none focus:bg-white focus:border-[#E4521B] focus:ring-4 focus:ring-[#E4521B]/10 disabled:opacity-60 disabled:cursor-not-allowed"
+                    className="w-full px-4 py-3 rounded-2xl bg-[#F8F9FA] border border-neutral-200 text-[#141210] text-sm sm:text-[14.5px] placeholder-neutral-400 font-sans transition-all duration-200 focus:outline-none focus:bg-white focus:border-[#E4521B] focus:ring-3 focus:ring-[#E4521B]/10 disabled:opacity-60"
                   />
                 </div>
-              </div>
-
-              {/* Field 2: Email */}
-              <div className="flex flex-col gap-2">
-                <label
-                  htmlFor="contact-email"
-                  className="font-sans font-semibold text-xs sm:text-[13px] text-[#1A1817] tracking-wide flex items-center justify-between"
-                >
-                  <span className="flex items-center gap-1.5">
-                    <Mail className="w-3.5 h-3.5 text-[#E4521B]" />
-                    <span>Email Address</span>
-                  </span>
-                  <span className="text-[#A39E98] text-[11px] font-normal">Required</span>
-                </label>
-                <div className="relative">
+                <div className="flex flex-col gap-1.5">
+                  <label
+                    htmlFor="contact-email"
+                    className="font-sans font-semibold text-xs sm:text-[13px] text-[#1A1817]"
+                  >
+                    Email
+                  </label>
                   <input
                     id="contact-email"
                     name="email"
                     type="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="alex@example.com"
+                    placeholder="you@example.com"
                     required
-                    aria-required="true"
                     disabled={status === 'submitting'}
-                    className="w-full px-4 py-3.5 rounded-2xl bg-[#FBF9F5] border border-[#E9E4DC] text-[#1A1817] text-sm sm:text-[15px] placeholder-[#A8A29D] font-sans transition-all duration-200 focus:outline-none focus:bg-white focus:border-[#E4521B] focus:ring-4 focus:ring-[#E4521B]/10 disabled:opacity-60 disabled:cursor-not-allowed"
+                    className="w-full px-4 py-3 rounded-2xl bg-[#F8F9FA] border border-neutral-200 text-[#141210] text-sm sm:text-[14.5px] placeholder-neutral-400 font-sans transition-all duration-200 focus:outline-none focus:bg-white focus:border-[#E4521B] focus:ring-3 focus:ring-[#E4521B]/10 disabled:opacity-60"
                   />
                 </div>
               </div>
-            </div>
 
-            {/* Row 2: Phone & Company (Optional) */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              {/* Field 3: Phone */}
-              <div className="flex flex-col gap-2">
-                <label
-                  htmlFor="contact-phone"
-                  className="font-sans font-semibold text-xs sm:text-[13px] text-[#1A1817] tracking-wide flex items-center justify-between"
-                >
-                  <span className="flex items-center gap-1.5">
-                    <Phone className="w-3.5 h-3.5 text-[#E4521B]" />
-                    <span>Phone Number</span>
-                  </span>
-                  <span className="text-[#A39E98] text-[11px] font-normal">Optional</span>
-                </label>
-                <div className="relative">
+              {/* Row 2: Phone Number & Subject Dropdown */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+                <div className="flex flex-col gap-1.5">
+                  <label
+                    htmlFor="contact-phone"
+                    className="font-sans font-semibold text-xs sm:text-[13px] text-[#1A1817]"
+                  >
+                    Phone Number
+                  </label>
                   <input
                     id="contact-phone"
                     name="phone"
                     type="tel"
                     value={formData.phone}
                     onChange={handleChange}
-                    placeholder="e.g. +1 555 123 4567"
+                    placeholder="+1 555 123 4567"
                     disabled={status === 'submitting'}
-                    className="w-full px-4 py-3.5 rounded-2xl bg-[#FBF9F5] border border-[#E9E4DC] text-[#1A1817] text-sm sm:text-[15px] placeholder-[#A8A29D] font-sans transition-all duration-200 focus:outline-none focus:bg-white focus:border-[#E4521B] focus:ring-4 focus:ring-[#E4521B]/10 disabled:opacity-60 disabled:cursor-not-allowed"
+                    className="w-full px-4 py-3 rounded-2xl bg-[#F8F9FA] border border-neutral-200 text-[#141210] text-sm sm:text-[14.5px] placeholder-neutral-400 font-sans transition-all duration-200 focus:outline-none focus:bg-white focus:border-[#E4521B] focus:ring-3 focus:ring-[#E4521B]/10 disabled:opacity-60"
                   />
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <label
+                    htmlFor="contact-subject"
+                    className="font-sans font-semibold text-xs sm:text-[13px] text-[#1A1817]"
+                  >
+                    Subject
+                  </label>
+                  <div className="relative">
+                    <select
+                      id="contact-subject"
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleChange}
+                      required
+                      disabled={status === 'submitting'}
+                      className={`w-full px-4 py-3 pr-10 rounded-2xl bg-[#F8F9FA] border border-neutral-200 text-sm sm:text-[14.5px] font-sans transition-all duration-200 focus:outline-none focus:bg-white focus:border-[#E4521B] focus:ring-3 focus:ring-[#E4521B]/10 disabled:opacity-60 appearance-none cursor-pointer ${formData.subject ? 'text-[#141210]' : 'text-neutral-400'
+                        }`}
+                    >
+                      <option value="" disabled>Choose your topic...</option>
+                      {SUBJECT_OPTIONS.map((opt) => (
+                        <option key={opt} value={opt} className="text-[#141210] bg-white py-1.5">
+                          {opt}
+                        </option>
+                      ))}
+                    </select>
+                    <ChevronDown className="w-4 h-4 text-neutral-400 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  </div>
                 </div>
               </div>
 
-              {/* Field 4: Company */}
-              <div className="flex flex-col gap-2">
-                <label
-                  htmlFor="contact-company"
-                  className="font-sans font-semibold text-xs sm:text-[13px] text-[#1A1817] tracking-wide flex items-center justify-between"
-                >
-                  <span className="flex items-center gap-1.5">
-                    <Building2 className="w-3.5 h-3.5 text-[#E4521B]" />
-                    <span>Company / Organisation</span>
-                  </span>
-                  <span className="text-[#A39E98] text-[11px] font-normal">Optional</span>
-                </label>
-                <div className="relative">
+              {/* Row 3: Company / Organisation & Preferred Timeline */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+                <div className="flex flex-col gap-1.5">
+                  <label
+                    htmlFor="contact-company"
+                    className="font-sans font-semibold text-xs sm:text-[13px] text-[#1A1817]"
+                  >
+                    Company / Organisation
+                  </label>
                   <input
                     id="contact-company"
                     name="company"
                     type="text"
                     value={formData.company}
                     onChange={handleChange}
-                    placeholder="e.g. Acme Corporation"
+                    placeholder="e.g. Acme Studio (optional)"
                     disabled={status === 'submitting'}
-                    className="w-full px-4 py-3.5 rounded-2xl bg-[#FBF9F5] border border-[#E9E4DC] text-[#1A1817] text-sm sm:text-[15px] placeholder-[#A8A29D] font-sans transition-all duration-200 focus:outline-none focus:bg-white focus:border-[#E4521B] focus:ring-4 focus:ring-[#E4521B]/10 disabled:opacity-60 disabled:cursor-not-allowed"
+                    className="w-full px-4 py-3 rounded-2xl bg-[#F8F9FA] border border-neutral-200 text-[#141210] text-sm sm:text-[14.5px] placeholder-neutral-400 font-sans transition-all duration-200 focus:outline-none focus:bg-white focus:border-[#E4521B] focus:ring-3 focus:ring-[#E4521B]/10 disabled:opacity-60"
                   />
                 </div>
-              </div>
-            </div>
-
-            {/* Row 3: Subject */}
-            <div className="flex flex-col gap-2.5">
-              <label
-                htmlFor="contact-subject"
-                className="font-sans font-semibold text-xs sm:text-[13px] text-[#1A1817] tracking-wide flex items-center justify-between"
-              >
-                <span className="flex items-center gap-1.5">
-                  <Tag className="w-3.5 h-3.5 text-[#E4521B]" />
-                  <span>Subject</span>
-                </span>
-                <span className="text-[#A39E98] text-[11px] font-normal">Required</span>
-              </label>
-
-              {/* Quick Select Subject Chips */}
-              <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                {SUBJECT_OPTIONS.map((option) => {
-                  const isSelected = formData.subject === option
-                  return (
-                    <button
-                      key={option}
-                      type="button"
-                      onClick={() => handleSubjectChipClick(option)}
+                <div className="flex flex-col gap-1.5">
+                  <label
+                    htmlFor="contact-timeline"
+                    className="font-sans font-semibold text-xs sm:text-[13px] text-[#1A1817]"
+                  >
+                    Preferred Timeline
+                  </label>
+                  <div className="relative">
+                    <select
+                      id="contact-timeline"
+                      name="timeline"
+                      value={timeline}
+                      onChange={(e) => setTimeline(e.target.value)}
                       disabled={status === 'submitting'}
-                      className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed ${
-                        isSelected
-                          ? 'bg-[#E4521B] text-white shadow-sm'
-                          : 'bg-[#F4EFEA] hover:bg-[#EFE9E2] text-[#5A5654] border border-[#E8E1D9]'
-                      }`}
+                      className={`w-full px-4 py-3 pr-10 rounded-2xl bg-[#F8F9FA] border border-neutral-200 text-sm sm:text-[14.5px] font-sans transition-all duration-200 focus:outline-none focus:bg-white focus:border-[#E4521B] focus:ring-3 focus:ring-[#E4521B]/10 disabled:opacity-60 appearance-none cursor-pointer ${timeline ? 'text-[#141210]' : 'text-neutral-400'
+                        }`}
                     >
-                      {option}
-                    </button>
-                  )
-                })}
+                      <option value="">Choose timeline (optional)...</option>
+                      {TIMELINE_OPTIONS.map((opt) => (
+                        <option key={opt} value={opt} className="text-[#141210] bg-white py-1.5">
+                          {opt}
+                        </option>
+                      ))}
+                    </select>
+                    <ChevronDown className="w-4 h-4 text-neutral-400 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  </div>
+                </div>
               </div>
 
-              {/* Subject Input Field */}
-              <div className="relative mt-1">
-                <input
-                  id="contact-subject"
-                  name="subject"
-                  type="text"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  placeholder="Select a topic above or type a custom subject..."
-                  required
-                  aria-required="true"
-                  disabled={status === 'submitting'}
-                  className="w-full px-4 py-3.5 rounded-2xl bg-[#FBF9F5] border border-[#E9E4DC] text-[#1A1817] text-sm sm:text-[15px] placeholder-[#A8A29D] font-sans transition-all duration-200 focus:outline-none focus:bg-white focus:border-[#E4521B] focus:ring-4 focus:ring-[#E4521B]/10 disabled:opacity-60 disabled:cursor-not-allowed"
-                />
-              </div>
-            </div>
-
-            {/* Row 4: Message */}
-            <div className="flex flex-col gap-2">
-              <label
-                htmlFor="contact-message"
-                className="font-sans font-semibold text-xs sm:text-[13px] text-[#1A1817] tracking-wide flex items-center justify-between"
-              >
-                <span className="flex items-center gap-1.5">
-                  <MessageSquare className="w-3.5 h-3.5 text-[#E4521B]" />
-                  <span>Your Message</span>
-                </span>
-                <span className="text-[#A39E98] text-[11px] font-normal">
-                  {formData.message.length} characters (min 10)
-                </span>
-              </label>
-              <div className="relative">
+              {/* Row 4: Message / Special Requests */}
+              <div className="flex flex-col gap-1.5">
+                <label
+                  htmlFor="contact-message"
+                  className="font-sans font-semibold text-xs sm:text-[13px] text-[#1A1817]"
+                >
+                  Message / Special Requests
+                </label>
                 <textarea
                   id="contact-message"
                   name="message"
-                  rows={5}
+                  rows={4}
                   value={formData.message}
                   onChange={handleChange}
-                  placeholder="Tell us what you're working on, questions you have, or how we can collaborate..."
+                  placeholder="Anything else we should know?"
                   required
-                  aria-required="true"
                   disabled={status === 'submitting'}
-                  className="w-full px-4 py-3.5 rounded-2xl bg-[#FBF9F5] border border-[#E9E4DC] text-[#1A1817] text-sm sm:text-[15px] placeholder-[#A8A29D] font-sans transition-all duration-200 resize-none focus:outline-none focus:bg-white focus:border-[#E4521B] focus:ring-4 focus:ring-[#E4521B]/10 disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="w-full px-4 py-3 rounded-2xl bg-[#F8F9FA] border border-neutral-200 text-[#141210] text-sm sm:text-[14.5px] placeholder-neutral-400 font-sans transition-all duration-200 resize-none focus:outline-none focus:bg-white focus:border-[#E4521B] focus:ring-3 focus:ring-[#E4521B]/10 disabled:opacity-60"
                 />
               </div>
+
+              {/* Row 5: Submit Action (Split Pill Button + Arrow Circle matching screenshot) */}
+              <div className="flex items-center gap-2.5 pt-2">
+                <button
+                  type="submit"
+                  disabled={status === 'submitting'}
+                  className="btn-dark-coral group inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full font-sans font-semibold text-sm sm:text-[15px]"
+                >
+                  {status === 'submitting' ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin text-white" />
+                      <span>Sending...</span>
+                    </>
+                  ) : (
+                    <span>Reserve Your Spot</span>
+                  )}
+                </button>
+
+                <button
+                  type="submit"
+                  disabled={status === 'submitting'}
+                  aria-label="Submit Message"
+                  className="btn-dark-coral w-12 h-12 rounded-full flex items-center justify-center group shrink-0"
+                >
+                  <ArrowUpRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </button>
+              </div>
+            </form>
+
+            {/* ========================================================
+                RIGHT COLUMN: Scenic Visual Card (Exact Screenshot Parity)
+               ======================================================== */}
+            <div className="lg:col-span-5 xl:col-span-5 relative w-full h-[380px] sm:h-[460px] lg:h-auto min-h-[380px] lg:min-h-full rounded-[26px] sm:rounded-[28px] overflow-hidden shadow-[0_8px_24px_rgba(26,24,23,0.06)] flex flex-col justify-between p-5 sm:p-6 group">
+              {/* Background scenic photo */}
+              <Image
+                src="/images/contact-journey.jpg"
+                alt="Scenic road representing your journey with KodeToMates"
+                fill
+                sizes="(max-width: 1024px) 100vw, 42vw"
+                className="object-cover object-center pointer-events-none select-none transition-transform duration-700 group-hover:scale-105"
+                priority
+              />
+
+              {/* Ambient depth gradients */}
+              <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-transparent to-black/60 pointer-events-none" />
+
+              {/* Top-Right Pill Badge matching "Your Journey" in screenshot */}
+              <div className="relative self-end z-10 px-4 py-1.5 rounded-full bg-black/25 backdrop-blur-md border border-white/40 text-white font-sans text-xs font-semibold tracking-wide shadow-sm select-none">
+                Your Journey
+              </div>
+
+              {/* Bottom Frosted Glass Trust Overlay Card */}
+              <div className="relative z-10 p-4 sm:p-5 rounded-2xl bg-[#0F0D16]/70 backdrop-blur-xl border border-white/20 text-white shadow-xl">
+
+                <div className="text-sm font-semibold text-white/95 leading-snug">
+                  Direct Founder &amp; Mentor Access
+                </div>
+                <div className="flex items-center justify-between mt-3 pt-3 border-t border-white/10 text-xs">
+                  <span className="text-white/80 font-mono text-[11.5px]">kodetomates@gmail.com</span>
+                  <button
+                    type="button"
+                    onClick={handleCopyEmail}
+                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white/15 hover:bg-white/25 text-white text-[11px] font-medium transition-colors cursor-pointer"
+                  >
+                    {copied ? <Check className="w-3 h-3 text-[#34D399]" /> : <Copy className="w-3 h-3" />}
+                    <span>{copied ? 'Copied' : 'Copy'}</span>
+                  </button>
+                </div>
+              </div>
             </div>
-
-            {/* Submit Button */}
-            <div className="pt-2">
-              <button
-                type="submit"
-                id="contact-submit-btn"
-                disabled={status === 'submitting'}
-                aria-busy={status === 'submitting'}
-                className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 sm:px-10 py-4 rounded-full bg-gradient-to-r from-[#FF6B26] via-[#F8493A] to-[#D81B60] text-white font-sans font-semibold text-[15.5px] sm:text-[16.5px] tracking-wide select-none shadow-[0_12px_28px_rgba(233,61,86,0.32),0_4px_14px_rgba(255,107,38,0.25)] hover:shadow-[0_16px_36px_rgba(233,61,86,0.42),0_6px_18px_rgba(255,107,38,0.35)] hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-75 disabled:cursor-not-allowed transition-all duration-300 cursor-pointer overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6B26] focus-visible:ring-offset-2"
-              >
-                {/* Shimmer sweep effect */}
-                <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none" />
-
-                {status === 'submitting' ? (
-                  <>
-                    <Loader2 className="w-5 h-5 animate-spin text-white" />
-                    <span>Sending Message...</span>
-                  </>
-                ) : (
-                  <>
-                    <span>Submit Message</span>
-                    <span className="w-7 h-7 rounded-full bg-white/20 border border-white/30 flex items-center justify-center text-white backdrop-blur-sm transition-transform duration-300 group-hover:translate-x-1">
-                      <Send className="w-3.5 h-3.5" />
-                    </span>
-                  </>
-                )}
-              </button>
-
-              <p className="font-sans text-[12px] text-[#8C847C] mt-3">
-                🔒 We respect your privacy. No spam. Usually replied within 24 hours.
-              </p>
-            </div>
-          </motion.form>
+          </div>
         )}
       </AnimatePresence>
     </div>

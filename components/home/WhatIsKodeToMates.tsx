@@ -1,344 +1,404 @@
 'use client'
 
-import React from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { motion, useReducedMotion } from 'framer-motion'
-import { ArrowRight, BookOpen, Code2, Users, TrendingUp, Sparkles } from 'lucide-react'
+import { motion, useScroll, useTransform, useMotionValueEvent, useReducedMotion } from 'framer-motion'
+import { ArrowRight, BookOpen, Code2, Users, TrendingUp, CheckCircle2, GitPullRequest, MessageSquareCode, BadgeCheck } from 'lucide-react'
 
-// 4-point sparkle star matching the exact reference ornament
-function SparkleStar({ className = '' }: { className?: string }) {
-  return (
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill="none"
-      className={className}
-      aria-hidden="true"
-    >
-      <path
-        d="M12 0C12 6.627 6.627 12 0 12C6.627 12 12 17.373 12 24C12 17.373 17.373 12 24 12C17.373 12 12 6.627 12 0Z"
-        fill="currentColor"
-      />
-    </svg>
-  )
-}
-
-const FEATURE_PILLARS = [
+const PILLAR_CARDS = [
   {
-    title: 'Learn',
-    subtitle: 'New skills, real practice',
+    id: 'learn',
+    number: '01',
+    pill: 'Learn by Doing',
+    title: 'Learn Together',
+    headline: 'Master modern engineering with live practice & mentorship',
+    description:
+      'Break out of tutorial purgatory. Dive into curated learning paths, live pair-coding sessions, and open workshops covering full-stack web development, AI automation, and system design.',
+    image: '/images/pillars/learn.jpg',
+    tags: ['Hands-on Labs', 'System Architecture', 'Live Workshops', 'Peer Mentoring'],
+    stat: '100% Practical',
     icon: BookOpen,
-    iconColor: 'text-[#3B82F6]',
-    squircleBg: 'bg-[#EFF6FF]',
+    accentColor: '#E4521B',
+    accentBg: 'bg-[#FFF2EB]',
+    accentBorder: 'border-[#FFD7C2]',
   },
   {
-    title: 'Build',
-    subtitle: 'Turn ideas into products',
+    id: 'build',
+    number: '02',
+    pill: 'Real-World Software',
+    title: 'Build Real Products',
+    headline: 'Turn your ideas into deployed, production code',
+    description:
+      'Theory without execution is wasted. Team up with fellow engineers to architect, code, test, and ship production-ready applications, open-source repositories, and client-grade solutions.',
+    image: '/images/pillars/build.jpg',
+    tags: ['Full-Stack Apps', 'Open Source Repos', 'CI/CD Pipelines', 'Production MVPs'],
+    stat: 'Shipped Code',
     icon: Code2,
-    iconColor: 'text-[#10B981]',
-    squircleBg: 'bg-[#ECFDF5]',
+    accentColor: '#059669',
+    accentBg: 'bg-[#ECFDF5]',
+    accentBorder: 'border-[#A7F3D0]',
   },
   {
-    title: 'Collaborate',
-    subtitle: 'Better together',
+    id: 'collaborate',
+    number: '03',
+    pill: 'Team Engineering',
+    title: 'Collaborate as a Team',
+    headline: 'Work the way modern high-performing tech teams work',
+    description:
+      'Software engineering is a multiplayer sport. Experience Git workflows, pull request reviews, Agile sprints, and cross-functional team dynamics alongside frontend, backend, and design peers.',
+    image: '/images/pillars/collaborate.jpg',
+    tags: ['Git & PR Reviews', 'Agile Sprints', 'Pair Programming', 'Community Hub'],
+    stat: 'Multiplayer Dev',
     icon: Users,
-    iconColor: 'text-[#8B5CF6]',
-    squircleBg: 'bg-[#F5F3FF]',
+    accentColor: '#7C3AED',
+    accentBg: 'bg-[#F5F3FF]',
+    accentBorder: 'border-[#DDD6FE]',
   },
   {
-    title: 'Grow',
-    subtitle: 'Skills, confidence, opportunities',
+    id: 'grow',
+    number: '04',
+    pill: 'Proof of Work',
+    title: 'Grow & Lead',
+    headline: 'Build a verifiable portfolio, unlock career opportunities',
+    description:
+      'Prove your skills with real contributions. Turn community projects into proof-of-work case studies, land high-impact tech roles, launch startups, or step up as an engineering mentor.',
+    image: '/images/pillars/grow.jpg',
+    tags: ['Career Growth', 'Portfolio Proof', 'Tech Leadership', 'Referral Network'],
+    stat: 'Career Impact',
     icon: TrendingUp,
-    iconColor: 'text-[#F97316]',
-    squircleBg: 'bg-[#FFF7ED]',
+    accentColor: '#D97706',
+    accentBg: 'bg-[#FFFBEB]',
+    accentBorder: 'border-[#FDE68A]',
   },
 ]
 
 export function WhatIsKodeToMates() {
   const shouldReduceMotion = useReducedMotion()
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const [activeCard, setActiveCard] = useState(0)
+
+  // Pinned scroll progress: tracks scroll from when section top hits viewport to bottom
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start start', 'end end'],
+  })
+
+  const progressWidth = useTransform(scrollYProgress, [0, 1], ['0%', '100%'])
+
+  // --- CARD 0 (Learn) Transforms: starts on top, slides right between 0.18 and 0.32 ---
+  const x0 = useTransform(scrollYProgress, [0, 0.18, 0.32, 1], ['0%', '0%', '115%', '115%'])
+  const rotate0 = useTransform(scrollYProgress, [0, 0.18, 0.32, 1], [0, 0, 7, 7])
+  const opacity0 = useTransform(scrollYProgress, [0, 0.18, 0.30, 0.33, 1], [1, 1, 0.2, 0, 0])
+
+  // --- CARD 1 (Build) Transforms: sits behind Card 0, scales up at 0.18-0.32, exits right at 0.46-0.60 ---
+  const x1 = useTransform(scrollYProgress, [0, 0.46, 0.60, 1], ['0%', '0%', '115%', '115%'])
+  const rotate1 = useTransform(scrollYProgress, [0, 0.46, 0.60, 1], [0, 0, 7, 7])
+  const scale1 = useTransform(scrollYProgress, [0, 0.18, 0.32, 1], [0.94, 0.94, 1, 1])
+  const y1 = useTransform(scrollYProgress, [0, 0.18, 0.32, 1], [18, 18, 0, 0])
+  const opacity1 = useTransform(scrollYProgress, [0, 0.18, 0.32, 0.46, 0.58, 0.61, 1], [0.85, 0.85, 1, 1, 0.2, 0, 0])
+
+  // --- CARD 2 (Collaborate) Transforms: sits behind Card 1, scales up at 0.46-0.60, exits right at 0.72-0.86 ---
+  const x2 = useTransform(scrollYProgress, [0, 0.72, 0.86, 1], ['0%', '0%', '115%', '115%'])
+  const rotate2 = useTransform(scrollYProgress, [0, 0.72, 0.86, 1], [0, 0, 7, 7])
+  const scale2 = useTransform(scrollYProgress, [0, 0.18, 0.32, 0.46, 0.60, 1], [0.88, 0.88, 0.94, 0.94, 1, 1])
+  const y2 = useTransform(scrollYProgress, [0, 0.18, 0.32, 0.46, 0.60, 1], [36, 36, 18, 18, 0, 0])
+  const opacity2 = useTransform(scrollYProgress, [0, 0.46, 0.60, 0.72, 0.84, 0.87, 1], [0.7, 0.7, 1, 1, 0.2, 0, 0])
+
+  // --- CARD 3 (Grow) Transforms: sits behind Card 2, scales up at 0.72-0.86, stays anchored as final card ---
+  const scale3 = useTransform(scrollYProgress, [0, 0.46, 0.60, 0.72, 0.86, 1], [0.84, 0.84, 0.90, 0.90, 1, 1])
+  const y3 = useTransform(scrollYProgress, [0, 0.46, 0.60, 0.72, 0.86, 1], [50, 50, 32, 32, 0, 0])
+  const opacity3 = useTransform(scrollYProgress, [0, 0.46, 0.72, 0.86, 1], [0.55, 0.55, 0.8, 1, 1])
+
+  // Keep track of active card index for left-side indicator
+  useMotionValueEvent(scrollYProgress, 'change', (latest) => {
+    if (latest < 0.25) {
+      setActiveCard(0)
+    } else if (latest < 0.52) {
+      setActiveCard(1)
+    } else if (latest < 0.78) {
+      setActiveCard(2)
+    } else {
+      setActiveCard(3)
+    }
+  })
+
+  // Clickable indicator: smoothly jump to a specific card's scroll position
+  const scrollToCard = (index: number) => {
+    if (!sectionRef.current) return
+    const sectionTop = sectionRef.current.offsetTop
+    const scrollableDistance = sectionRef.current.offsetHeight - window.innerHeight
+    const targets = [0.08, 0.38, 0.65, 0.92]
+    const targetY = sectionTop + targets[index] * scrollableDistance
+    window.scrollTo({ top: targetY, behavior: 'smooth' })
+  }
+
+  // Pre-bundle styles for each card with explicit zIndex
+  const cardMotionStyles = [
+    {
+      style: shouldReduceMotion ? {} : { x: x0, rotate: rotate0, opacity: opacity0 },
+      zIndex: 40,
+      pointerEvents: activeCard === 0 ? 'auto' : 'none',
+    },
+    {
+      style: shouldReduceMotion ? {} : { x: x1, rotate: rotate1, scale: scale1, y: y1, opacity: opacity1 },
+      zIndex: 30,
+      pointerEvents: activeCard === 1 ? 'auto' : 'none',
+    },
+    {
+      style: shouldReduceMotion ? {} : { x: x2, rotate: rotate2, scale: scale2, y: y2, opacity: opacity2 },
+      zIndex: 20,
+      pointerEvents: activeCard === 2 ? 'auto' : 'none',
+    },
+    {
+      style: shouldReduceMotion ? {} : { scale: scale3, y: y3, opacity: opacity3 },
+      zIndex: 10,
+      pointerEvents: activeCard === 3 ? 'auto' : 'none',
+    },
+  ]
 
   return (
-    <section 
-      id="about" 
-      className="relative z-10 w-full pt-12 sm:pt-16 lg:pt-20 pb-14 sm:pb-18 lg:pb-24 overflow-hidden bg-white border-y border-[#F3ECE4]/80 shadow-[0_2px_16px_rgba(0,0,0,0.015)] selection:bg-[#E4521B]/20 selection:text-[#E4521B]"
+    <section
+      ref={sectionRef}
+      id="about"
+      className="relative w-full bg-white selection:bg-[#E4521B]/20 selection:text-[#E4521B] h-[320vh]"
       aria-labelledby="what-is-kodetomates-heading"
     >
-      {/* ========================================================
-          BACKGROUND CORNER ORNAMENTS (EXACT REFERENCE PARITY)
-         ======================================================== */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-        {/* TOP-LEFT: Exact Organic Fluid Sunset Wave Droplet Blob */}
-        <div className="absolute top-0 left-0 w-[200px] sm:w-[260px] md:w-[300px] h-[160px] sm:h-[200px] md:h-[230px] pointer-events-none select-none z-0">
-          <svg
-            viewBox="0 0 260 200"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-full h-full"
-          >
-            <defs>
-              <linearGradient id="whatIsTopLeftFluidBlob" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#FF4A7A" />
-                <stop offset="30%" stopColor="#FF6024" />
-                <stop offset="70%" stopColor="#FF7A36" />
-                <stop offset="100%" stopColor="#FFA665" />
-              </linearGradient>
-            </defs>
-            <path
-              d="M 0 0 L 220 0 C 190 20, 160 40, 130 60 C 80 90, 45 130, 20 170 C 8 188, 0 196, 0 200 Z"
-              fill="url(#whatIsTopLeftFluidBlob)"
-            />
-          </svg>
-        </div>
-        {/* Sparkle star near top-left */}
-        <div className="absolute top-8 sm:top-10 left-10 sm:left-14 text-[#E4521B]">
-          <SparkleStar className="w-5 h-5 sm:w-5.5 sm:h-5.5" />
-        </div>
+      {/* Pinned Viewport Container (stays sticky on screen while user scrolls through all cards) */}
+      <div className="sticky top-0 h-screen w-full flex items-center overflow-hidden bg-white z-10">
+        <div className="relative w-full max-w-[1380px] mx-auto px-6 sm:px-8 lg:px-10 xl:px-12 h-full flex flex-col justify-center">
 
-        {/* BOTTOM-LEFT: Soft Peach Wave Wash */}
-        <div className="absolute bottom-0 left-0 w-[240px] sm:w-[320px] h-[160px] sm:h-[220px] pointer-events-none select-none z-0">
-          <svg
-            viewBox="0 0 320 220"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-full h-full"
-          >
-            <defs>
-              <linearGradient id="whatIsBottomLeftGrad" x1="0%" y1="100%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#FF8F4D" stopOpacity="0.45" />
-                <stop offset="50%" stopColor="#FED7AA" stopOpacity="0.25" />
-                <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
-              </linearGradient>
-            </defs>
-            <path
-              d="M 0 220 L 0 100 C 60 100, 140 140, 200 175 C 260 210, 290 215, 320 220 Z"
-              fill="url(#whatIsBottomLeftGrad)"
-            />
-          </svg>
-        </div>
+          {/* Main 2-Column Balanced Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-center w-full">
 
-        {/* BOTTOM-RIGHT: Luminous Sunset-Berry Gradient Wave + Sparkle Star */}
-        <div className="absolute bottom-0 right-0 w-[260px] sm:w-[360px] h-[180px] sm:h-[240px] pointer-events-none select-none z-0">
-          <svg
-            viewBox="0 0 360 240"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-full h-full"
-          >
-            <defs>
-              <linearGradient id="whatIsBottomRightGrad" x1="100%" y1="100%" x2="0%" y2="0%">
-                <stop offset="0%" stopColor="#FF4A7A" stopOpacity="0.8" />
-                <stop offset="42%" stopColor="#FF7A3D" stopOpacity="0.6" />
-                <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
-              </linearGradient>
-            </defs>
-            <path
-              d="M 360 240 L 160 240 C 210 190, 270 160, 310 120 C 335 95, 350 60, 360 40 Z"
-              fill="url(#whatIsBottomRightGrad)"
-            />
-          </svg>
-          <div className="absolute bottom-8 sm:bottom-10 right-14 sm:right-20 text-[#E4521B]">
-            <SparkleStar className="w-5 h-5 sm:w-6 sm:h-6" />
-          </div>
-        </div>
-      </div>
+            {/* ========================================================
+                LEFT COLUMN: Sticky Editorial Heading, Copy, & Navigation
+               ======================================================== */}
+            <div className="lg:col-span-6 flex flex-col items-start text-left z-20">
 
-      <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 z-10">
-        {/* ========================================================
-            MAIN EDITORIAL GRID: 2 COLUMNS (Text & Icons Left, Visual Right)
-           ======================================================== */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-          
-          {/* LEFT COLUMN: Editorial Typography, Copy, Button, & Icons Below Button */}
-          <div className="lg:col-span-7 flex flex-col items-start text-left">
-            {/* Eyebrow: Dual-square icon + WHAT IS KodeToMates? */}
-            <motion.div
-              initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-              className="inline-flex items-center gap-2.5 mb-3 select-none cursor-default"
-            >
-              <span className="flex items-center justify-center shrink-0">
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  className="w-4.5 h-4.5 shrink-0"
-                  aria-hidden="true"
-                >
-                  <rect x="2" y="2" width="7.5" height="7.5" rx="1.5" fill="#FF914D" fillOpacity="0.45" />
-                  <rect x="6.5" y="6.5" width="7.5" height="7.5" rx="1.5" fill="#E4521B" />
-                </svg>
-              </span>
-              <span className="font-sans font-bold text-[12px] sm:text-[13px] tracking-[0.16em] text-[#C2410C] uppercase">
-                WHAT IS KodeToMates?
-              </span>
-            </motion.div>
-
-            {/* Main Headline: Line 1 Bold Charcoal, Line 2 Bold Sunset Berry Gradient (No Italic, matching all sections) */}
-            <motion.h2
-              id="what-is-kodetomates-heading"
-              initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.65, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-              className="font-serif text-[clamp(2.4rem,4.2vw,3.8rem)] font-bold text-[#111827] leading-[1.12] tracking-tight mb-2.5"
-            >
-              <div>More than learning.</div>
-              <div className="mt-1">
-                <span className="bg-gradient-to-r from-[#FF914D] to-[#AB003E] bg-clip-text text-transparent">
-                  More than building.
+              {/* Eyebrow: Brand Dual Square + Category Tag */}
+              <div className="inline-flex items-center gap-2.5 mb-3.5 select-none">
+                <span className="flex items-center justify-center shrink-0">
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    className="w-4.5 h-4.5 shrink-0"
+                    aria-hidden="true"
+                  >
+                    <rect x="2" y="2" width="7.5" height="7.5" rx="1.5" fill="#FF914D" fillOpacity="0.45" />
+                    <rect x="6.5" y="6.5" width="7.5" height="7.5" rx="1.5" fill="#E4521B" />
+                  </svg>
+                </span>
+                <span className="font-sans font-bold text-[12px] sm:text-[13px] tracking-[0.16em] text-[#E4521B] uppercase">
+                  WHAT IS KodeToMates?
                 </span>
               </div>
-            </motion.h2>
 
-            {/* Signature Decorative Down Line with Square Dot (━━━━ ▪) matching all sections */}
-            <motion.div
-              initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, scaleX: 0 }}
-              whileInView={{ opacity: 1, scaleX: 1 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.5, delay: 0.15 }}
-              className="flex items-center gap-2 my-3.5 sm:my-4 origin-left"
-              aria-hidden="true"
-            >
-              <span className="w-12 sm:w-14 h-[3.5px] rounded-[1px] bg-gradient-to-r from-[#FF914D] to-[#AB003E]" />
-              <span className="w-[3.5px] h-[3.5px] rounded-[1px] bg-[#AB003E]" />
-            </motion.div>
+              {/* Main Headline (Strictly 2 lines in UI) */}
+              <h2
+                id="what-is-kodetomates-heading"
+                className="font-sans font-bold text-[clamp(26px,2.8vw,48px)] xl:text-[clamp(32px,3.1vw,52px)] leading-[1.08] tracking-[-0.035em] text-[#111827] mb-4"
+              >
+                <span className="block whitespace-nowrap">
+                  More than learning<span className="text-[#E4521B]">.</span>
+                </span>
+                <span className="block whitespace-nowrap text-[#111827]/90 mt-1 sm:mt-1.5">
+                  More than building<span className="text-[#E4521B]">.</span>
+                </span>
+              </h2>
 
-            {/* Description Paragraph */}
-            <motion.p
-              initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 14 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.65, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
-              className="font-sans text-[15px] sm:text-[16px] leading-[1.65] text-[#554E48] font-normal max-w-xl mb-6 sm:mb-7"
-            >
-              We bring learning, building and collaboration into one environment so technology becomes something you practice, share and create — not something you only study.
-            </motion.p>
+              {/* Signature Accent Line */}
+              <div className="flex items-center gap-2 my-2.5 origin-left" aria-hidden="true">
+                <span className="w-12 h-[3.5px] rounded-full bg-[#E4521B]" />
+                <span className="w-2 h-[3.5px] rounded-full bg-[#E4521B]/40" />
+              </div>
 
-            {/* CTA Button: Explore Our Community → */}
-            <motion.div
-              initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 14 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.65, delay: 0.22 }}
-              className="mb-7 sm:mb-8"
-            >
+              {/* Description Paragraphs: Rich Mission & Practical Context */}
+              <div className="space-y-3 font-sans text-[14.5px] sm:text-[15.5px] leading-[1.68] text-[#554E48] font-normal max-w-xl mb-6">
+                <p>
+                  KodeToMates is an open ecosystem designed for developers, builders, and creative technologists who want to break beyond passive tutorials. We bridge the critical gap between understanding syntax and shipping production-grade software.
+                </p>
+                <p className="text-[#665F58] text-[13.5px] sm:text-[14.5px]">
+                  Here, learning is active, multiplayer, and driven by execution. Members collaborate on real GitHub repositories, participate in pair-coding sprints, exchange candid peer code reviews, and build verifiable public proof-of-work that unlocks high-impact engineering careers.
+                </p>
+              </div>
+
+              {/* 4 Core Community Highlights with Official Icons */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 w-full max-w-lg mb-6 select-none">
+                {/* 1. Real GitHub Repositories & PRs */}
+                <div className="flex items-center gap-2.5 text-xs sm:text-[13px] font-sans font-medium text-[#292524] bg-[#FAF8F5] border border-[#EFEAE0] hover:border-[#E4521B]/40 px-3 py-2 rounded-xl transition-colors">
+                  <span className="w-5 h-5 rounded-lg bg-[#FFF2EB] flex items-center justify-center shrink-0">
+                    <GitPullRequest className="w-3.5 h-3.5 text-[#E4521B]" />
+                  </span>
+                  <span>Real GitHub Repositories & PRs</span>
+                </div>
+
+                {/* 2. Live Pair Coding & Sprints */}
+                <div className="flex items-center gap-2.5 text-xs sm:text-[13px] font-sans font-medium text-[#292524] bg-[#FAF8F5] border border-[#EFEAE0] hover:border-[#059669]/40 px-3 py-2 rounded-xl transition-colors">
+                  <span className="w-5 h-5 rounded-lg bg-[#ECFDF5] flex items-center justify-center shrink-0">
+                    <Code2 className="w-3.5 h-3.5 text-[#059669]" />
+                  </span>
+                  <span>Live Pair Coding & Sprints</span>
+                </div>
+
+                {/* 3. Senior Peer Code Reviews */}
+                <div className="flex items-center gap-2.5 text-xs sm:text-[13px] font-sans font-medium text-[#292524] bg-[#FAF8F5] border border-[#EFEAE0] hover:border-[#7C3AED]/40 px-3 py-2 rounded-xl transition-colors">
+                  <span className="w-5 h-5 rounded-lg bg-[#F5F3FF] flex items-center justify-center shrink-0">
+                    <MessageSquareCode className="w-3.5 h-3.5 text-[#7C3AED]" />
+                  </span>
+                  <span>Senior Peer Code Reviews</span>
+                </div>
+
+                {/* 4. Verifiable Career Proof-of-Work */}
+                <div className="flex items-center gap-2.5 text-xs sm:text-[13px] font-sans font-medium text-[#292524] bg-[#FAF8F5] border border-[#EFEAE0] hover:border-[#D97706]/40 px-3 py-2 rounded-xl transition-colors">
+                  <span className="w-5 h-5 rounded-lg bg-[#FFFBEB] flex items-center justify-center shrink-0">
+                    <BadgeCheck className="w-3.5 h-3.5 text-[#D97706]" />
+                  </span>
+                  <span>Verifiable Career Proof-of-Work</span>
+                </div>
+              </div>
+
+              {/* Pillar Switcher Navigation (Interactive Pills that update with scroll) */}
+              <div className="flex flex-wrap items-center gap-2 mb-6 select-none">
+                {PILLAR_CARDS.map((pillar, idx) => {
+                  const isActive = activeCard === idx
+                  return (
+                    <button
+                      key={pillar.id}
+                      onClick={() => scrollToCard(idx)}
+                      className={`px-3 sm:px-3.5 py-1.5 rounded-full text-xs sm:text-[13px] font-sans font-semibold transition-all duration-300 focus:outline-none flex items-center gap-1.5 ${isActive
+                          ? 'bg-[#141210] text-white shadow-md shadow-black/10 scale-105'
+                          : 'bg-[#F5F2EB] text-[#554E48] hover:bg-[#EBE6DC] hover:text-[#111827]'
+                        }`}
+                    >
+                      <span className={`text-[10px] font-mono ${isActive ? 'text-[#E4521B]' : 'text-[#888]'}`}>
+                        {pillar.number}
+                      </span>
+                      <span>{pillar.title.split(' ')[0]}</span>
+                    </button>
+                  )
+                })}
+              </div>
+
+              {/* Scroll Progress Bar & Counter */}
+              <div className="w-full max-w-[280px] mb-6">
+                <div className="flex items-center justify-between text-xs font-mono font-medium text-[#78716C] mb-2">
+                  <span className="text-[#E4521B] font-bold">
+                    CARD {PILLAR_CARDS[activeCard].number} / 04
+                  </span>
+                  <span className="text-[11px] text-[#A8A29E]">Scroll to explore →</span>
+                </div>
+                <div className="w-full h-1.5 bg-[#F0EBE3] rounded-full overflow-hidden">
+                  <motion.div
+                    style={{ width: progressWidth }}
+                    className="h-full bg-gradient-to-r from-[#E4521B] to-[#FF7A3D] rounded-full transition-all"
+                  />
+                </div>
+              </div>
+
+              {/* CTA Action Button */}
               <Link
                 href="/community"
-                className="group inline-flex items-center gap-2.5 px-6 sm:px-7 py-3.5 rounded-full bg-gradient-to-r from-[#FF662B] to-[#FF4D1A] text-white font-sans font-semibold text-[14.5px] shadow-[0_6px_22px_rgba(255,85,32,0.32)] hover:shadow-[0_8px_28px_rgba(255,85,32,0.45)] hover:-translate-y-0.5 transition-all duration-300 select-none"
+                className="group inline-flex items-center gap-2.5 px-6 sm:px-7 py-3.5 rounded-full bg-[#E4521B] hover:bg-[#141210] text-white font-sans font-semibold text-[14px] shadow-[0_8px_20px_rgba(228,82,27,0.25)] hover:shadow-[0_10px_24px_rgba(0,0,0,0.2)] transition-all duration-300 select-none"
               >
                 <span>Explore Our Community</span>
                 <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
-            </motion.div>
+            </div>
 
             {/* ========================================================
-                4 FEATURE PILLARS DIRECTLY DOWN BELOW THE BUTTON
-                (Matching exact reference image layout)
+                RIGHT COLUMN: Stack of Cards (Tight Gap with Left Context)
                ======================================================== */}
-            <motion.div
-              initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.65, delay: 0.26 }}
-              className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-3.5 lg:gap-4 w-full pt-1"
-            >
-              {FEATURE_PILLARS.map((pillar) => {
-                const Icon = pillar.icon
-                return (
-                  <div key={pillar.title} className="flex items-start sm:items-center gap-2.5 py-1">
-                    {/* Icon Squircle */}
-                    <span className={`w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-[10px] ${pillar.squircleBg} flex items-center justify-center shrink-0`}>
-                      <Icon className={`w-4 h-4 sm:w-4.5 sm:h-4.5 ${pillar.iconColor} stroke-[2.2]`} />
-                    </span>
+            <div className="lg:col-span-6 relative w-full flex items-center justify-center lg:justify-start py-4 sm:py-6">
 
-                    {/* Title & Subtitle */}
-                    <div className="flex flex-col min-w-0">
-                      <span className="font-sans font-bold text-[13px] sm:text-[13.5px] text-[#111827] leading-tight">
-                        {pillar.title}
-                      </span>
-                      <span className="font-sans text-[10.5px] sm:text-[11px] text-[#78716C] leading-tight mt-0.5 truncate">
-                        {pillar.subtitle}
-                      </span>
-                    </div>
-                  </div>
-                )
-              })}
-            </motion.div>
+              {/* Stack Stage: Fixed frame holding all layered cards */}
+              <div className="relative w-full max-w-[520px] xl:max-w-[560px] h-[520px] sm:h-[560px] lg:h-[580px]">
+                {PILLAR_CARDS.map((card, idx) => {
+                  const isActive = activeCard === idx
+                  const motionConfig = cardMotionStyles[idx]
+
+                  return (
+                    <motion.div
+                      key={card.id}
+                      style={{
+                        ...motionConfig.style,
+                        zIndex: motionConfig.zIndex,
+                        pointerEvents: motionConfig.pointerEvents as any,
+                      }}
+                      className="absolute inset-0 w-full h-full rounded-[28px] sm:rounded-[32px] bg-white border border-[#E8E4DC] shadow-[0_20px_50px_rgba(0,0,0,0.08)] p-5 sm:p-6 flex flex-col justify-between overflow-hidden group select-none origin-bottom-left will-change-transform"
+                      data-index={idx}
+                    >
+                      {/* Top Section: High-Res Photo with Badges */}
+                      <div className="relative w-full aspect-[16/10] rounded-[20px] sm:rounded-[24px] overflow-hidden mb-4 sm:mb-5 bg-[#FAF7F2] shrink-0">
+                        <Image
+                          src={card.image}
+                          alt={card.title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 580px"
+                          className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                          priority={idx < 2}
+                        />
+
+                        {/* Top Gradient Overlay for Badge Contrast */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/25 pointer-events-none" />
+
+                        {/* Floating Pillar Tag Badge (Top Left) */}
+
+                        {/* Floating Stat Badge (Top Right) */}
+                        <div className="absolute top-3.5 right-3.5 sm:top-4 sm:right-4 z-10 px-2.5 sm:px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-white text-[11px] sm:text-xs font-sans font-medium">
+                          {card.stat}
+                        </div>
+
+                        {/* Bottom Title on Image */}
+                        <div className="absolute bottom-3.5 left-4 right-4 z-10 text-white">
+                          <h3 className="font-sans font-bold text-2xl sm:text-[28px] leading-[1.04] tracking-[-0.035em] drop-shadow-md">
+                            {card.title}
+                            <span className="text-[#E4521B]">.</span>
+                          </h3>
+                        </div>
+                      </div>
+
+                      {/* Middle Section: Headline & Description */}
+                      <div className="flex-1 flex flex-col justify-between">
+                        <div>
+                          <p className="font-sans font-bold text-[15px] sm:text-[17px] text-[#111827] leading-snug tracking-[-0.025em] mb-2">
+                            {card.headline}
+                          </p>
+                          <p className="font-sans text-[13px] sm:text-[14px] leading-relaxed text-[#554E48] line-clamp-3">
+                            {card.description}
+                          </p>
+                        </div>
+
+                        {/* Bottom Feature Tags */}
+                        <div className="pt-3 border-t border-[#F2EEE6] mt-3">
+                          <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                            {card.tags.map((tag) => (
+                              <span
+                                key={tag}
+                                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#F8F5EE] border border-[#EFEAE0] text-[11px] sm:text-xs font-sans font-medium text-[#4A4540]"
+                              >
+                                <CheckCircle2
+                                  className="w-3 h-3 shrink-0"
+                                  style={{ color: card.accentColor }}
+                                />
+                                <span>{tag}</span>
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                    </motion.div>
+                  )
+                })}
+              </div>
+
+            </div>
+
           </div>
 
-          {/* RIGHT COLUMN: Trending Showcase with community-sticky-notes.jpg */}
-          <motion.div
-            initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, scale: 0.96 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.75, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-5 relative flex items-center justify-center lg:justify-end w-full select-none mt-6 lg:mt-0"
-          >
-            {/* Ambient Warm Gradient Glow Behind Card */}
-            <div 
-              className="absolute -inset-4 sm:-inset-6 bg-gradient-to-tr from-[#FF7A3D]/25 via-[#FFA665]/20 to-[#FF4A7A]/20 rounded-[44px] blur-2xl opacity-75 pointer-events-none" 
-              aria-hidden="true" 
-            />
-
-            {/* Floating Trending Badge Top-Left */}
-            <motion.div
-              initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 12, scale: 0.92 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.25 }}
-              className="absolute -top-3.5 left-4 sm:-top-5 sm:left-6 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-2xl bg-white/95 backdrop-blur-md shadow-[0_12px_30px_rgba(0,0,0,0.12)] border border-white/80 flex items-center gap-2.5 z-20 pointer-events-none select-none"
-            >
-              <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-[#EFF6FF] flex items-center justify-center text-[#3B82F6]">
-                <Sparkles className="w-4 h-4 text-[#FF7A3D]" />
-              </span>
-              <div className="flex flex-col">
-                <span className="font-sans font-bold text-[12px] sm:text-[13px] text-[#111827] leading-tight">Learn & Build</span>
-                <span className="font-sans text-[10px] sm:text-[10.5px] text-[#6B7280] leading-tight mt-0.5">Hands-on practice</span>
-              </div>
-            </motion.div>
-
-            {/* Floating Trending Badge Bottom-Right */}
-            <motion.div
-              initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: -12, scale: 0.92 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.35 }}
-              className="absolute -bottom-3.5 right-4 sm:-bottom-5 sm:right-6 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-2xl bg-white/95 backdrop-blur-md shadow-[0_14px_34px_rgba(228,82,27,0.18)] border border-white/80 flex items-center gap-2.5 z-20 pointer-events-none select-none"
-            >
-              <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-gradient-to-tr from-[#FF662B] to-[#FF4D1A] flex items-center justify-center text-white shadow-sm shadow-[#FF5520]/40">
-                <Code2 className="w-4 h-4" />
-              </span>
-              <div className="flex flex-col">
-                <span className="font-sans font-bold text-[12px] sm:text-[13px] text-[#111827] leading-tight">Real Products</span>
-                <span className="font-sans text-[10px] sm:text-[10.5px] text-[#E4521B] font-semibold leading-tight mt-0.5">Built by community</span>
-              </div>
-            </motion.div>
-
-            {/* Master Showcase Frame with Gradient Border & Soft Squircle Curvature */}
-            <div className="relative w-full max-w-[500px] p-2 sm:p-2.5 rounded-[30px] sm:rounded-[36px] bg-gradient-to-b from-white/90 via-white/50 to-white/20 backdrop-blur-md border border-white/80 shadow-[0_22px_55px_-12px_rgba(228,82,27,0.14)] overflow-hidden">
-              <div className="relative w-full aspect-[16/11] rounded-[22px] sm:rounded-[28px] overflow-hidden bg-[#FEF6EC]">
-                <Image
-                  src="/images/projects/community-sticky-notes.jpg"
-                  alt="KodeToMates Community Sticky Notes Collaboration"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover object-center pointer-events-none select-none transition-transform duration-700 hover:scale-105"
-                  priority
-                />
-                
-                {/* Subtle Cinematic Vignette / Depth Gradient */}
-                <div 
-                  className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-black/10 pointer-events-none" 
-                  aria-hidden="true" 
-                />
-              </div>
-            </div>
-          </motion.div>
         </div>
       </div>
     </section>

@@ -1,6 +1,7 @@
 import { Inter, Instrument_Serif, Outfit, Fraunces, Plus_Jakarta_Sans, Playfair_Display, Space_Grotesk, Caveat } from 'next/font/google'
 import './globals.css'
 import { SiteLayout } from '@/components/layout/SiteLayout'
+import { SmoothScrollProvider } from '@/components/providers/SmoothScrollProvider'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const instrument = Instrument_Serif({ 
@@ -46,9 +47,11 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${inter.variable} ${instrument.variable} ${outfit.variable} ${fraunces.variable} ${jakarta.variable} ${playfair.variable} ${spaceGrotesk.variable} ${caveat.variable}`}>
-      <body className="font-sans bg-background-sand text-text-primary antialiased">
-        <SiteLayout>{children}</SiteLayout>
+      <body suppressHydrationWarning className="font-sans bg-background-sand text-text-primary antialiased">
+        <SmoothScrollProvider>
+          <SiteLayout>{children}</SiteLayout>
+        </SmoothScrollProvider>
       </body>
     </html>
-  )
+  )   
 }

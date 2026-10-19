@@ -168,54 +168,9 @@ export function WhatWeDo() {
   return (
     <section
       id="what-we-do"
-      className="relative z-10 w-full pt-16 md:pt-20 lg:pt-24 pb-20 md:pb-28 overflow-hidden scroll-mt-28 bg-gradient-to-b from-[#FEF5EB] via-[#FDF0E2] to-[#FEF5EB] selection:bg-[#E4521B]/20 selection:text-[#E4521B]"
+      className="relative z-10 w-full pt-16 md:pt-20 lg:pt-24 pb-20 md:pb-28 overflow-hidden scroll-mt-28 bg-[#FEF5EB] selection:bg-[#E4521B]/20 selection:text-[#E4521B]"
       aria-labelledby="what-we-do-heading"
     >
-      {/* ========================================================
-          CORNER EFFECTS (CIRCLED IN USER REFERENCE SCREENSHOT)
-         ======================================================== */}
-      {/* --- TOP-RIGHT CORNER: Layered organic peach wave blobs + contour line --- */}
-      <div className="absolute top-0 right-0 w-[300px] sm:w-[420px] lg:w-[500px] h-[280px] sm:h-[360px] lg:h-[420px] pointer-events-none select-none z-0 overflow-hidden">
-        <svg
-          viewBox="0 0 500 420"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-full h-full"
-          preserveAspectRatio="none"
-        >
-          <defs>
-            <linearGradient id="topRightBlobGrad1" x1="500" y1="0" x2="220" y2="380" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stopColor="#FFA474" stopOpacity="0.45" />
-              <stop offset="55%" stopColor="#FED7AA" stopOpacity="0.32" />
-              <stop offset="100%" stopColor="#FFF1E6" stopOpacity="0" />
-            </linearGradient>
-            <linearGradient id="topRightBlobGrad2" x1="500" y1="30" x2="280" y2="300" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stopColor="#FF8550" stopOpacity="0.35" />
-              <stop offset="100%" stopColor="#FED7AA" stopOpacity="0.05" />
-            </linearGradient>
-          </defs>
-          {/* Base organic fluid blob */}
-          <path
-            d="M 500 0 L 240 0 C 255 100, 290 190, 365 240 C 425 285, 465 330, 500 380 Z"
-            fill="url(#topRightBlobGrad1)"
-          />
-          {/* Secondary inner wave */}
-          <path
-            d="M 500 0 L 320 0 C 330 80, 360 145, 420 185 C 460 215, 485 245, 500 290 Z"
-            fill="url(#topRightBlobGrad2)"
-          />
-          {/* Delicate contour line sweeping across the wave */}
-          <path
-            d="M 220 0 C 245 130, 320 245, 415 295 C 455 320, 480 340, 500 370"
-            stroke="#E4521B"
-            strokeWidth="1.8"
-            strokeOpacity="0.45"
-            fill="none"
-          />
-        </svg>
-      </div>
-
-
       <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 z-10">
         
         {/* Section Header */}

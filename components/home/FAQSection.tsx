@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 
 interface FAQItem {
@@ -76,74 +76,15 @@ export function FAQSection() {
   return (
     <section
       id="faq"
-      className="relative z-10 w-full py-20 sm:py-24 lg:py-28 overflow-hidden bg-white border-t border-[#F3ECE4]/80 shadow-[0_2px_16px_rgba(0,0,0,0.015)] selection:bg-[#E4521B]/20 selection:text-[#E4521B]"
+      className="relative z-10 w-full min-h-screen min-h-[100svh] flex flex-col justify-center py-12 sm:py-16 lg:py-20 overflow-visible overflow-x-clip scroll-mt-28 bg-white border-t border-[#F3ECE4]/80 shadow-[0_2px_16px_rgba(0,0,0,0.015)] selection:bg-[#E4521B]/20 selection:text-[#E4521B]"
       aria-labelledby="faq-heading"
     >
-      {/* ========================================================
-          BACKGROUND CORNER FLUID WAVES (SOFT ORGANIC GRADIENTS)
-         ======================================================== */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden select-none z-0" aria-hidden="true">
-        {/* TOP-LEFT: Fluid Sunset Orange Wave */}
-        <motion.div
-          animate={shouldReduceMotion ? {} : { x: [0, 5, 0], y: [0, 4, 0] }}
-          transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute top-0 left-0 w-[260px] sm:w-[340px] md:w-[420px] lg:w-[460px] h-[200px] sm:h-[260px] md:h-[310px]"
-        >
-          <svg
-            viewBox="0 0 460 310"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-full h-full"
-            preserveAspectRatio="none"
-          >
-            <defs>
-              <linearGradient id="faqTopLeftWaveGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#FF7A32" stopOpacity="0.85" />
-                <stop offset="40%" stopColor="#FFA25E" stopOpacity="0.6" />
-                <stop offset="75%" stopColor="#FED7AA" stopOpacity="0.22" />
-                <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
-              </linearGradient>
-            </defs>
-            <path
-              d="M 0 0 L 290 0 C 270 80, 230 145, 160 200 C 95 245, 45 275, 0 310 Z"
-              fill="url(#faqTopLeftWaveGrad)"
-            />
-          </svg>
-        </motion.div>
-
-        {/* BOTTOM-RIGHT: Fluid Sunset Rose/Amber Wave */}
-        <motion.div
-          animate={shouldReduceMotion ? {} : { x: [0, -5, 0], y: [0, -4, 0] }}
-          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute bottom-0 right-0 w-[280px] sm:w-[380px] md:w-[460px] lg:w-[500px] h-[220px] sm:h-[280px] md:h-[330px]"
-        >
-          <svg
-            viewBox="0 0 500 330"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-full h-full"
-            preserveAspectRatio="none"
-          >
-            <defs>
-              <linearGradient id="faqBottomRightWaveGrad" x1="100%" y1="100%" x2="0%" y2="0%">
-                <stop offset="0%" stopColor="#FF6628" stopOpacity="0.85" />
-                <stop offset="40%" stopColor="#FF8550" stopOpacity="0.6" />
-                <stop offset="75%" stopColor="#FED7AA" stopOpacity="0.22" />
-                <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
-              </linearGradient>
-            </defs>
-            <path
-              d="M 500 330 L 190 330 C 260 250, 360 195, 425 125 C 460 88, 485 45, 500 0 Z"
-              fill="url(#faqBottomRightWaveGrad)"
-            />
-          </svg>
-        </motion.div>
-      </div>
-
-      {/* ========================================================
-          CENTERED SECTION HEADER (MATCHING REFERENCE EXACTLY)
-         ======================================================== */}
-      <div className="relative max-w-4xl mx-auto px-6 sm:px-8 text-center z-10 flex flex-col items-center mb-12 sm:mb-16">
+      {/* Main unified container centered in 100vh */}
+      <div className="relative w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 z-10 my-auto">
+        {/* ========================================================
+            CENTERED SECTION HEADER (MATCHING REFERENCE EXACTLY)
+           ======================================================== */}
+        <div className="relative max-w-4xl mx-auto text-center flex flex-col items-center mb-8 sm:mb-10">
         {/* Top Annotation: Quick Answers with curved arrows */}
         <motion.div
           initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 10 }}
@@ -249,20 +190,21 @@ export function FAQSection() {
       {/* ========================================================
           TWO-COLUMN MAIN CONTENT: VISUAL ON LEFT, ACCORDION ON RIGHT
          ======================================================== */}
-      <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-          {/* Left Column: User Provided Authentic KodeToMates Desk Visual */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+        {/* Left Column: Sticky Desk Visual (pinned to top during FAQ scroll) */}
+        <div className="lg:col-span-5 lg:sticky lg:top-28 xl:top-32 self-start z-10">
           <motion.div
             initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-5 flex items-center justify-center"
+            className="w-full flex items-center justify-center"
           >
             <div className="relative w-full max-w-[500px] lg:max-w-none">
               {/* Soft Ambient Warm Glow Behind Card */}
               <div 
-                className="absolute -inset-4 sm:-inset-6 bg-gradient-to-tr from-[#FF7A3D]/20 via-[#FFA665]/15 to-[#FF4A7A]/10 rounded-[40px] blur-2xl opacity-75 pointer-events-none" 
+                className="absolute -inset-4 sm:-inset-6 bg-gradient-to-tr from-[#FF7A3D]/20 via-[#FFA665]/15 to-[#FF4A7A]/10 rounded-[40px] blur-2xl opacity-75 pointer-events-none transform-gpu" 
+                style={{ transform: 'translateZ(0)' }}
                 aria-hidden="true" 
               />
 
@@ -279,6 +221,7 @@ export function FAQSection() {
               </div>
             </div>
           </motion.div>
+        </div>
 
           {/* Right Column: 7 Accordion Items */}
           <motion.div
@@ -293,7 +236,7 @@ export function FAQSection() {
               return (
                 <div
                   key={item.id}
-                  className={`rounded-2xl transition-all duration-300 overflow-hidden ${
+                  className={`rounded-2xl transition-[background-color,border-color,box-shadow] duration-200 overflow-hidden ${
                     isOpen
                       ? 'bg-[#FFF6ED] border border-[#FDE3CA] shadow-[0_6px_20px_rgba(255,107,38,0.08)]'
                       : 'bg-[#FAF7F2] hover:bg-[#F4EFE6] border border-[#ECE5DB] shadow-[0_2px_8px_rgba(26,24,23,0.02)]'
@@ -327,7 +270,7 @@ export function FAQSection() {
 
                     {/* Chevron Icon */}
                     <span
-                      className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 ${
+                      className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center shrink-0 transition-[transform,background-color,color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
                         isOpen
                           ? 'text-[#E4521B] rotate-180 bg-[#FF914D]/10'
                           : 'text-[#8C847C] rotate-0'
@@ -337,27 +280,28 @@ export function FAQSection() {
                     </span>
                   </button>
 
-                  {/* Accordion Answer Content */}
-                  <AnimatePresence initial={false}>
-                    {isOpen && (
-                      <motion.div
-                        id={`${item.id}-answer`}
-                        role="region"
-                        aria-labelledby={`${item.id}-question`}
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                        className="overflow-hidden"
-                      >
-                        <div className="px-5 pb-5 pt-1 pl-15 sm:pl-17 pr-6">
-                          <p className="font-sans text-xs sm:text-[14px] text-[#554E48] leading-relaxed">
-                            {item.answer}
-                          </p>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                  {/* Accordion Answer Content: Pure CSS Grid 0fr -> 1fr animation */}
+                  <div
+                    id={`${item.id}-answer`}
+                    role="region"
+                    aria-labelledby={`${item.id}-question`}
+                    style={{
+                      display: 'grid',
+                      gridTemplateRows: isOpen ? '1fr' : '0fr',
+                      transition: shouldReduceMotion
+                        ? 'none'
+                        : 'grid-template-rows 280ms cubic-bezier(0.16, 1, 0.3, 1), opacity 240ms ease',
+                      opacity: isOpen ? 1 : 0,
+                    }}
+                  >
+                    <div className="overflow-hidden">
+                      <div className="px-5 pb-5 pt-1 pl-15 sm:pl-17 pr-6">
+                        <p className="font-sans text-xs sm:text-[14px] text-[#554E48] leading-relaxed">
+                          {item.answer}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               )
             })}
