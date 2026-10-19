@@ -74,25 +74,6 @@ const RESOURCES_DATA: ResourceItem[] = [
   },
 ]
 
-// 4-point sparkle star matching brand ornament
-function SparkleStar({ className = '' }: { className?: string }) {
-  return (
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill="none"
-      className={className}
-      aria-hidden="true"
-    >
-      <path
-        d="M12 0C12 6.627 6.627 12 0 12C6.627 12 12 17.373 12 24C12 17.373 17.373 12 24 12C17.373 12 12 6.627 12 0Z"
-        fill="currentColor"
-      />
-    </svg>
-  )
-}
-
 const RESOURCE_TABS = ['All Resources', 'Engineering Notes', 'Practical Guides', 'AI & Systems']
 
 export function ResourcesSection() {

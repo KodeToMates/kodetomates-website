@@ -1,10 +1,7 @@
 'use client'
 
 import React from 'react'
-import { motion, useReducedMotion } from 'framer-motion'
-
 export function FloatingBackground() {
-  const shouldReduceMotion = useReducedMotion()
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none select-none z-0" aria-hidden="true">

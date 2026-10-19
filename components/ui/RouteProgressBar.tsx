@@ -1,8 +1,8 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { usePathname } from 'next/navigation'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 /**
  * Unique Top Route Progress Bar for KodeToMates
@@ -12,18 +12,27 @@ export function RouteProgressBar() {
   const pathname = usePathname()
   const [isNavigating, setIsNavigating] = useState(false)
   const [progress, setProgress] = useState(0)
+  const prevPathnameRef = useRef(pathname)
 
   // Complete and reset progress bar on pathname change
   useEffect(() => {
-    if (isNavigating) {
-      setProgress(100)
-      const timeout = setTimeout(() => {
-        setIsNavigating(false)
-        setProgress(0)
-      }, 350)
-      return () => clearTimeout(timeout)
+    if (prevPathnameRef.current !== pathname) {
+      prevPathnameRef.current = pathname
+      if (isNavigating) {
+        const completeTimer = setTimeout(() => {
+          setProgress(100)
+        }, 0)
+        const resetTimer = setTimeout(() => {
+          setIsNavigating(false)
+          setProgress(0)
+        }, 350)
+        return () => {
+          clearTimeout(completeTimer)
+          clearTimeout(resetTimer)
+        }
+      }
     }
-  }, [pathname])
+  }, [pathname, isNavigating])
 
   // Listen to internal link clicks to trigger route progress immediately
   useEffect(() => {

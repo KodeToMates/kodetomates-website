@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion, useScroll, useTransform, useMotionValueEvent, useReducedMotion } from 'framer-motion'
@@ -138,22 +138,22 @@ export function WhatIsKodeToMates() {
     {
       style: shouldReduceMotion ? {} : { x: x0, rotate: rotate0, opacity: opacity0 },
       zIndex: 40,
-      pointerEvents: activeCard === 0 ? 'auto' : 'none',
+      pointerEvents: activeCard === 0 ? ('auto' as const) : ('none' as const),
     },
     {
       style: shouldReduceMotion ? {} : { x: x1, rotate: rotate1, scale: scale1, y: y1, opacity: opacity1 },
       zIndex: 30,
-      pointerEvents: activeCard === 1 ? 'auto' : 'none',
+      pointerEvents: activeCard === 1 ? ('auto' as const) : ('none' as const),
     },
     {
       style: shouldReduceMotion ? {} : { x: x2, rotate: rotate2, scale: scale2, y: y2, opacity: opacity2 },
       zIndex: 20,
-      pointerEvents: activeCard === 2 ? 'auto' : 'none',
+      pointerEvents: activeCard === 2 ? ('auto' as const) : ('none' as const),
     },
     {
       style: shouldReduceMotion ? {} : { scale: scale3, y: y3, opacity: opacity3 },
       zIndex: 10,
-      pointerEvents: activeCard === 3 ? 'auto' : 'none',
+      pointerEvents: activeCard === 3 ? ('auto' as const) : ('none' as const),
     },
   ]
 
@@ -316,7 +316,6 @@ export function WhatIsKodeToMates() {
               {/* Stack Stage: Fixed frame holding all layered cards */}
               <div className="relative w-full max-w-[520px] xl:max-w-[560px] h-[520px] sm:h-[560px] lg:h-[580px]">
                 {PILLAR_CARDS.map((card, idx) => {
-                  const isActive = activeCard === idx
                   const motionConfig = cardMotionStyles[idx]
 
                   return (
@@ -325,7 +324,7 @@ export function WhatIsKodeToMates() {
                       style={{
                         ...motionConfig.style,
                         zIndex: motionConfig.zIndex,
-                        pointerEvents: motionConfig.pointerEvents as any,
+                        pointerEvents: motionConfig.pointerEvents,
                       }}
                       className="absolute inset-0 w-full h-full rounded-[28px] sm:rounded-[32px] bg-white border border-[#E8E4DC] shadow-[0_20px_50px_rgba(0,0,0,0.08)] p-5 sm:p-6 flex flex-col justify-between overflow-hidden group select-none origin-bottom-left will-change-transform"
                       data-index={idx}

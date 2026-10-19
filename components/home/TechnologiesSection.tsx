@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
-import { ArrowRight, Search, X, Sparkles, ExternalLink, CheckCircle2 } from 'lucide-react'
+import { ArrowRight, Search, X, Sparkles, CheckCircle2 } from 'lucide-react'
 
 // Definition of each technology item
 interface TechnologyItem {

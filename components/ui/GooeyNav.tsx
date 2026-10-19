@@ -280,6 +280,13 @@ export const GooeyNav: React.FC<GooeyNavProps> = ({
 }) => {
   const [innerIndex, setInnerIndex] = useState(initialActiveIndex)
   const [targetIndex, setTargetIndex] = useState<number | null>(null)
+  const [prevActiveIndex, setPrevActiveIndex] = useState(activeIndex)
+
+  if (prevActiveIndex !== activeIndex) {
+    setPrevActiveIndex(activeIndex)
+    setTargetIndex(null)
+  }
+
   const current = Math.min(Math.max(0, targetIndex ?? (activeIndex ?? innerIndex)), Math.max(0, items.length - 1))
   const stageRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -288,7 +295,6 @@ export const GooeyNav: React.FC<GooeyNavProps> = ({
   const fallbackRef = useRef<HTMLSpanElement>(null)
   const engineRef = useRef<{ go: (index: number) => void; refresh: () => void } | null>(null)
   const indexRef = useRef(current)
-  indexRef.current = current
 
   const palette = theme === 'dark' ? 'dark' : 'light'
   const pillColor = color || PILLS[palette].color
@@ -308,7 +314,11 @@ export const GooeyNav: React.FC<GooeyNavProps> = ({
     shadow: PILLS[palette].shadow,
   }
   const settingsRef = useRef(settings)
-  settingsRef.current = settings
+
+  useEffect(() => {
+    indexRef.current = current
+    settingsRef.current = settings
+  })
 
   const select = (index: number) => {
     if (index === current) return
@@ -836,10 +846,6 @@ export const GooeyNav: React.FC<GooeyNavProps> = ({
   }, [items.length])
 
   useEffect(() => {
-    setTargetIndex(null)
-  }, [activeIndex])
-
-  useEffect(() => {
     engineRef.current?.go(current)
   }, [current])
 
@@ -907,7 +913,7 @@ export const GooeyNav: React.FC<GooeyNavProps> = ({
         '--gn-pill': pillColor,
         '--gn-active-ink': textColor,
         ...style,
-      } as CSSProperties}
+      } as unknown as CSSProperties}
     >
       {frame && <span className="gooey-nav__rim" />}
       <div ref={stageRef} className="gooey-nav__stage">
