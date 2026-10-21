@@ -12,6 +12,7 @@ import {
   ArrowRight,
   CheckCircle2,
 } from 'lucide-react'
+import { SlitHeading } from '@/components/ui/SlitHeading'
 
 interface ServiceItem {
   id: string
@@ -144,61 +145,16 @@ export function WhatWeDo() {
         {/* Section Header: Centered Position */}
         <div className="flex flex-col items-center text-center mb-8 sm:mb-10">
 
-          {/* Eyebrow: Brand Dual Square + Category Tag */}
-          <motion.div
-            initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-            className="inline-flex items-center justify-center gap-2.5 mb-3.5 select-none"
-          >
-            <span className="flex items-center justify-center shrink-0">
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 16 16"
-                fill="none"
-                className="w-4.5 h-4.5 shrink-0"
-                aria-hidden="true"
-              >
-                <rect x="2" y="2" width="7.5" height="7.5" rx="1.5" fill="#FF914D" fillOpacity="0.45" />
-                <rect x="6.5" y="6.5" width="7.5" height="7.5" rx="1.5" fill="#E4521B" />
-              </svg>
-            </span>
-            <span className="font-sans font-bold text-[12px] sm:text-[13px] tracking-[0.16em] text-[#E4521B] uppercase">
-              WHAT WE DO
-            </span>
-          </motion.div>
-
-          {/* Main Headline: Centered Strict 2 Lines with Brand Coral Dot */}
-          <motion.h2
+          {/* Main Headline with Slit Reveal & Coral Dots */}
+          <SlitHeading
             id="what-we-do-heading"
-            initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.75, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
-            className="font-sans font-bold text-[clamp(26px,2.8vw,48px)] xl:text-[clamp(32px,3.1vw,52px)] leading-[1.08] tracking-[-0.035em] text-[#111827] mb-4 text-center"
-          >
-            <span className="block whitespace-nowrap">
-              Digital Experiences<span className="text-[#E4521B]">.</span>
-            </span>
-            <span className="block whitespace-nowrap text-[#111827]/90 mt-1 sm:mt-1.5">
-              That Drive Real Growth<span className="text-[#E4521B]">.</span>
-            </span>
-          </motion.h2>
-
-          {/* Signature Accent Line: Centered */}
-          <motion.div
-            initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, scaleX: 0 }}
-            whileInView={{ opacity: 1, scaleX: 1 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6, delay: 0.22 }}
-            className="flex items-center justify-center gap-2 my-2.5 origin-center"
-            aria-hidden="true"
-          >
-            <span className="w-12 h-[3.5px] rounded-full bg-[#E4521B]" />
-            <span className="w-2 h-[3.5px] rounded-full bg-[#E4521B]/40" />
-          </motion.div>
+            align="center"
+            eyebrow="WHAT WE DO"
+            lines={[`Digital Experiences. <span style="color: var(--color-primary-orange)">That Drive Real Growth.</span>`]}
+            showAccentLine={true}
+            slit={0}
+            className="text-[clamp(22px,2.6vw,44px)] xl:text-[clamp(26px,2.7vw,48px)] leading-[1.14] tracking-[-0.03em] mb-3"
+          />
 
         </div>
 
@@ -249,9 +205,8 @@ export function WhatWeDo() {
                       IMAGE COLUMN (Swaps: Left on Card 1 & 3, Right on Card 2 & 4)
                      ======================================================== */}
                   <div
-                    className={`lg:col-span-6 relative w-full aspect-[16/10] rounded-[20px] sm:rounded-[24px] overflow-hidden bg-[#FAF7F2] border border-[#EFEAE0] shadow-sm group ${
-                      isSwapped ? 'lg:order-2' : 'lg:order-1'
-                    }`}
+                    className={`lg:col-span-6 relative w-full aspect-[16/10] rounded-[20px] sm:rounded-[24px] overflow-hidden bg-[#FAF7F2] border border-[#EFEAE0] shadow-sm group ${isSwapped ? 'lg:order-2' : 'lg:order-1'
+                      }`}
                   >
                     <Image
                       src={service.image}
@@ -290,9 +245,8 @@ export function WhatWeDo() {
                       CONTEXT COLUMN (Swaps: Right on Card 1 & 3, Left on Card 2 & 4)
                      ======================================================== */}
                   <div
-                    className={`lg:col-span-6 flex flex-col items-start text-left ${
-                      isSwapped ? 'lg:order-1' : 'lg:order-2'
-                    }`}
+                    className={`lg:col-span-6 flex flex-col items-start text-left ${isSwapped ? 'lg:order-1' : 'lg:order-2'
+                      }`}
                   >
 
                     {/* Number & Category Eyebrow */}

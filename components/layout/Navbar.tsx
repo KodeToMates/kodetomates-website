@@ -1,11 +1,12 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown, Globe, TrendingUp, RefreshCw, Sparkles, Menu, X } from 'lucide-react'
+import { JoinCommunityModal } from '@/components/common/JoinCommunityModal'
 
 
 interface SubItem {
@@ -91,6 +92,14 @@ export function Navbar() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [mobileAccordion, setMobileAccordion] = useState<string | null>(null)
+  const [joinModalOpen, setJoinModalOpen] = useState(false)
+
+  // Allow triggering from anywhere on the page via custom event
+  useEffect(() => {
+    const handleOpen = () => setJoinModalOpen(true)
+    window.addEventListener('open-join-modal', handleOpen)
+    return () => window.removeEventListener('open-join-modal', handleOpen)
+  }, [])
 
   return (
     <motion.header
@@ -214,12 +223,13 @@ export function Navbar() {
         {/* --- RIGHT: CTA BUTTON --- */}
         <div className="hidden lg:flex items-center shrink-0">
           <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-            <Link
-              href="/join"
-              className="btn-pill-coral inline-flex items-center justify-center px-5 sm:px-6 py-2.5 sm:py-3 rounded-full font-sans font-semibold text-[13.5px] sm:text-[14px] border border-transparent hover:border-white/20"
+            <button
+              type="button"
+              onClick={() => setJoinModalOpen(true)}
+              className="btn-pill-coral inline-flex items-center justify-center px-5 sm:px-6 py-2.5 sm:py-3 rounded-full font-sans font-semibold text-[13.5px] sm:text-[14px] border border-transparent hover:border-white/20 cursor-pointer"
             >
               <span>Join KodeTomates</span>
-            </Link>
+            </button>
           </motion.div>
         </div>
 
@@ -227,12 +237,13 @@ export function Navbar() {
         {/* --- MOBILE: RIGHT ACTIONS + HAMBURGER BUTTON --- */}
         <div className="flex lg:hidden items-center gap-2.5">
           {/* Mobile Get Started CTA */}
-          <Link
-            href="/join"
-            className="btn-pill-coral inline-flex items-center justify-center px-4 py-2 rounded-full font-sans font-semibold text-xs border border-transparent hover:border-white/20"
+          <button
+            type="button"
+            onClick={() => setJoinModalOpen(true)}
+            className="btn-pill-coral inline-flex items-center justify-center px-4 py-2 rounded-full font-sans font-semibold text-xs border border-transparent hover:border-white/20 cursor-pointer"
           >
             Join KodeTomates
-          </Link>
+          </button>
 
           {/* Hamburger Toggle */}
           <button
@@ -318,9 +329,28 @@ export function Navbar() {
             })}
 
 
+            {/* Mobile Drawer Join CTA */}
+            <div className="pt-2 mt-1 border-t border-white/10">
+              <button
+                type="button"
+                onClick={() => {
+                  setMobileMenuOpen(false)
+                  setJoinModalOpen(true)
+                }}
+                className="w-full btn-pill-coral py-2.5 rounded-xl font-sans font-semibold text-sm flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <span>Join KodeTomates</span>
+              </button>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Glassmorphism Join Community Modal */}
+      <JoinCommunityModal
+        isOpen={joinModalOpen}
+        onClose={() => setJoinModalOpen(false)}
+      />
     </motion.header>
   )
 }

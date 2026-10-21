@@ -1,4 +1,5 @@
 import { Hero } from '@/components/home/Hero'
+import { HeroTicker } from '@/components/home/HeroTicker'
 import { FloatingBackground } from '@/components/home/FloatingBackground'
 import { WhatIsKodeToMates } from '@/components/home/WhatIsKodeToMates'
 import { WhatWeDo } from '@/components/home/WhatWeDo'
@@ -17,6 +18,9 @@ export default function HomePage() {
 
       {/* Hero Section */}
       <Hero />
+
+      {/* Engineering & Ecosystem Ticker Bar */}
+      <HeroTicker />
 
       {/* Section 1: What Is KodeToMates? */}
       <WhatIsKodeToMates />

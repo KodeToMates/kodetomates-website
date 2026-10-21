@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { StackedCardsSection, StackedCardItem } from '@/components/home/StackedCardsSection'
+import { StackedCardsSection, StackedCardItem } from '@/components/common/stacked-cards'
 
 const PROJECTS_CARDS: StackedCardItem[] = [
   {
@@ -54,7 +54,7 @@ export function BuiltByKodeToMates() {
       sectionId="built-by-kodetomates"
       eyebrow="OUR JOURNEY STARTS HERE"
       titleLine1="Real ideas. Real problems"
-      titleLine2="Real products"
+      titleLine2={`<span style="color: var(--color-primary-orange)">Real products</span>`}
       descriptionParagraphs={[
         "We're at the beginning of our journey. Explore the ideas we're researching, the tools we're experimenting with, and the production-grade software we build together.",
         'From developer tooling and autonomous AI workflows to community-driven repositories, our focus is turning concepts into shipped, open proof of work that solves real software challenges.',

@@ -1,7 +1,6 @@
 'use client'
 
-import React from 'react'
-import { motion, useReducedMotion } from 'framer-motion'
+import { SlitHeading } from '@/components/ui/SlitHeading'
 
 // Definition of each technology item
 interface TechnologyItem {
@@ -596,8 +595,6 @@ const ROW_2 = TECH_ITEMS.slice(14, 28)
  * meticulously styled to match the KodeToMates aesthetic, colors, and typography.
  */
 export function TechnologiesSection() {
-  const shouldReduceMotion = useReducedMotion()
-
   return (
     <section
       id="technologies"
@@ -609,58 +606,16 @@ export function TechnologiesSection() {
             CENTERED SECTION HEADER
            ======================================================== */}
         <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-2.5 sm:mb-3.5">
-          {/* Eyebrow Brand Title with Layered Dual-Square Icon */}
-          <motion.div
-            initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-            className="inline-flex items-center gap-2 mb-2 select-none"
-          >
-            {/* Layered Dual-Square Icon matching Brand Style */}
-            <span className="flex items-center justify-center shrink-0">
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 16 16"
-                fill="none"
-                className="w-4.5 h-4.5 shrink-0"
-                aria-hidden="true"
-              >
-                <rect x="2" y="2" width="7.5" height="7.5" rx="1.5" fill="#FF914D" fillOpacity="0.45" />
-                <rect x="6.5" y="6.5" width="7.5" height="7.5" rx="1.5" fill="#E4521B" />
-              </svg>
-            </span>
-
-            <span className="font-sans font-bold text-[12px] sm:text-[13px] tracking-[0.16em] text-[#E4521B] uppercase">
-              CORE TECH ECOSYSTEM
-            </span>
-          </motion.div>
-
-          {/* Main Headline: Single Line with Brand Coral Dot */}
-          <motion.h2
+          {/* Main Headline with Slit Reveal & Coral Dots */}
+          <SlitHeading
             id="technologies-heading"
-            initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.65, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="font-sans font-bold text-[clamp(24px,2.6vw,44px)] xl:text-[clamp(28px,2.8vw,48px)] leading-[1.12] tracking-[-0.035em] text-[#111827] mb-2 text-center"
-          >
-            Technologies <span className="text-[#111827]/90">We Are Using</span><span className="text-[#E4521B]">.</span>
-          </motion.h2>
-
-          {/* Decorative Dash Line with Dot (━━━━ ▪) matching What We Do & What Is KodeToMates */}
-          <motion.div
-            initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, scaleX: 0 }}
-            whileInView={{ opacity: 1, scaleX: 1 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex items-center justify-center gap-2 mt-0.5 origin-center"
-            aria-hidden="true"
-          >
-            <span className="w-12 h-[3.5px] rounded-full bg-[#E4521B]" />
-            <span className="w-2 h-[3.5px] rounded-full bg-[#E4521B]/40" />
-          </motion.div>
+            align="center"
+            eyebrow="CORE TECH ECOSYSTEM"
+            lines={[`<span style="color: var(--color-primary-orange)">Technologies</span> We Are Using.`]}
+            showAccentLine={true}
+            slit={0.35}
+            className="text-[clamp(24px,2.6vw,44px)] xl:text-[clamp(28px,2.8vw,48px)] mb-1"
+          />
         </div>
       </div>
 

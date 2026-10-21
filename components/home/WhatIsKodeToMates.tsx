@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { StackedCardsSection, StackedCardItem } from '@/components/home/StackedCardsSection'
+import { StackedCardsSection, StackedCardItem } from '@/components/common/stacked-cards'
 
 const PILLAR_CARDS: StackedCardItem[] = [
   {
@@ -64,7 +64,7 @@ export function WhatIsKodeToMates() {
       sectionId="about"
       eyebrow="WHAT IS KodeToMates?"
       titleLine1="More than learning"
-      titleLine2="More than building"
+      titleLine2='<span className="text-[var(--color-primary-orange)]">More than building</span>'
       descriptionParagraphs={[
         'KodeToMates is an open ecosystem designed for developers, builders, and creative technologists who want to break beyond passive tutorials. We bridge the critical gap between understanding syntax and shipping production-grade software.',
         'Here, learning is active, multiplayer, and driven by execution. Members collaborate on real GitHub repositories, participate in pair-coding sprints, exchange candid peer code reviews, and build verifiable public proof-of-work that unlocks high-impact engineering careers.',

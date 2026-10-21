@@ -3,7 +3,6 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowUp } from 'lucide-react'
 
 // Inline SVG brand icons for socials
 function GithubIcon({ className = 'w-4 h-4' }: { className?: string }) {
@@ -43,26 +42,22 @@ function DiscordIcon({ className = 'w-4 h-4' }: { className?: string }) {
 }
 
 export function Footer() {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
-
   return (
     <footer className="relative w-full bg-gradient-to-b from-[#7A2207] via-[#521604] to-[#200701] overflow-hidden selection:bg-[#E4521B]/40 selection:text-white">
-      
+
       {/* ========================================================
           AMBIENT RADIANT TERRACOTTA & PEACH GLOWS (BRAND PRIMARY SHADES)
          ======================================================== */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
         {/* Core luminous terracotta radial burst behind watermark */}
-        <div 
+        <div
           className="absolute bottom-8 left-1/2 -translate-x-1/2 w-[1000px] h-[380px] rounded-full blur-[120px] opacity-85"
           style={{
             background: 'radial-gradient(ellipse at center, #E4521B 0%, #B8380A 45%, rgba(40, 10, 2, 0.1) 85%)',
           }}
         />
         {/* Top subtle peach rim glow */}
-        <div 
+        <div
           className="absolute top-0 left-1/2 -translate-x-1/2 w-[850px] h-[200px] rounded-full blur-[90px] opacity-40"
           style={{
             background: 'radial-gradient(circle, #FFA466 0%, rgba(122, 34, 7, 0) 70%)',
@@ -75,9 +70,9 @@ export function Footer() {
           Sleek reduced height with prominent rounded bottom curve
          ======================================================== */}
       <div className="relative w-full bg-[#0E0C0A] text-[#A69B92] rounded-b-[36px] sm:rounded-b-[48px] md:rounded-b-[56px] border-b border-white/10 shadow-[0_20px_44px_rgba(0,0,0,0.65)] pt-12 sm:pt-14 pb-12 sm:pb-14 px-6 sm:px-8 lg:px-12 z-20">
-        
+
         {/* Ambient warm glow in upper card */}
-        <div 
+        <div
           className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[200px] rounded-full blur-[100px] pointer-events-none opacity-20"
           style={{
             background: 'radial-gradient(circle, #E4521B 0%, rgba(228,82,27,0) 70%)',
@@ -87,7 +82,7 @@ export function Footer() {
 
         <div className="relative max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12">
-            
+
             {/* Brand Col */}
             <div className="md:col-span-4 flex flex-col items-start">
               <Link href="/" className="inline-flex items-center gap-3 mb-3.5 group select-none">
@@ -300,10 +295,10 @@ export function Footer() {
          ======================================================== */}
       <div className="relative w-full pt-8 sm:pt-10 md:pt-12 pb-7 sm:pb-8 px-6 sm:px-8 lg:px-12 flex flex-col items-center z-10">
         <div className="relative max-w-7xl w-full mx-auto flex flex-col items-center">
-          
+
           {/* Centered Stylized Watermark Logo with Official Logo Mark */}
           <div className="my-3 sm:my-5 md:my-6 flex items-center justify-center gap-3.5 sm:gap-5 group select-none cursor-default">
-            
+
             {/* Official Logo Mark with Radiant Drop Shadow */}
             <div className="relative w-11 h-11 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full overflow-hidden flex items-center justify-center shrink-0 drop-shadow-[0_4px_24px_rgba(228,82,27,0.7)] group-hover:scale-105 transition-transform duration-300">
               <Image
@@ -324,7 +319,7 @@ export function Footer() {
 
           {/* Bottom Copyright & Legal Line in Warm Harmonious Tones */}
           <div className="w-full pt-5 sm:pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3.5 text-[12.5px] sm:text-[13px] text-[#E8BA9E]">
-            
+
             {/* Copyright Left */}
             <div className="font-sans font-normal">
               <span>© KodeToMates 2026, All rights reserved</span>
@@ -341,14 +336,7 @@ export function Footer() {
               <Link href="/terms" className="hover:text-white transition-colors">
                 End User License Agreement
               </Link>
-              <button
-                onClick={scrollToTop}
-                className="inline-flex items-center gap-1.5 hover:text-white text-[#FFA466] transition-colors cursor-pointer select-none font-semibold ml-1.5"
-                aria-label="Back to top"
-              >
-                <span>Back to top</span>
-                <ArrowUp className="w-3.5 h-3.5" />
-              </button>
+
             </div>
 
           </div>

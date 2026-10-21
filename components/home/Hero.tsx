@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
+import { HeroSparks } from '@/components/ui/HeroSparks'
+import { HeroGlitch } from '@/components/ui/HeroGlitch'
 import { ArrowUpRight } from 'lucide-react'
 
 interface HeadingItem {
@@ -51,13 +52,9 @@ export function Hero() {
       {/* --- 1. FULL-WIDTH BACKGROUND PHOTOGRAPHY & CINEMATIC ATMOSPHERE --- */}
       <div className="absolute inset-0 z-0 pointer-events-none select-none">
         {/* Main Cinematic Image: Developer in kinetic motion blur with loft studio background */}
-        <Image
-          src="/images/hero-kinetic-cinematic.jpg"
-          alt="KodeToMates Creative Tech Community"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-[center_35%] filter brightness-[0.72] contrast-[1.08] scale-[1.02]"
+        <HeroGlitch
+          imageSrc="/images/hero-kinetic-cinematic.jpg"
+          imageAlt="KodeToMates Creative Tech Community"
         />
 
         {/* Deep Vignette Overlays for 100% Crisp Headline Contrast (No borders, completely seamless) */}
@@ -72,6 +69,9 @@ export function Hero() {
 
         {/* Subtle warm ambient highlight echoing the brand coral */}
         <div className="absolute top-1/4 right-1/4 w-[450px] h-[450px] rounded-full bg-[#E4521B]/10 blur-[130px] pointer-events-none z-10" />
+
+        {/* Ambient Warm Spark / Ember Particle Animation */}
+        <HeroSparks className="opacity-80" />
       </div>
 
       {/* --- 2. INNER CONTENT WRAPPER (Full-width responsive alignment, no white outline) --- */}
@@ -79,25 +79,25 @@ export function Hero() {
 
         {/* --- MIDDLE: GIANT EDITORIAL HEADLINE WITH ULTRA-SMOOTH SLOW FRAMER MOTION TRANSITIONS --- */}
         <div className="my-auto py-6 sm:py-8 max-w-[960px] min-h-[220px] sm:min-h-[280px] lg:min-h-[340px] flex items-center relative overflow-hidden">
-          <AnimatePresence mode="popLayout" initial={false}>
+          <AnimatePresence mode="wait" initial={false}>
             <motion.h1
               key={currentIndex}
               initial={
                 shouldReduceMotion
                   ? { opacity: 0 }
-                  : { opacity: 0, y: 28, filter: 'blur(10px)' }
+                  : { opacity: 0, y: 20, filter: 'blur(6px)' }
               }
               animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
               exit={
                 shouldReduceMotion
                   ? { opacity: 0 }
-                  : { opacity: 0, y: -28, filter: 'blur(10px)' }
+                  : { opacity: 0, y: -18, filter: 'blur(6px)' }
               }
               transition={{
-                duration: 1.2,
-                ease: [0.22, 1, 0.36, 1],
+                duration: 0.55,
+                ease: [0.16, 1, 0.3, 1],
               }}
-              className="w-full text-white font-sans font-bold text-[clamp(40px,5.8vw,92px)] leading-[1.03] tracking-[-0.035em]"
+              className="w-full text-white font-sans font-bold text-[clamp(40px,5.8vw,92px)] leading-[1.14] tracking-[-0.03em]"
             >
               {HEADINGS[currentIndex].lines.map((line, idx) => (
                 <span key={idx} className="block text-white">
