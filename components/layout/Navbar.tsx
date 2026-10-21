@@ -97,7 +97,7 @@ export function Navbar() {
       initial={{ y: -60, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed top-3.5 sm:top-5 left-0 right-0 z-50 flex justify-center px-3 sm:px-4 pointer-events-none"
+      className="fixed top-4 sm:top-6 left-0 right-0 z-50 flex justify-center px-4 sm:px-6 pointer-events-none"
     >
       {/* ========================================================
           FLOATING PILL NAVBAR CONTAINER (n8n Aesthetic)
@@ -105,7 +105,7 @@ export function Navbar() {
          ======================================================== */}
       <nav
         aria-label="Main Navigation"
-        className="pointer-events-auto relative w-full max-w-[1360px] h-[54px] sm:h-[58px] rounded-full bg-[#12111A]/90 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.08)] flex items-center justify-between px-3.5 sm:px-5 lg:px-6 transition-all duration-300"
+        className="pointer-events-auto relative w-full max-w-[1360px] h-[62px] sm:h-[68px] rounded-full bg-[#12111A]/90 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.08)] flex items-center justify-between px-5 sm:px-7 lg:px-8 transition-all duration-300"
       >
         {/* Specular Top Rim Reflection Line */}
         <div className="absolute inset-x-8 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none rounded-full" />
@@ -115,18 +115,18 @@ export function Navbar() {
           href="/"
           className="flex items-center gap-2.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E4521B] rounded-full shrink-0"
         >
-          <div className="relative w-8 h-8 rounded-full p-[1.5px] bg-white/[0.08] border border-white/15 flex items-center justify-center shrink-0 group-hover:border-white/30 transition-colors">
+          <div className="relative w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-full p-[2px] bg-white/[0.08] border border-white/15 flex items-center justify-center shrink-0 group-hover:border-white/30 transition-colors">
             <Image
               src="/images/brand/KM - Logo.png"
               alt="KodeToMates Mark"
-              width={26}
-              height={26}
+              width={28}
+              height={28}
               className="object-contain"
               priority
             />
           </div>
-          <span className="font-sans font-bold text-[16px] sm:text-[17px] tracking-tight text-white transition-colors">
-            KodeToMates<span className="text-[#E4521B]">.</span>
+          <span className="font-sans font-bold text-[16px] sm:text-[17.5px] tracking-tight text-white transition-colors">
+            KodeToMates<span className="text-[#E4521B]"></span>
           </span>
         </Link>
 
@@ -148,7 +148,7 @@ export function Navbar() {
                   <button
                     type="button"
                     onClick={() => setActiveDropdown(isDropdownOpen ? null : item.title)}
-                    className={`flex items-center gap-1 text-[13.5px] font-sans font-medium transition-colors py-2 cursor-pointer ${isActive || isDropdownOpen ? 'text-white' : 'text-[#C4C0D0] hover:text-white'
+                    className={`flex items-center gap-1.5 text-[14px] font-sans font-medium transition-colors py-2 px-1 cursor-pointer ${isActive || isDropdownOpen ? 'text-white' : 'text-[#C4C0D0] hover:text-white'
                       }`}
                   >
                     <span>{item.title}</span>
@@ -201,7 +201,7 @@ export function Navbar() {
               <Link
                 key={item.title}
                 href={item.href}
-                className={`text-[13.5px] font-sans font-medium transition-colors py-2 ${isActive ? 'text-white' : 'text-[#C4C0D0] hover:text-white'
+                className={`text-[14px] font-sans font-medium transition-colors py-2 px-1 ${isActive ? 'text-white' : 'text-[#C4C0D0] hover:text-white'
                   }`}
               >
                 {item.title}
@@ -216,7 +216,7 @@ export function Navbar() {
           <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
             <Link
               href="/join"
-              className="btn-pill-coral inline-flex items-center justify-center px-4 sm:px-5 py-2 sm:py-2.5 rounded-full font-sans font-semibold text-[13px] sm:text-[13.5px] border border-transparent hover:border-white/20"
+              className="btn-pill-coral inline-flex items-center justify-center px-5 sm:px-6 py-2.5 sm:py-3 rounded-full font-sans font-semibold text-[13.5px] sm:text-[14px] border border-transparent hover:border-white/20"
             >
               <span>Join KodeTomates</span>
             </Link>
@@ -225,11 +225,11 @@ export function Navbar() {
 
 
         {/* --- MOBILE: RIGHT ACTIONS + HAMBURGER BUTTON --- */}
-        <div className="flex lg:hidden items-center gap-2">
+        <div className="flex lg:hidden items-center gap-2.5">
           {/* Mobile Get Started CTA */}
           <Link
             href="/join"
-            className="btn-pill-coral inline-flex items-center justify-center px-3.5 py-1.5 rounded-full font-sans font-semibold text-xs border border-transparent hover:border-white/20"
+            className="btn-pill-coral inline-flex items-center justify-center px-4 py-2 rounded-full font-sans font-semibold text-xs border border-transparent hover:border-white/20"
           >
             Join KodeTomates
           </Link>
@@ -237,7 +237,7 @@ export function Navbar() {
           {/* Hamburger Toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 text-white/90 hover:text-white rounded-full hover:bg-white/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E4521B]"
+            className="p-2.5 text-white/90 hover:text-white rounded-full hover:bg-white/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E4521B]"
             aria-label="Toggle navigation"
             aria-expanded={mobileMenuOpen}
           >
@@ -256,7 +256,7 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.98 }}
             transition={{ duration: 0.2 }}
-            className="pointer-events-auto absolute top-full left-3 right-3 mt-2 bg-[#12111A]/95 backdrop-blur-2xl border border-white/12 rounded-2xl p-4 shadow-[0_16px_40px_rgba(0,0,0,0.6)] flex flex-col gap-1.5 z-50 overflow-hidden"
+            className="pointer-events-auto absolute top-full left-3 right-3 mt-3 bg-[#12111A]/95 backdrop-blur-2xl border border-white/12 rounded-2xl p-5 shadow-[0_16px_40px_rgba(0,0,0,0.6)] flex flex-col gap-2 z-50 overflow-hidden"
           >
             {menuItems.map((item) => {
               const isActive = pathname === item.href
@@ -308,8 +308,8 @@ export function Navbar() {
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
                   className={`px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors ${isActive
-                      ? 'bg-white/[0.1] text-white font-semibold'
-                      : 'text-white/80 hover:text-white hover:bg-white/[0.06]'
+                    ? 'bg-white/[0.1] text-white font-semibold'
+                    : 'text-white/80 hover:text-white hover:bg-white/[0.06]'
                     }`}
                 >
                   {item.title}

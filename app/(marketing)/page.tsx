@@ -42,14 +42,8 @@ export default function HomePage() {
       </LazySection>
 
       {/* Section 3: Built by KodeToMates */}
-      <LazySection
-        title="Built by KodeToMates"
-        tag="SHOWCASE:PORTFOLIO"
-        minHeight="520px"
-        skeletonCards={3}
-      >
-        <BuiltByKodeToMates />
-      </LazySection>
+      <BuiltByKodeToMates />
+
 
 
       {/* Section 6: Join KodeToMates CTA */}

@@ -10,6 +10,7 @@
     "lint:fix": "eslint . --fix",
     "typecheck": "tsc --noEmit",
     "check": "npm run lint && npm run typecheck",
+    "precommit": "node scripts/smart-precommit.mjs",
     "prepare": "node -e \"try { require('husky')() } catch (e) {}\""
   },
   "dependencies": {

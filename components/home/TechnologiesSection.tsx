@@ -1,8 +1,7 @@
 'use client'
 
-import React, { useState } from 'react'
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
-import { ArrowRight, Search, X, Sparkles, CheckCircle2 } from 'lucide-react'
+import React from 'react'
+import { motion, useReducedMotion } from 'framer-motion'
 
 // Definition of each technology item
 interface TechnologyItem {
@@ -590,14 +589,6 @@ const TECH_ITEMS: TechnologyItem[] = [
 const ROW_1 = TECH_ITEMS.slice(0, 14)
 const ROW_2 = TECH_ITEMS.slice(14, 28)
 
-const CATEGORIES = [
-  'All',
-  'Frontend',
-  'Backend & Cloud',
-  'Database',
-  'AI & Automation',
-  'DevOps & Tools',
-] as const
 
 /**
  * TechnologiesSection Component
@@ -606,439 +597,122 @@ const CATEGORIES = [
  */
 export function TechnologiesSection() {
   const shouldReduceMotion = useReducedMotion()
-  const [selectedCategory, setSelectedCategory] = useState<string>('All')
-  const [activeTech, setActiveTech] = useState<TechnologyItem | null>(null)
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [searchQuery, setSearchQuery] = useState('')
-
-  // Filtered tech items for the explore modal
-  const filteredTechs = TECH_ITEMS.filter((item) => {
-    const matchesCategory = selectedCategory === 'All' || item.category === selectedCategory
-    const matchesSearch =
-      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.useCase.toLowerCase().includes(searchQuery.toLowerCase())
-    return matchesCategory && matchesSearch
-  })
 
   return (
     <section
       id="technologies"
-      className="relative z-10 w-full py-20 sm:py-28 overflow-hidden bg-[radial-gradient(ellipse_80%_60%_at_50%_40%,#181226_0%,#0C0A14_100%)] text-white selection:bg-[#E4521B]/30 selection:text-[#FF914D]"
+      className="relative z-10 w-full py-6 sm:py-8 overflow-hidden bg-white text-[#111827] selection:bg-[#E4521B]/20 selection:text-[#E4521B]"
       aria-labelledby="technologies-heading"
     >
-      {/* ========================================================
-          BACKGROUND AMBIENT ATMOSPHERE & BRAND RADIAL GLOWS
-         ======================================================== */}
-      {/* Central Warm Terracotta Glow (matching reference image center spotlight) */}
-      <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] sm:w-[900px] h-[480px] rounded-full pointer-events-none blur-[140px] opacity-35"
-        style={{
-          background: 'radial-gradient(circle, #E4521B 0%, #FF914D 35%, #AB003E 65%, transparent 80%)',
-        }}
-        aria-hidden="true"
-      />
-
-      {/* Subtle Starry / Cyber Dot Grid */}
-      <div
-        className="absolute inset-0 bg-[radial-gradient(#FF914D_0.75px,transparent_0.75px)] [background-size:32px_32px] opacity-[0.05] pointer-events-none"
-        aria-hidden="true"
-      />
-
       <div className="relative w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 z-10">
         {/* ========================================================
             CENTERED SECTION HEADER
            ======================================================== */}
-        <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+        <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-2.5 sm:mb-3.5">
           {/* Eyebrow Brand Title with Layered Dual-Square Icon */}
           <motion.div
-            initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 14 }}
+            initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="group inline-flex items-center gap-2.5 sm:gap-3 mb-3.5 select-none cursor-default"
+            transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+            className="inline-flex items-center gap-2 mb-2 select-none"
           >
             {/* Layered Dual-Square Icon matching Brand Style */}
             <span className="flex items-center justify-center shrink-0">
               <svg
-                width="20"
-                height="20"
+                width="18"
+                height="18"
                 viewBox="0 0 16 16"
                 fill="none"
-                className="w-5 h-5 shrink-0 transition-transform duration-300 group-hover:scale-110"
+                className="w-4.5 h-4.5 shrink-0"
                 aria-hidden="true"
               >
-                <rect x="2" y="2" width="7.5" height="7.5" rx="1.5" fill="#FF914D" fillOpacity="0.6" />
-                <rect x="6.5" y="6.5" width="7.5" height="7.5" rx="1.5" fill="#AB003E" />
+                <rect x="2" y="2" width="7.5" height="7.5" rx="1.5" fill="#FF914D" fillOpacity="0.45" />
+                <rect x="6.5" y="6.5" width="7.5" height="7.5" rx="1.5" fill="#E4521B" />
               </svg>
             </span>
 
-            <span className="font-sans font-bold text-[14px] sm:text-[16px] tracking-wider uppercase bg-gradient-to-r from-[#FF914D] to-[#AB003E] bg-clip-text text-transparent">
+            <span className="font-sans font-bold text-[12px] sm:text-[13px] tracking-[0.16em] text-[#E4521B] uppercase">
               CORE TECH ECOSYSTEM
             </span>
           </motion.div>
 
-          {/* Main Headline (Exact title requested by user with brand styling) */}
+          {/* Main Headline: Single Line with Brand Coral Dot */}
           <motion.h2
             id="technologies-heading"
             initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.65, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-            className="font-serif text-[clamp(2.4rem,4.6vw,4rem)] font-bold text-white leading-[1.12] tracking-tight mb-3"
+            transition={{ duration: 0.65, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="font-sans font-bold text-[clamp(24px,2.6vw,44px)] xl:text-[clamp(28px,2.8vw,48px)] leading-[1.12] tracking-[-0.035em] text-[#111827] mb-2 text-center"
           >
-            Technologies{' '}
-            <span className="bg-gradient-to-r from-[#FF914D] via-[#FF7A3D] to-[#AB003E] bg-clip-text text-transparent drop-shadow-[0_4px_24px_rgba(255,145,77,0.35)]">
-              We Are Using
-            </span>
+            Technologies <span className="text-[#111827]/90">We Are Using</span><span className="text-[#E4521B]">.</span>
           </motion.h2>
 
-          {/* Decorative Dash Line with Dot (━━━━ ▪) matching What We Do */}
+          {/* Decorative Dash Line with Dot (━━━━ ▪) matching What We Do & What Is KodeToMates */}
           <motion.div
             initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, scaleX: 0 }}
             whileInView={{ opacity: 1, scaleX: 1 }}
             viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.5, delay: 0.15 }}
-            className="flex items-center justify-center gap-2 my-3 sm:my-3.5 origin-center"
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="flex items-center justify-center gap-2 mt-0.5 origin-center"
             aria-hidden="true"
           >
-            <span className="w-14 sm:w-16 h-[3.5px] rounded-[1px] bg-gradient-to-r from-[#FF914D] to-[#AB003E]" />
-            <span className="w-[3.5px] h-[3.5px] rounded-[1px] bg-[#AB003E]" />
+            <span className="w-12 h-[3.5px] rounded-full bg-[#E4521B]" />
+            <span className="w-2 h-[3.5px] rounded-full bg-[#E4521B]/40" />
           </motion.div>
-
-          {/* Subtitle Description */}
-          <motion.p
-            initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.65, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
-            className="font-sans text-[15px] sm:text-[17px] leading-[1.68] text-[#B0A7A0] max-w-2xl font-normal"
-          >
-            Production-grade frameworks, ultra-fast runtimes, cloud infrastructure, and modern AI pipelines engineered for speed, modularity, and scale.
-          </motion.p>
-        </div>
-
-        {/* ========================================================
-            CATEGORY FILTER TABS (Interactive Pills)
-           ======================================================== */}
-        <div className="flex items-center justify-center gap-1.5 sm:gap-2 flex-wrap mb-10 select-none">
-          {CATEGORIES.map((cat) => {
-            const isActive = selectedCategory === cat
-            return (
-              <button
-                key={cat}
-                onClick={() => setSelectedCategory(cat)}
-                className={`px-3.5 py-1.5 rounded-full text-xs sm:text-[13px] font-sans font-medium transition-all duration-200 cursor-pointer ${isActive
-                  ? 'bg-gradient-to-r from-[#FF914D] to-[#AB003E] text-white shadow-[0_4px_16px_rgba(228,82,27,0.35)] scale-105'
-                  : 'bg-white/5 text-[#9E958E] hover:bg-white/10 hover:text-white border border-white/5'
-                  }`}
-              >
-                {cat}
-              </button>
-            )
-          })}
         </div>
       </div>
 
       {/* ========================================================
           FULL-WIDTH CURVED DUAL-ROW MARQUEE (Spans 100% Viewport)
          ======================================================== */}
-      <div className="relative w-full pt-30 pb-34 sm:pt-24 sm:pb-34 select-none group overflow-hidden z-10">
+      <div className="relative w-full pt-3 pb-5 sm:pt-4 sm:pb-6 select-none group overflow-hidden z-10">
         {/* Left Edge Gradient Fade Mask */}
-        <div className="absolute top-0 bottom-0 left-0 w-28 sm:w-48 lg:w-72 z-20 pointer-events-none bg-gradient-to-r from-[#0C0A14] via-[#0C0A14]/90 to-transparent" />
+        <div className="absolute top-0 bottom-0 left-0 w-28 sm:w-48 lg:w-72 z-20 pointer-events-none bg-gradient-to-r from-white via-white/95 to-transparent" />
         {/* Right Edge Gradient Fade Mask */}
-        <div className="absolute top-0 bottom-0 right-0 w-28 sm:w-48 lg:w-72 z-20 pointer-events-none bg-gradient-to-l from-[#0C0A14] via-[#0C0A14]/90 to-transparent" />
+        <div className="absolute top-0 bottom-0 right-0 w-28 sm:w-48 lg:w-72 z-20 pointer-events-none bg-gradient-to-l from-white via-white/95 to-transparent" />
 
         {/* Arched Perspective Container (gentle dome curvature matching screenshot) */}
         <div className="relative flex flex-col gap-4 sm:gap-6 [perspective:1200px]">
-          {/* ROW 1: Scrolls Left - Tooltip renders above */}
-          <div className="flex gap-4 sm:gap-5 w-max animate-marquee-left group-hover-pause">
-            {/* 4x duplicated array for ultra-wide seamless infinite loop */}
-            {[...ROW_1, ...ROW_1, ...ROW_1, ...ROW_1].map((tech, idx) => {
-              const isHighlighted = selectedCategory === 'All' || tech.category === selectedCategory
-              return (
-                <TechTile
-                  key={`row1-${tech.id}-${idx}`}
-                  tech={tech}
-                  isHighlighted={isHighlighted}
-                  tooltipPosition="top"
-                  onClick={() => setActiveTech(tech)}
-                />
-              )
-            })}
+          {/* ROW 1: Scrolls Left */}
+          <div className="flex gap-3 sm:gap-4 w-max animate-marquee-left group-hover-pause">
+            {[...ROW_1, ...ROW_1, ...ROW_1, ...ROW_1].map((tech, idx) => (
+              <TechTile key={`row1-${tech.id}-${idx}`} tech={tech} />
+            ))}
           </div>
 
-          {/* ROW 2: Offset Scrolls Right - Tooltip renders below */}
-          <div className="flex gap-4 sm:gap-5 w-max animate-marquee-right group-hover-pause pl-8">
-            {[...ROW_2, ...ROW_2, ...ROW_2, ...ROW_2].map((tech, idx) => {
-              const isHighlighted = selectedCategory === 'All' || tech.category === selectedCategory
-              return (
-                <TechTile
-                  key={`row2-${tech.id}-${idx}`}
-                  tech={tech}
-                  isHighlighted={isHighlighted}
-                  tooltipPosition="bottom"
-                  onClick={() => setActiveTech(tech)}
-                />
-              )
-            })}
+          {/* ROW 2: Offset Scrolls Right */}
+          <div className="flex gap-3 sm:gap-4 w-max animate-marquee-right group-hover-pause pl-8">
+            {[...ROW_2, ...ROW_2, ...ROW_2, ...ROW_2].map((tech, idx) => (
+              <TechTile key={`row2-${tech.id}-${idx}`} tech={tech} />
+            ))}
           </div>
         </div>
       </div>
-
-      <div className="relative w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 z-10">
-        {/* ========================================================
-            CENTERED BOTTOM ACTION BUTTON
-            (Matching "Browse all integrations" in reference screenshot)
-           ======================================================== */}
-        <div className="mt-2 sm:mt-4 flex flex-col items-center justify-center">
-          <motion.button
-            whileHover={shouldReduceMotion ? {} : { scale: 1.03 }}
-            whileTap={shouldReduceMotion ? {} : { scale: 0.98 }}
-            onClick={() => setIsModalOpen(true)}
-            className="group relative inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full bg-gradient-to-r from-[#FF914D] via-[#E4521B] to-[#AB003E] text-white font-sans text-sm sm:text-[15px] font-semibold shadow-[0_4px_24px_rgba(228,82,27,0.38)] hover:shadow-[0_8px_36px_rgba(228,82,27,0.6)] transition-all cursor-pointer overflow-hidden"
-          >
-            {/* Luminous sheen wave */}
-            <span
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent pointer-events-none"
-              style={{ animation: 'shimmer-sweep 2.8s infinite linear' }}
-            />
-            <Sparkles className="w-4 h-4 text-[#FED7AA]" />
-            <span>Browse All Technologies</span>
-            <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
-          </motion.button>
-
-          <p className="mt-3.5 text-xs font-mono text-[#8C847E]">
-            28+ core frameworks, databases &amp; AI tools in active production
-          </p>
-        </div>
-      </div>
-
-      {/* ========================================================
-          INTERACTIVE DETAIL MODAL / QUICK-VIEW DRAWER
-         ======================================================== */}
-      {/* 1. Single Tech Quick-View Popup */}
-      <AnimatePresence>
-        {activeTech && (
-          <div
-            className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/75 backdrop-blur-md"
-            onClick={() => setActiveTech(null)}
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.92, y: 15 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.92, y: 15 }}
-              onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-md p-6 sm:p-8 rounded-3xl bg-[#161224] border border-[#FF914D]/30 shadow-[0_20px_60px_rgba(0,0,0,0.8)] text-white overflow-hidden"
-            >
-              <button
-                onClick={() => setActiveTech(null)}
-                className="absolute top-5 right-5 p-2 rounded-full bg-white/10 hover:bg-white/20 text-[#B0A7A0] hover:text-white transition-colors cursor-pointer"
-                aria-label="Close"
-              >
-                <X className="w-4 h-4" />
-              </button>
-
-              <div className="flex items-center gap-4 mb-5">
-                <div
-                  className="w-16 h-16 rounded-2xl flex items-center justify-center p-3 border border-white/10 shadow-lg"
-                  style={{ backgroundColor: '#1E1933' }}
-                >
-                  <activeTech.svg />
-                </div>
-                <div>
-                  <span className="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-mono font-semibold uppercase bg-[#E4521B]/20 text-[#FF914D] border border-[#E4521B]/30 mb-1">
-                    {activeTech.category}
-                  </span>
-                  <h3 className="font-serif text-2xl font-bold text-white">{activeTech.name}</h3>
-                </div>
-              </div>
-
-              <p className="text-sm text-[#D5CEC8] leading-relaxed mb-4">
-                {activeTech.description}
-              </p>
-
-              <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 mb-6">
-                <div className="flex items-center gap-2 text-xs font-mono text-[#FF914D] font-semibold mb-1">
-                  <CheckCircle2 className="w-3.5 h-3.5" />
-                  <span>How KodeToMates Uses It:</span>
-                </div>
-                <p className="text-xs text-[#A8A099] leading-normal">{activeTech.useCase}</p>
-              </div>
-
-              <button
-                onClick={() => setActiveTech(null)}
-                className="w-full py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-sans text-xs font-semibold transition-colors cursor-pointer"
-              >
-                Close Preview
-              </button>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
-
-      {/* 2. Full Directory "Browse All Technologies" Modal */}
-      <AnimatePresence>
-        {isModalOpen && (
-          <div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/85 backdrop-blur-lg"
-            onClick={() => setIsModalOpen(false)}
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.94, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.94, y: 20 }}
-              onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-4xl max-h-[88vh] rounded-[28px] sm:rounded-[36px] bg-[#141021] border border-white/15 shadow-[0_24px_80px_rgba(0,0,0,0.9)] flex flex-col overflow-hidden text-white"
-            >
-              {/* Modal Header */}
-              <div className="p-6 sm:p-8 border-b border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div>
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#E4521B]/15 text-[#FF914D] text-xs font-mono font-semibold uppercase mb-2">
-                    <Sparkles className="w-3 h-3" />
-                    Complete Tech Directory
-                  </div>
-                  <h3 className="font-serif text-2xl sm:text-3xl font-bold text-white">
-                    Technologies We Are Using
-                  </h3>
-                </div>
-
-                <div className="flex items-center gap-3">
-                  {/* Search Input */}
-                  <div className="relative w-full sm:w-64">
-                    <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#8C847E]" />
-                    <input
-                      type="text"
-                      placeholder="Search technology..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full pl-9 pr-4 py-2 rounded-xl bg-white/5 border border-white/10 text-xs font-sans text-white placeholder:text-[#8C847E] focus:outline-none focus:border-[#FF914D]"
-                    />
-                  </div>
-
-                  <button
-                    onClick={() => setIsModalOpen(false)}
-                    className="p-2.5 rounded-full bg-white/10 hover:bg-white/20 text-[#A39B95] hover:text-white transition-colors cursor-pointer shrink-0"
-                    aria-label="Close modal"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-
-              {/* Modal Body: Scrollable Grid of All Technologies */}
-              <div className="p-6 sm:p-8 overflow-y-auto space-y-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {filteredTechs.map((tech) => (
-                    <div
-                      key={tech.id}
-                      className="group p-4 rounded-2xl bg-white/5 hover:bg-white/[0.08] border border-white/10 hover:border-[#FF914D]/40 transition-all duration-200 flex flex-col justify-between"
-                    >
-                      <div className="flex items-start gap-3.5 mb-3">
-                        <div
-                          className="w-12 h-12 rounded-xl flex items-center justify-center p-2.5 shrink-0 bg-[#1D182E] border border-white/10 group-hover:scale-105 transition-transform"
-                        >
-                          <tech.svg />
-                        </div>
-                        <div>
-                          <span className="text-[10px] font-mono font-semibold uppercase text-[#FF914D]">
-                            {tech.category}
-                          </span>
-                          <h4 className="font-serif text-lg font-bold text-white group-hover:text-[#FF914D] transition-colors">
-                            {tech.name}
-                          </h4>
-                        </div>
-                      </div>
-
-                      <p className="text-xs text-[#A8A099] line-clamp-2 leading-relaxed">
-                        {tech.description}
-                      </p>
-
-                      <div className="mt-3 pt-2.5 border-t border-white/5 text-[11px] font-sans text-[#8C847E]">
-                        <span className="text-[#FF914D] font-medium">Role:</span> {tech.useCase}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {filteredTechs.length === 0 && (
-                  <div className="py-12 text-center text-[#8C847E] font-sans text-sm">
-                    No technologies found matching &quot;{searchQuery}&quot;.
-                  </div>
-                )}
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
     </section>
   )
 }
 
 /**
- * Individual Squircle Technology Tile
- * Features custom brand glow, hover scale, and tooltip
+ * Individual Technology Pill Tile
+ * Features SVG icon, technology name, and sleek dark navbar glass styling
  */
-function TechTile({
-  tech,
-  isHighlighted,
-  onClick,
-  tooltipPosition = 'top',
-}: {
-  tech: TechnologyItem
-  isHighlighted: boolean
-  onClick: () => void
-  tooltipPosition?: 'top' | 'bottom'
-}) {
-  const [isHovered, setIsHovered] = useState(false)
-  const isTop = tooltipPosition === 'top'
-
+function TechTile({ tech }: { tech: TechnologyItem }) {
   return (
     <div
-      onClick={onClick}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className={`relative group/tile flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 md:w-[68px] md:h-[68px] rounded-2xl cursor-pointer transition-all duration-300 ${isHovered ? 'z-40' : 'z-10'
-        } ${isHighlighted
-          ? 'bg-[#181329]/90 border border-white/15 hover:border-[#FF914D]/70 hover:bg-[#221B38] hover:scale-110 hover:-translate-y-1.5'
-          : 'bg-[#141021]/60 border border-white/5 opacity-35 hover:opacity-100 hover:border-white/20'
-        }`}
-      style={{
-        boxShadow: isHovered
-          ? `0 10px 28px -4px ${tech.glowColor}, 0 0 12px 0 ${tech.glowColor}`
-          : '0 4px 16px rgba(0,0,0,0.3)',
-      }}
-      role="button"
-      aria-label={`View details for ${tech.name}`}
+      className="group/tile relative inline-flex items-center gap-2.5 sm:gap-3 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl sm:rounded-2xl transition-all duration-300 bg-[#12111A] border border-white/10 hover:border-[#E4521B]/60 hover:scale-105 hover:-translate-y-1 shadow-[0_4px_16px_rgba(0,0,0,0.18)] hover:shadow-[0_12px_28px_-4px_rgba(228,82,27,0.35),0_4px_12px_rgba(0,0,0,0.2)] select-none cursor-default shrink-0"
+      aria-label={tech.name}
     >
       {/* SVG Icon */}
-      <div className="w-8 h-8 flex items-center justify-center transition-transform duration-300 group-hover/tile:scale-110">
+      <div className="w-5 h-5 sm:w-6 sm:h-6 shrink-0 flex items-center justify-center [&>svg]:w-full [&>svg]:h-full transition-transform duration-300 group-hover/tile:scale-110">
         <tech.svg />
       </div>
 
-      {/* Floating Hover Tooltip */}
-      <AnimatePresence>
-        {isHovered && (
-          <motion.div
-            initial={{ opacity: 0, y: isTop ? 8 : -8, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: isTop ? 6 : -6, scale: 0.95 }}
-            transition={{ duration: 0.18 }}
-            className={`absolute ${isTop ? 'bottom-full mb-3' : 'top-full mt-3'
-              } z-50 pointer-events-none px-3.5 py-1.5 rounded-xl bg-[#0F0C1A] border border-white/25 shadow-[0_12px_32px_rgba(0,0,0,0.85)] whitespace-nowrap text-center`}
-          >
-            <div className="text-xs font-serif font-bold text-white tracking-wide">{tech.name}</div>
-            <div className="text-[10px] font-mono text-[#FF914D] font-medium">{tech.category}</div>
-            {/* Tooltip Arrow */}
-            <div
-              className={`absolute left-1/2 -translate-x-1/2 border-4 border-transparent ${isTop
-                ? 'top-full border-t-[#0F0C1A]'
-                : 'bottom-full border-b-[#0F0C1A]'
-                }`}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Technology Name */}
+      <span className="font-sans font-semibold text-[13px] sm:text-[14px] text-white tracking-tight whitespace-nowrap">
+        {tech.name}
+      </span>
     </div>
   )
 }

@@ -1,4 +1,12 @@
 #!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
 
-npx lint-staged
+# Ensure Node is found even when launched from TortoiseGit GUI with minimal environment PATH
+if ! command -v node >/dev/null 2>&1; then
+  if [ -f "/c/Program Files/nodejs/node.exe" ]; then
+    export PATH="/c/Program Files/nodejs:$PATH"
+  elif [ -f "C:/Program Files/nodejs/node.exe" ]; then
+    export PATH="C:/Program Files/nodejs:$PATH"
+  fi
+fi
+
+node scripts/smart-precommit.mjs

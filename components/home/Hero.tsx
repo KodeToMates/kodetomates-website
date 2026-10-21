@@ -6,25 +6,29 @@ import Image from 'next/image'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
 
-const HEADINGS = [
+interface HeadingItem {
+  lines: React.ReactNode[]
+}
+
+const HEADINGS: HeadingItem[] = [
   {
     lines: [
-      { text: 'Next-Gen', dot: false },
-      { text: 'Tech Community for', dot: false },
-      { text: 'Growing Builders', dot: true },
+      'Next-Gen',
+      'Tech Community for',
+      'Growing Builders',
     ],
   },
   {
     lines: [
-      { text: 'Build Real-World', dot: false },
-      { text: 'Projects. Shape', dot: false },
-      { text: 'the Future', dot: true },
+      'Build Real-World',
+      'Projects. Shape',
+      'the Future',
     ],
   },
   {
     lines: [
-      { text: 'Learn Together', dot: true },
-      { text: 'Grow Together', dot: true },
+      'Learn Together',
+      'Grow Together',
     ],
   },
 ]
@@ -97,8 +101,7 @@ export function Hero() {
             >
               {HEADINGS[currentIndex].lines.map((line, idx) => (
                 <span key={idx} className="block text-white">
-                  {line.text}
-                  {line.dot && <span className="text-[#E4521B]">.</span>}
+                  {line}
                 </span>
               ))}
             </motion.h1>
@@ -138,7 +141,7 @@ export function Hero() {
           >
             {/* Description Text */}
             <div className="text-white/75 text-xs sm:text-sm md:text-[14.5px] leading-relaxed font-sans max-w-[360px]">
-              <p className="font-semibold text-white/95">Open Source Software & Products.</p>
+              <p className="font-semibold text-white/95">Open Source Software & Products</p>
               <p className="text-white/70">Full-Stack engineering & real-world projects for modern builders.</p>
             </div>
 
