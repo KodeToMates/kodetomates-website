@@ -74,25 +74,6 @@ const RESOURCES_DATA: ResourceItem[] = [
   },
 ]
 
-// 4-point sparkle star matching brand ornament
-function SparkleStar({ className = '' }: { className?: string }) {
-  return (
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill="none"
-      className={className}
-      aria-hidden="true"
-    >
-      <path
-        d="M12 0C12 6.627 6.627 12 0 12C6.627 12 12 17.373 12 24C12 17.373 17.373 12 24 12C17.373 12 12 6.627 12 0Z"
-        fill="currentColor"
-      />
-    </svg>
-  )
-}
-
 const RESOURCE_TABS = ['All Resources', 'Engineering Notes', 'Practical Guides', 'AI & Systems']
 
 export function ResourcesSection() {
@@ -110,105 +91,10 @@ export function ResourcesSection() {
   return (
     <section
       id="resources"
-      className="relative z-10 w-full pt-14 sm:pt-18 md:pt-20 pb-18 sm:pb-22 md:pb-30 overflow-hidden bg-white border-y border-[#F3ECE4]/80 shadow-[0_2px_16px_rgba(0,0,0,0.015)] selection:bg-[#E4521B]/20 selection:text-[#E4521B]"
+      className="relative z-10 w-full min-h-screen min-h-[100svh] flex flex-col justify-center py-12 sm:py-16 lg:py-20 overflow-hidden scroll-mt-28 bg-white border-y border-[#F3ECE4]/80 shadow-[0_2px_16px_rgba(0,0,0,0.015)] selection:bg-[#E4521B]/20 selection:text-[#E4521B]"
       aria-labelledby="resources-heading"
     >
-      {/* ========================================================
-          BACKGROUND CORNER ORNAMENTS & ARCHITECTURAL ACCENTS
-         ======================================================== */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-        {/* TOP-LEFT: Architectural Fluid Wave + Downward Drafting Contour Arcs + Sparkle Star */}
-        <div className="absolute top-0 left-0 w-[240px] sm:w-[320px] md:w-[380px] h-[180px] sm:h-[230px] md:h-[270px] pointer-events-none select-none z-0">
-          <svg
-            viewBox="0 0 380 270"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-full h-full"
-          >
-            <defs>
-              <linearGradient id="resTopLeftBlobGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#FF7A36" stopOpacity="0.4" />
-                <stop offset="45%" stopColor="#FFA665" stopOpacity="0.2" />
-                <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
-              </linearGradient>
-            </defs>
-            {/* Outer soft wave */}
-            <path
-              d="M 0 0 L 220 0 C 200 65, 175 125, 120 170 C 70 210, 35 240, 0 270 Z"
-              fill="url(#resTopLeftBlobGrad)"
-            />
-            {/* Architectural downward sweeping contour drafting lines */}
-            <path
-              d="M 0 110 C 90 110, 175 155, 235 205 C 275 240, 305 255, 340 270"
-              stroke="#E4521B"
-              strokeWidth="1.5"
-              strokeOpacity="0.4"
-              strokeLinecap="round"
-            />
-            <path
-              d="M 0 160 C 65 160, 130 195, 185 235 C 220 255, 245 265, 270 270"
-              stroke="#E4521B"
-              strokeWidth="1.2"
-              strokeOpacity="0.28"
-              strokeLinecap="round"
-            />
-          </svg>
-          {/* Floating Sparkle Star beside the drafting lines */}
-          <div className="absolute top-8 sm:top-10 left-12 sm:left-16 text-[#E4521B]">
-            <SparkleStar className="w-5 h-5 sm:w-5.5 sm:h-5.5" />
-          </div>
-        </div>
-
-        {/* BOTTOM-RIGHT: Luminous Sunset-Berry Wave + Inner Ripple Contour + Sparkle Star */}
-        <div className="absolute bottom-0 right-0 w-[260px] sm:w-[360px] md:w-[420px] h-[190px] sm:h-[250px] md:h-[290px] pointer-events-none select-none z-0">
-          <svg
-            viewBox="0 0 420 290"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-full h-full"
-          >
-            <defs>
-              <linearGradient id="resBottomRightGrad" x1="100%" y1="100%" x2="0%" y2="0%">
-                <stop offset="0%" stopColor="#FF4A7A" stopOpacity="0.45" />
-                <stop offset="42%" stopColor="#FF7A3D" stopOpacity="0.3" />
-                <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
-              </linearGradient>
-            </defs>
-            <path
-              d="M 420 290 L 170 290 C 230 220, 310 180, 360 130 C 390 100, 410 60, 420 30 Z"
-              fill="url(#resBottomRightGrad)"
-            />
-            {/* Concentric ripple stroke */}
-            <path
-              d="M 420 250 C 350 250, 270 200, 210 145 C 175 110, 150 70, 130 0"
-              stroke="#E4521B"
-              strokeWidth="1.4"
-              strokeOpacity="0.35"
-              strokeLinecap="round"
-            />
-          </svg>
-          {/* Sparkle star floating above bottom-right wave */}
-          <div className="absolute bottom-8 sm:bottom-10 right-14 sm:right-20 text-[#E4521B]">
-            <SparkleStar className="w-5 h-5 sm:w-6 sm:h-6" />
-          </div>
-        </div>
-
-        {/* Ambient Radial Peach Glows */}
-        <div 
-          className="absolute right-[-6%] top-1/3 w-[650px] h-[550px] rounded-full blur-[110px] opacity-35"
-          style={{
-            background: 'radial-gradient(ellipse at center, #FDC7A2 0%, #FDE4D0 45%, rgba(254,236,220,0) 75%)',
-          }}
-        />
-        <div 
-          className="absolute left-[-6%] bottom-1/4 w-[600px] h-[500px] rounded-full blur-[100px] opacity-25"
-          style={{
-            background: 'radial-gradient(circle, #FDD5B7 0%, rgba(254,240,226,0) 70%)',
-          }}
-        />
-      </div>
-
-      <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+      <div className="relative w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 my-auto">
         
         {/* ========================================================
             HEADER: Signature Subtitle, Editorial Heading & CTA

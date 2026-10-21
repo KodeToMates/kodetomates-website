@@ -10,76 +10,13 @@ export function FinalCTASection() {
   return (
     <section
       id="join"
-      className="relative z-10 w-full min-h-[560px] lg:min-h-[620px] py-16 sm:py-20 lg:py-24 flex flex-col justify-center items-center overflow-hidden bg-gradient-to-b from-[#FEF5EB] via-[#FDEBD9] to-[#FEF5EB] selection:bg-[#E4521B]/20 selection:text-[#E4521B]"
+      className="relative z-10 w-full min-h-screen min-h-[100svh] py-12 sm:py-16 lg:py-20 flex flex-col justify-center items-center overflow-hidden bg-[#FEF5EB] selection:bg-[#E4521B]/20 selection:text-[#E4521B]"
       aria-labelledby="join-heading"
     >
       {/* ========================================================
-          BACKGROUND CORNER FLUID WAVES (SOFT ORGANIC GRADIENTS)
-         ======================================================== */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden select-none z-0" aria-hidden="true">
-        {/* TOP-LEFT: Fluid Sunset Orange Wave */}
-        <motion.div
-          animate={shouldReduceMotion ? {} : { x: [0, 5, 0], y: [0, 4, 0] }}
-          transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute top-0 left-0 w-[260px] sm:w-[340px] md:w-[420px] lg:w-[460px] h-[200px] sm:h-[260px] md:h-[310px]"
-        >
-          <svg
-            viewBox="0 0 460 310"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-full h-full"
-            preserveAspectRatio="none"
-          >
-            <defs>
-              <linearGradient id="ctaTopLeftWaveGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#FF7A32" stopOpacity="0.9" />
-                <stop offset="40%" stopColor="#FFA25E" stopOpacity="0.65" />
-                <stop offset="75%" stopColor="#FED7AA" stopOpacity="0.25" />
-                <stop offset="100%" stopColor="#FFF9F2" stopOpacity="0" />
-              </linearGradient>
-            </defs>
-            {/* Organic Fluid Wave */}
-            <path
-              d="M 0 0 L 290 0 C 270 80, 230 145, 160 200 C 95 245, 45 275, 0 310 Z"
-              fill="url(#ctaTopLeftWaveGrad)"
-            />
-          </svg>
-        </motion.div>
-
-        {/* BOTTOM-RIGHT: Fluid Sunset Rose/Amber Wave */}
-        <motion.div
-          animate={shouldReduceMotion ? {} : { x: [0, -5, 0], y: [0, -4, 0] }}
-          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute bottom-0 right-0 w-[280px] sm:w-[380px] md:w-[460px] lg:w-[500px] h-[220px] sm:h-[280px] md:h-[330px]"
-        >
-          <svg
-            viewBox="0 0 500 330"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-full h-full"
-            preserveAspectRatio="none"
-          >
-            <defs>
-              <linearGradient id="ctaBottomRightWaveGrad" x1="100%" y1="100%" x2="0%" y2="0%">
-                <stop offset="0%" stopColor="#FF6628" stopOpacity="0.9" />
-                <stop offset="40%" stopColor="#FF8550" stopOpacity="0.65" />
-                <stop offset="75%" stopColor="#FED7AA" stopOpacity="0.25" />
-                <stop offset="100%" stopColor="#FFF9F2" stopOpacity="0" />
-              </linearGradient>
-            </defs>
-            {/* Organic Fluid Wave */}
-            <path
-              d="M 500 330 L 190 330 C 260 250, 360 195, 425 125 C 460 88, 485 45, 500 0 Z"
-              fill="url(#ctaBottomRightWaveGrad)"
-            />
-          </svg>
-        </motion.div>
-      </div>
-
-      {/* ========================================================
           CENTERED HERO CONTENT (EXACT REFERENCE PARITY)
          ======================================================== */}
-      <div className="relative max-w-5xl mx-auto px-6 sm:px-8 text-center z-10 flex flex-col items-center">
+      <div className="relative w-full max-w-5xl mx-auto px-6 sm:px-8 text-center z-10 flex flex-col items-center my-auto">
         
         {/* --- MAIN HEADLINE CONTAINER WITH ATTACHED DOODLE & BURSTS --- */}
         <div className="relative inline-flex flex-col items-center max-w-full">

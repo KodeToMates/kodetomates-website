@@ -1,10 +1,7 @@
 'use client'
 
 import React from 'react'
-import { motion, useReducedMotion } from 'framer-motion'
-
 export function FloatingBackground() {
-  const shouldReduceMotion = useReducedMotion()
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none select-none z-0" aria-hidden="true">
@@ -16,18 +13,10 @@ export function FloatingBackground() {
         }} 
       />
 
-      {/* 2. Soft atmospheric breathing glow behind the right visual */}
-      <motion.div
-        animate={shouldReduceMotion ? {} : {
-          scale: [1, 1.05, 1],
-          opacity: [0.55, 0.75, 0.55],
-        }}
-        transition={{
-          duration: 12,
-          repeat: Infinity,
-          ease: 'easeInOut'
-        }}
-        className="absolute top-[8%] right-[-5%] w-[58vw] h-[58vw] max-w-[950px] max-h-[950px] rounded-full bg-gradient-to-br from-[#FF9234]/25 via-[#F79A62]/15 to-transparent blur-[120px]"
+      {/* 2. Soft atmospheric glow behind the right visual (Static GPU-composited: zero CPU/GPU redraws) */}
+      <div 
+        className="absolute top-[8%] right-[-5%] w-[58vw] h-[58vw] max-w-[950px] max-h-[950px] rounded-full bg-gradient-to-br from-[#FF9234]/20 via-[#F79A62]/12 to-transparent blur-[110px] pointer-events-none gpu-accelerated"
+        style={{ transform: 'translateZ(0)' }}
       />
     </div>
   )

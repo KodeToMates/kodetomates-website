@@ -14,6 +14,9 @@
   --color-text-inverse: #FFFFFF;
 
   --color-primary-orange: #E4521B;
+  --color-coral: #E4521B;
+  --color-coral-hover: #CC420F;
+  --color-pill-black: #141210;
   --color-sunset-orange: #FF914D;
   --color-berry-crimson: #AB003E;
   --color-primary-sunset: #FF914D;
@@ -23,12 +26,15 @@
   --color-terminal-navy: #161B26;
 
   --font-sans: var(--font-jakarta), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: var(--font-playfair), Georgia, serif;
-  --font-playfair: var(--font-playfair), Georgia, serif;
-  --font-fraunces: var(--font-playfair), Georgia, serif;
+  --font-hero: var(--font-jakarta), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-jakarta), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-jakarta), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-jakarta), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-playfair: var(--font-jakarta), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-fraunces: var(--font-jakarta), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-outfit: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
   --font-space: var(--font-space), monospace, sans-serif;
-  --font-instrument: var(--font-playfair), Georgia, serif;
+  --font-instrument: var(--font-jakarta), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-caveat: var(--font-caveat), cursive;
 
   --text-h1: 4.5rem;
@@ -45,16 +51,385 @@
 @layer base {
   body {
     @apply bg-background-sand text-text-primary font-sans antialiased;
-    scroll-behavior: smooth;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-playfair), Georgia, serif;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-jakarta), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: -0.03em;
   }
 }
 
+/* ============================================================
+   LENIS SMOOTH SCROLL INTEGRATION
+   ============================================================ */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* ============================================================
+   HARDWARE ACCELERATION & GPU COMPOSITING
+   ============================================================ */
+.gpu-accelerated {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* ============================================================
+   HARDWARE-ACCELERATED CSS KEYFRAMES (Offloaded from JS thread)
+   ============================================================ */
+@keyframes float-gentle {
+
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0, -6px, 0);
+  }
+}
+
+@keyframes float-reverse {
+
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0, 6px, 0);
+  }
+}
+
+@keyframes float-orb {
+
+  0%,
+  100% {
+    transform: translate3d(-50%, -50%, 0) translateY(-3px) scale(1);
+  }
+
+  50% {
+    transform: translate3d(-50%, -50%, 0) translateY(3px) scale(1.035);
+  }
+}
+
+@keyframes pulse-orb-shadow {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.38;
+  }
+
+  50% {
+    transform: scale(0.85);
+    opacity: 0.22;
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-float-slow {
+  animation: float-gentle 7s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-float-delayed {
+  animation: float-reverse 7.5s ease-in-out infinite;
+  animation-delay: 0.4s;
+  will-change: transform;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 24s linear infinite;
+  will-change: transform;
+}
+
+@keyframes float-cube {
+
+  0%,
+  100% {
+    transform: translate3d(0, -5px, 0) rotate(8deg);
+  }
+
+  50% {
+    transform: translate3d(0, 5px, 0) rotate(10.5deg);
+  }
+}
+
+.animate-float-cube {
+  animation: float-cube 6s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes wave-drift-tl {
+
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(5px, 4px, 0);
+  }
+}
+
+@keyframes wave-drift-br {
+
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(-5px, -4px, 0);
+  }
+}
+
+.animate-wave-drift-tl {
+  animation: wave-drift-tl 9s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-wave-drift-br {
+  animation: wave-drift-br 10s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes orbit-travel-0 {
+  from {
+    offset-distance: 0%;
+  }
+
+  to {
+    offset-distance: 100%;
+  }
+}
+
+@keyframes orbit-travel-33 {
+  from {
+    offset-distance: 33%;
+  }
+
+  to {
+    offset-distance: 133%;
+  }
+}
+
+@keyframes orbit-travel-66 {
+  from {
+    offset-distance: 66%;
+  }
+
+  to {
+    offset-distance: 166%;
+  }
+}
+
+.animate-orbit-1 {
+  offset-path: ellipse(50% 50% at 50% 50%);
+  animation: orbit-travel-0 18s linear infinite;
+  will-change: transform;
+}
+
+.animate-orbit-2 {
+  offset-path: ellipse(50% 50% at 50% 50%);
+  animation: orbit-travel-33 21s linear infinite;
+  will-change: transform;
+}
+
+.animate-orbit-3 {
+  offset-path: ellipse(50% 50% at 50% 50%);
+  animation: orbit-travel-66 24s linear infinite;
+  will-change: transform;
+}
+
+/* ============================================================
+   KODETOMATES UNIQUE LOADER KEYFRAMES
+   ============================================================ */
+@keyframes shimmer-sweep {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes tomato-glow-pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 8px 18px rgba(228, 82, 27, 0.28));
+  }
+
+  50% {
+    transform: scale(1.05);
+    filter: drop-shadow(0 14px 28px rgba(228, 82, 27, 0.45));
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer-sweep 2s infinite linear;
+}
+
+.animate-tomato-glow {
+  animation: tomato-glow-pulse 3s infinite ease-in-out;
+}
+
+/* ============================================================
+   TECH MARQUEE ANIMATION KEYFRAMES (Hardware accelerated)
+   ============================================================ */
+@keyframes marquee-scroll-left {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes marquee-scroll-right {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate-marquee-left {
+  animation: marquee-scroll-left 70s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-right {
+  animation: marquee-scroll-right 75s linear infinite;
+  will-change: transform;
+}
+
+.group:hover .group-hover-pause {
+  animation-play-state: paused;
+}
+
+
+/* ============================================================
+   GLOBAL CTA BUTTON: Dark Pill -> Coral Hover
+   Matches "Reserve Your Spot" & "Join KodeToMates"
+   ============================================================ */
+.btn-dark-coral,
+.btn-pill-dark {
+  background-color: #141210;
+  color: #ffffff;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+}
+
+.btn-dark-coral:hover,
+.btn-pill-dark:hover {
+  background-color: #e4521b;
+  box-shadow: 0 8px 20px rgba(228, 82, 27, 0.3);
+}
+
+.btn-dark-coral:active,
+.btn-pill-dark:active {
+  background-color: #e4521b;
+}
+
+.btn-dark-coral:disabled,
+.btn-pill-dark:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ============================================================
+   GLOBAL CTA BUTTON: Coral Pill -> Black Hover
+   Matches Navbar "Join KodeTomates" (.btn-pill-coral / .btn-coral-dark)
+   ============================================================ */
+.btn-pill-coral,
+.btn-coral-dark {
+  background-color: var(--color-coral, #E4521B);
+  color: #ffffff;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 16px rgba(228, 82, 27, 0.35);
+  cursor: pointer;
+}
+
+.btn-pill-coral:hover,
+.btn-coral-dark:hover {
+  background-color: var(--color-pill-black, #141210);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.btn-pill-coral:active,
+.btn-coral-dark:active {
+  background-color: var(--color-pill-black, #141210);
+}
+
+.btn-pill-coral:disabled,
+.btn-coral-dark:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ============================================================
+   GLOBAL HERO TYPOGRAPHY UTILITIES
+   Plus Jakarta Sans with tight modern editorial tracking
+   ============================================================ */
+.font-hero,
+.font-display {
+  font-family: var(--font-jakarta), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: -0.035em;
+}
+
+.heading-hero {
+  font-family: var(--font-jakarta), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  *, ::before, ::after {
+
+  *,
+  ::before,
+  ::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
