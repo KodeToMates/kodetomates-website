@@ -1,5 +1,6 @@
 'use client'
 
+import { motion, useReducedMotion } from 'framer-motion'
 import { SlitHeading } from '@/components/ui/SlitHeading'
 
 // Definition of each technology item
@@ -595,6 +596,8 @@ const ROW_2 = TECH_ITEMS.slice(14, 28)
  * meticulously styled to match the KodeToMates aesthetic, colors, and typography.
  */
 export function TechnologiesSection() {
+  const shouldReduceMotion = useReducedMotion()
+
   return (
     <section
       id="technologies"
@@ -622,7 +625,13 @@ export function TechnologiesSection() {
       {/* ========================================================
           FULL-WIDTH CURVED DUAL-ROW MARQUEE (Spans 100% Viewport)
          ======================================================== */}
-      <div className="relative w-full pt-3 pb-5 sm:pt-4 sm:pb-6 select-none group overflow-hidden z-10">
+      <motion.div
+        initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, x: -48 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+        className="relative w-full pt-3 pb-5 sm:pt-4 sm:pb-6 select-none group overflow-hidden z-10"
+      >
         {/* Left Edge Gradient Fade Mask */}
         <div className="absolute top-0 bottom-0 left-0 w-28 sm:w-48 lg:w-72 z-20 pointer-events-none bg-gradient-to-r from-white via-white/95 to-transparent" />
         {/* Right Edge Gradient Fade Mask */}
@@ -644,7 +653,7 @@ export function TechnologiesSection() {
             ))}
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   )
 }

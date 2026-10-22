@@ -189,12 +189,12 @@ export function WhatWeDo() {
               <motion.article
                 key={service.id}
                 id={service.id}
-                initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, x: isSwapped ? 48 : -48, y: 16 }}
+                whileInView={{ opacity: 1, x: 0, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
                 transition={{
-                  duration: 0.7,
-                  delay: idx * 0.08,
+                  duration: 0.8,
+                  delay: 0.05,
                   ease: [0.16, 1, 0.3, 1],
                 }}
                 className="rounded-[28px] sm:rounded-[32px] bg-white border border-[#E8E4DC] p-6 sm:p-8 lg:p-10 shadow-[0_12px_36px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.08)] transition-all duration-300 scroll-mt-28"

@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import { motion, useReducedMotion } from 'framer-motion'
 import SlitTypeFaq, { FaqItem, SlitPreset } from '@/components/ui/slit-type-faq'
 import { HOME_FAQ_ITEMS, HOME_FAQ_CATEGORIES, FAQ_TICKER_PHRASES } from '@/data/faq'
 
@@ -70,13 +71,21 @@ export function FAQSection({
   bgColor = 'bg-white',
   defaultOpen = 0,
 }: FAQSectionProps) {
+  const shouldReduceMotion = useReducedMotion()
+
   return (
     <section
       id={id}
-      className={`w-full ${bgColor} relative scroll-mt-24 border-t border-[#F0EBE1] ${className}`}
+      className={`w-full ${bgColor} relative scroll-mt-24 border-t border-[#F0EBE1] overflow-hidden ${className}`}
       aria-label={headline ? undefined : 'Frequently asked questions'}
     >
-      <div className={`w-full ${containerMaxWidth} mx-auto px-4 sm:px-6 lg:px-8`}>
+      <motion.div
+        initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, x: -44 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className={`w-full ${containerMaxWidth} mx-auto px-4 sm:px-6 lg:px-8`}
+      >
         <SlitTypeFaq
           items={items}
           eyebrow={eyebrow}
@@ -98,7 +107,7 @@ export function FAQSection({
           syncHash={true}
           defaultOpen={defaultOpen}
         />
-      </div>
+      </motion.div>
     </section>
   )
 }

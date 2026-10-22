@@ -90,7 +90,13 @@ export function CTASection({
       aria-labelledby={`${id}-heading`}
     >
       {/* --- CENTERED CARD CONTAINER --- */}
-      <div className={`relative w-full ${containerMaxWidth} mx-auto`}>
+      <motion.div
+        initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, x: 48, scale: 0.98 }}
+        whileInView={{ opacity: 1, x: 0, scale: 1 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className={`relative w-full ${containerMaxWidth} mx-auto`}
+      >
         <div
           className={`relative w-full rounded-[28px] sm:rounded-[36px] lg:rounded-[42px] overflow-hidden bg-[#0C0B0A] border border-[#302A25] shadow-[0_24px_60px_-15px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.06)] py-14 sm:py-16 lg:py-20 px-6 sm:px-10 lg:px-14 ${cardClassName}`}
         >
@@ -189,7 +195,7 @@ export function CTASection({
             )}
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   )
 }

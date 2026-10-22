@@ -51,6 +51,9 @@ export interface StackedCardsSectionProps {
   cards: StackedCardItem[]
   ctaButton?: StackedCtaButton
   slit?: number
+  className?: string
+  /** Vertical alignment of sticky content: 'center' (default) or 'top' */
+  contentAlign?: 'center' | 'top'
 }
 
 export function StackedCardsSection({
@@ -64,6 +67,8 @@ export function StackedCardsSection({
   cards,
   ctaButton,
   slit = 0,
+  className = '',
+  contentAlign = 'center',
 }: StackedCardsSectionProps) {
   const shouldReduceMotion = useReducedMotion()
   const sectionRef = useRef<HTMLDivElement>(null)
@@ -117,18 +122,24 @@ export function StackedCardsSection({
     <section
       ref={sectionRef}
       id={sectionId}
-      className={`relative w-full bg-white selection:bg-[#E4521B]/20 selection:text-[#E4521B] ${sectionHeightClass}`}
+      className={`relative w-full bg-white selection:bg-[#E4521B]/20 selection:text-[#E4521B] ${sectionHeightClass} ${className}`}
       aria-labelledby={`${sectionId}-heading`}
     >
       {/* Pinned Viewport Container (stays sticky on screen while user scrolls through all cards) */}
-      <div className="sticky top-0 h-screen w-full flex items-center overflow-hidden bg-white z-10">
-        <div className="relative w-full max-w-[1380px] mx-auto px-6 sm:px-8 lg:px-10 xl:px-12 h-full flex flex-col justify-center">
+      <div className={`sticky top-0 h-screen w-full flex overflow-hidden bg-white z-10 ${contentAlign === 'top' ? 'items-start pt-[6vh]' : 'items-center'}`}>
+        <div className={`relative w-full max-w-[1380px] mx-auto px-6 sm:px-8 lg:px-10 xl:px-12 h-full flex flex-col ${contentAlign === 'top' ? 'justify-start' : 'justify-center'}`}>
           {/* Main 2-Column Balanced Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-center w-full">
             {/* ========================================================
                 LEFT COLUMN: Sticky Editorial Heading, Copy, & Navigation
                ======================================================== */}
-            <div className="lg:col-span-6 flex flex-col items-start text-left z-20">
+            <motion.div
+              initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, x: -44 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="lg:col-span-6 flex flex-col items-start text-left z-20"
+            >
               {/* Main Headline with Letter-by-Letter Slit Reveal & Coral Dots */}
               {(() => {
                 const formatTitle = (line: string, color?: string, className?: string) => {
@@ -215,12 +226,18 @@ export function StackedCardsSection({
                   )}
                 </div>
               )}
-            </div>
+            </motion.div>
 
             {/* ========================================================
                 RIGHT COLUMN: Stack of Cards (Tight Gap with Left Context)
                ======================================================== */}
-            <div className="lg:col-span-6 relative w-full flex items-center justify-center lg:justify-start py-4 sm:py-6">
+            <motion.div
+              initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, x: 44 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="lg:col-span-6 relative w-full flex items-center justify-center lg:justify-start py-4 sm:py-6"
+            >
               {/* Stack Stage: Fixed frame holding all layered cards */}
               <div className="relative w-full max-w-[520px] xl:max-w-[560px] h-[520px] sm:h-[560px] lg:h-[580px]">
                 {cards.map((card, idx) => (
@@ -235,7 +252,7 @@ export function StackedCardsSection({
                   />
                 ))}
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>
