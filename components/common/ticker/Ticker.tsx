@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
 export interface TickerProps {
   /** Array of text phrases or items to display in the marquee */
@@ -31,6 +31,12 @@ export interface TickerProps {
   textColor?: string
   /** Custom background color override */
   bgColor?: string
+  /**
+   * If true, moving direction responds to user scroll:
+   * scrolling down moves forward (left), scrolling up reverts direction (right).
+   * Automatically defaults to true for 'hero' variant.
+   */
+  reverseOnScrollUp?: boolean
 }
 
 export const DEFAULT_TICKER_PHRASES = [
@@ -58,12 +64,19 @@ export function Ticker({
   separator,
   textColor,
   bgColor,
+  reverseOnScrollUp,
 }: TickerProps) {
   const [isPaused, setIsPaused] = useState(false)
+  const [isHovered, setIsHovered] = useState(false)
+
+  // Default reverseOnScrollUp to true for 'hero' variant
+  const shouldReverseOnScrollUp =
+    reverseOnScrollUp !== undefined ? reverseOnScrollUp : variant === 'hero'
 
   // Variant-based styling presets
+  // 'hero' has increased height (py-7 sm:py-8 lg:py-10), while 'faq' remains py-2.5
   const variantStyles = {
-    hero: 'w-full bg-[#FAF7F2] border-y border-[#EDE8DF] py-3',
+    hero: 'w-full bg-[#FAF7F2] border-y border-[#EDE8DF] py-7 sm:py-8 lg:py-10',
     faq: 'w-full bg-transparent border-y border-[#F0EBE1] py-2.5 my-4 sm:my-6',
     banner: 'w-full bg-[#141210] border-y border-white/10 py-3 text-white',
     clean: 'w-full bg-transparent py-2',
@@ -71,12 +84,185 @@ export function Ticker({
 
   const animDirection = direction === 'right' ? 'kt-ticker-slide-right' : 'kt-ticker-slide-left'
 
+  // Refs for requestAnimationFrame bidirectional motion
+  const trackRef = useRef<HTMLDivElement>(null)
+  const firstRunRef = useRef<HTMLDivElement>(null)
+  const [singleRunWidth, setSingleRunWidth] = useState(0)
+
+  // Direction: -1 = move left (default/scroll down), 1 = move right (scroll up)
+  const initialDir = direction === 'right' ? 1 : -1
+  const targetDirectionRef = useRef<-1 | 1>(initialDir)
+  const currentDirectionRef = useRef<number>(initialDir)
+  const targetVelocityMultiplierRef = useRef<number>(1)
+  const currentVelocityMultiplierRef = useRef<number>(1)
+  const posXRef = useRef<number>(0)
+
+  // Measure single run width
+  useEffect(() => {
+    if (!shouldReverseOnScrollUp) return
+
+    const measureWidth = () => {
+      if (firstRunRef.current) {
+        const width = firstRunRef.current.getBoundingClientRect().width
+        if (width > 0) {
+          setSingleRunWidth(width)
+        }
+      }
+    }
+
+    measureWidth()
+
+    window.addEventListener('resize', measureWidth)
+    if (typeof document !== 'undefined' && 'fonts' in document) {
+      document.fonts.ready.then(measureWidth)
+    }
+
+    return () => {
+      window.removeEventListener('resize', measureWidth)
+    }
+  }, [shouldReverseOnScrollUp, phrases])
+
+  // Track window scroll & wheel events for responsive directional change
+  useEffect(() => {
+    if (!shouldReverseOnScrollUp) return
+
+    let lastScrollY = window.scrollY
+    let scrollEndTimer: ReturnType<typeof setTimeout> | null = null
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY
+      const delta = currentScrollY - lastScrollY
+
+      if (Math.abs(delta) > 1) {
+        if (delta > 0) {
+          // Scrolling DOWN -> normal direction (left = -1)
+          targetDirectionRef.current = -1
+        } else {
+          // Scrolling UP -> revert direction (right = 1)
+          targetDirectionRef.current = 1
+        }
+
+        // Add smooth velocity boost during active scroll (capped at 2.5x)
+        const boost = Math.min(Math.abs(delta) * 0.04, 2.5)
+        targetVelocityMultiplierRef.current = 1 + boost
+      }
+
+      // If user scrolls all the way back to the top of the page, return to default left direction
+      if (currentScrollY <= 25) {
+        targetDirectionRef.current = -1
+      }
+
+      lastScrollY = currentScrollY
+
+      if (scrollEndTimer) clearTimeout(scrollEndTimer)
+      scrollEndTimer = setTimeout(() => {
+        // Return to normal cruising speed when scroll ends
+        targetVelocityMultiplierRef.current = 1
+      }, 140)
+    }
+
+    const handleWheel = (e: WheelEvent) => {
+      if (Math.abs(e.deltaY) > 2) {
+        if (e.deltaY > 0) {
+          // Wheel DOWN -> move left
+          targetDirectionRef.current = -1
+        } else if (e.deltaY < 0) {
+          // Wheel UP -> revert (move right)
+          targetDirectionRef.current = 1
+        }
+
+        const boost = Math.min(Math.abs(e.deltaY) * 0.03, 2.5)
+        targetVelocityMultiplierRef.current = 1 + boost
+
+        if (scrollEndTimer) clearTimeout(scrollEndTimer)
+        scrollEndTimer = setTimeout(() => {
+          targetVelocityMultiplierRef.current = 1
+        }, 140)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    window.addEventListener('wheel', handleWheel, { passive: true })
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('wheel', handleWheel)
+      if (scrollEndTimer) clearTimeout(scrollEndTimer)
+    }
+  }, [shouldReverseOnScrollUp])
+
+  // Bidirectional RequestAnimationFrame loop
+  useEffect(() => {
+    if (!shouldReverseOnScrollUp || singleRunWidth <= 0) return
+
+    // Base speed in px/sec matching duration prop
+    const baseSpeed = singleRunWidth / Math.max(duration, 1)
+
+    let animationFrameId: number
+    let lastTime = performance.now()
+
+    const loop = (now: number) => {
+      const dt = Math.min((now - lastTime) / 1000, 0.1) // Cap dt at 100ms
+      lastTime = now
+
+      const isActuallyPaused = isPaused || (pauseOnHover && isHovered)
+      const prefersReduced =
+        typeof window !== 'undefined' &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+      if (!isActuallyPaused && !prefersReduced) {
+        // Smooth exponential lerp for seamless direction and speed changes
+        currentDirectionRef.current +=
+          (targetDirectionRef.current - currentDirectionRef.current) * 0.08
+        currentVelocityMultiplierRef.current +=
+          (targetVelocityMultiplierRef.current - currentVelocityMultiplierRef.current) * 0.1
+
+        const step =
+          currentDirectionRef.current *
+          baseSpeed *
+          currentVelocityMultiplierRef.current *
+          dt
+
+        posXRef.current += step
+
+        // Wrap seamlessly around singleRunWidth
+        while (posXRef.current <= -singleRunWidth) {
+          posXRef.current += singleRunWidth
+        }
+        while (posXRef.current > 0) {
+          posXRef.current -= singleRunWidth
+        }
+
+        if (trackRef.current) {
+          trackRef.current.style.transform = `translate3d(${posXRef.current}px, 0, 0)`
+        }
+      }
+
+      animationFrameId = requestAnimationFrame(loop)
+    }
+
+    animationFrameId = requestAnimationFrame(loop)
+
+    return () => {
+      cancelAnimationFrame(animationFrameId)
+    }
+  }, [shouldReverseOnScrollUp, singleRunWidth, duration, isPaused, isHovered, pauseOnHover])
+
+  const copyCount = shouldReverseOnScrollUp ? 4 : 2
+  const isHero = variant === 'hero'
+
   return (
     <div
       className={`relative z-20 select-none overflow-hidden group ${variantStyles} ${bgColor || ''} ${className}`}
       role="region"
       aria-label={ariaLabel}
       data-paused={isPaused ? 'true' : 'false'}
+      onMouseEnter={() => {
+        if (pauseOnHover) setIsHovered(true)
+      }}
+      onMouseLeave={() => {
+        if (pauseOnHover) setIsHovered(false)
+      }}
     >
       <style>{`
         .kt-ticker-container[data-paused="true"] .kt-ticker-track {
@@ -111,6 +297,13 @@ export function Ticker({
           white-space: nowrap;
         }
 
+        .kt-ticker-item-hero {
+          padding: 0 2rem;
+          font-size: clamp(14px, 1.4vw, 17.5px);
+          font-weight: 750;
+          letter-spacing: 0.14em;
+        }
+
         .kt-ticker-dot {
           display: inline-block;
           width: 0.38em;
@@ -119,6 +312,12 @@ export function Ticker({
           margin-left: 1.8rem;
           vertical-align: middle;
           opacity: 0.9;
+        }
+
+        .kt-ticker-item-hero .kt-ticker-dot {
+          margin-left: 2.2rem;
+          width: 0.44em;
+          height: 0.44em;
         }
 
         @keyframes kt-ticker-slide-left {
@@ -166,16 +365,23 @@ export function Ticker({
           aria-hidden="true"
         >
           <div
-            className={`kt-ticker-track ${pauseOnHover ? 'kt-ticker-track-hover' : ''} ${trackClassName}`}
-            style={{
-              animation: `${animDirection} ${duration}s linear infinite`,
-            }}
+            ref={trackRef}
+            className={`kt-ticker-track ${!shouldReverseOnScrollUp && pauseOnHover ? 'kt-ticker-track-hover' : ''} ${trackClassName}`}
+            style={
+              shouldReverseOnScrollUp
+                ? { willChange: 'transform' }
+                : { animation: `${animDirection} ${duration}s linear infinite` }
+            }
           >
-            {[0, 1].map((copyIndex) => (
-              <div className="kt-ticker-run" key={copyIndex}>
+            {Array.from({ length: copyCount }).map((_, copyIndex) => (
+              <div
+                ref={copyIndex === 0 ? firstRunRef : undefined}
+                className="kt-ticker-run"
+                key={copyIndex}
+              >
                 {[...phrases, ...phrases].map((phrase, idx) => (
                   <span
-                    className={`kt-ticker-item ${itemClassName}`}
+                    className={`kt-ticker-item ${isHero ? 'kt-ticker-item-hero' : ''} ${itemClassName}`}
                     style={{ color: textColor || '#E4521B' }}
                     key={idx}
                   >

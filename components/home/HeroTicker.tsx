@@ -26,7 +26,7 @@ export const DEFAULT_HERO_TICKER_PHRASES = [
 export function HeroTicker({
   phrases = DEFAULT_HERO_TICKER_PHRASES,
   className = '',
-  duration = 38,
+  duration = 65,
   pauseOnHover = true,
 }: HeroTickerProps) {
   return (
@@ -35,6 +35,7 @@ export function HeroTicker({
       variant="hero"
       duration={duration}
       pauseOnHover={pauseOnHover}
+      reverseOnScrollUp={true}
       className={className}
       ariaLabel="KodeToMates Ecosystem Highlights Ticker"
     />

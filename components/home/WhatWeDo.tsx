@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion, useReducedMotion } from 'framer-motion'
@@ -133,17 +133,80 @@ const SERVICES: ServiceItem[] = [
 
 export function WhatWeDo() {
   const shouldReduceMotion = useReducedMotion()
+  const [activePillar, setActivePillar] = useState<string>(SERVICES[0].id)
+
+  // Track the active section on scroll to illuminate the corresponding filter pill
+  useEffect(() => {
+    if (typeof window === 'undefined' || typeof IntersectionObserver === 'undefined') return
+
+    const observers: IntersectionObserver[] = []
+    SERVICES.forEach((service) => {
+      const el = document.getElementById(service.id)
+      if (!el) return
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setActivePillar(service.id)
+            }
+          })
+        },
+        { rootMargin: '-20% 0px -55% 0px', threshold: 0 }
+      )
+      observer.observe(el)
+      observers.push(observer)
+    })
+
+    return () => {
+      observers.forEach((obs) => obs.disconnect())
+    }
+  }, [])
+
+  // Smooth scroll handler with Lenis support & fallback
+  const handlePillarClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault()
+    const target = document.getElementById(id)
+    if (!target) return
+
+    setActivePillar(id)
+
+    // Check for global Lenis instance
+    const lenisInstance =
+      typeof window !== 'undefined'
+        ? (window as unknown as { lenis?: { scrollTo: (target: HTMLElement | string, options?: object) => void } }).lenis
+        : null
+
+    if (lenisInstance) {
+      lenisInstance.scrollTo(target, { offset: -80, duration: 1.0 })
+    } else {
+      const navOffset = 80
+      const elementPosition = target.getBoundingClientRect().top
+      const offsetPosition = elementPosition + window.pageYOffset - navOffset
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth',
+      })
+    }
+
+    try {
+      window.history.pushState(null, '', `#${id}`)
+    } catch {
+      // ignore
+    }
+  }
 
   return (
     <section
       id="what-we-do"
-      className="relative z-10 w-full pt-16 md:pt-20 lg:pt-24 pb-20 md:pb-28 overflow-hidden scroll-mt-28 bg-white selection:bg-[#E4521B]/20 selection:text-[#E4521B]"
+      className="relative z-10 w-full py-8 sm:py-10 md:py-12 lg:py-14 overflow-hidden scroll-mt-24 bg-[#12111A] rounded-t-2xl rounded-b-2xl sm:rounded-t-3xl sm:rounded-b-3xl text-white selection:bg-[#E4521B]/30 selection:text-white"
       aria-labelledby="what-we-do-heading"
     >
       <div className="relative max-w-[1380px] mx-auto px-6 sm:px-8 lg:px-10 xl:px-12 z-10">
 
-        {/* Section Header: Centered Position */}
-        <div className="flex flex-col items-center text-center mb-8 sm:mb-10">
+        {/* Section Header: Centered Position with Reduced Margin */}
+        <div className="flex flex-col items-center text-center mb-4 sm:mb-6">
 
           {/* Main Headline with Slit Reveal & Coral Dots */}
           <SlitHeading
@@ -153,156 +216,225 @@ export function WhatWeDo() {
             lines={[`Digital Experiences. <span style="color: var(--color-primary-orange)">That Drive Real Growth.</span>`]}
             showAccentLine={true}
             slit={0}
-            className="text-[clamp(22px,2.6vw,44px)] xl:text-[clamp(26px,2.7vw,48px)] leading-[1.14] tracking-[-0.03em] mb-3"
+            textColor="#FFFFFF"
+            dotColor="#E4521B"
+            className="text-[clamp(22px,2.6vw,44px)] xl:text-[clamp(26px,2.7vw,48px)] leading-[1.14] tracking-[-0.03em] mb-2"
           />
 
         </div>
 
-        {/* Pillar Switcher Navigation: Centered */}
+        {/* Pillar Switcher Navigation: Smooth scroll pills with active indicator */}
         <motion.div
-          initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 16 }}
+          initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.65, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-wrap items-center justify-center gap-2 mb-10 sm:mb-12 select-none"
+          transition={{ duration: 0.5, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-wrap items-center justify-center gap-2 mb-6 sm:mb-7 select-none"
         >
-          {SERVICES.map((pillar) => (
-            <a
-              key={pillar.id}
-              href={`#${pillar.id}`}
-              className="px-3 sm:px-3.5 py-1.5 rounded-full text-xs sm:text-[13px] font-sans font-semibold transition-all duration-300 flex items-center gap-1.5 bg-[#F5F2EB] text-[#554E48] hover:bg-[#141210] hover:text-white group focus:outline-none"
-            >
-              <span className="text-[10px] font-mono text-[#E4521B] group-hover:text-[#FF914D]">
-                {pillar.number}
-              </span>
-              <span>{pillar.shortTitle}</span>
-            </a>
-          ))}
-        </motion.div>
-
-        {/* 4 Category Showcases: Alternating Left Image / Right Image Swap */}
-        <div className="space-y-8 sm:space-y-12">
-          {SERVICES.map((service, idx) => {
-            const isSwapped = idx % 2 === 1
+          {SERVICES.map((pillar) => {
+            const isActive = activePillar === pillar.id
 
             return (
-              <motion.article
+              <a
+                key={pillar.id}
+                href={`#${pillar.id}`}
+                onClick={(e) => handlePillarClick(e, pillar.id)}
+                className={`px-3.5 sm:px-4 py-1.5 rounded-full text-xs sm:text-[13px] font-sans font-semibold transition-all duration-300 flex items-center gap-1.5 backdrop-blur-md shadow-xs group focus:outline-none cursor-pointer ${
+                  isActive
+                    ? 'bg-[#E4521B] text-white border border-[#E4521B] shadow-md shadow-[#E4521B]/35 scale-105'
+                    : 'bg-white/[0.08] hover:bg-white/[0.15] text-[#E0DCED] hover:text-white border border-white/10 hover:border-white/25'
+                }`}
+              >
+                <span
+                  className={`text-[10px] font-mono transition-colors duration-300 ${
+                    isActive ? 'text-white' : 'text-[#FF914D] group-hover:text-[#FFA366]'
+                  }`}
+                >
+                  {pillar.number}
+                </span>
+                <span>{pillar.shortTitle}</span>
+              </a>
+            )
+          })}
+        </motion.div>
+
+        {/* 4 Category Showcases: Left image with reveal animation, right context entering from left */}
+        <div className="space-y-4 sm:space-y-5 lg:space-y-6">
+          {SERVICES.map((service, idx) => {
+            const isImageLeft = idx % 2 === 0
+            const imageInitialX = shouldReduceMotion ? 0 : isImageLeft ? -80 : 80
+            const imageClipInitial = shouldReduceMotion
+              ? 'inset(0% 0% 0% 0% round 20px)'
+              : isImageLeft
+              ? 'inset(0% 100% 0% 0% round 20px)'
+              : 'inset(0% 0% 0% 100% round 20px)'
+            const imageWipeTarget = isImageLeft ? '102%' : '-102%'
+            const contextInitialX = shouldReduceMotion ? 0 : isImageLeft ? 80 : -80
+
+            return (
+              <article
                 key={service.id}
                 id={service.id}
-                initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, x: isSwapped ? 48 : -48, y: 16 }}
-                whileInView={{ opacity: 1, x: 0, y: 0 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{
-                  duration: 0.8,
-                  delay: 0.05,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                className="rounded-[28px] sm:rounded-[32px] bg-white border border-[#E8E4DC] p-6 sm:p-8 lg:p-10 shadow-[0_12px_36px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.08)] transition-all duration-300 scroll-mt-28"
+                className="scroll-mt-20 pb-4 sm:pb-5 lg:pb-6 border-b border-white/[0.08] last:border-b-0 last:pb-0 overflow-hidden"
               >
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-center">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 lg:gap-8 items-center">
 
                   {/* ========================================================
-                      IMAGE COLUMN (Swaps: Left on Card 1 & 3, Right on Card 2 & 4)
+                      IMAGE COLUMN (Alternates: Left on 1st/3rd, Right on 2nd/4th)
                      ======================================================== */}
-                  <div
-                    className={`lg:col-span-6 relative w-full aspect-[16/10] rounded-[20px] sm:rounded-[24px] overflow-hidden bg-[#FAF7F2] border border-[#EFEAE0] shadow-sm group ${isSwapped ? 'lg:order-2' : 'lg:order-1'
-                      }`}
+                  <motion.div
+                    initial={shouldReduceMotion ? { opacity: 1, x: 0 } : { opacity: 0, x: imageInitialX }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: '-60px' }}
+                    transition={{
+                      duration: 0.85,
+                      delay: 0.28,
+                      ease: [0.16, 1, 0.3, 1],
+                    }}
+                    className={`lg:col-span-6 ${isImageLeft ? 'lg:order-1' : 'lg:order-2'} order-1 relative w-full`}
                   >
-                    <Image
-                      src={service.image}
-                      alt={service.title}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 50vw"
-                      className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
-                      priority={idx === 0}
-                    />
+                    {/* Clip-Path Reveal Container */}
+                    <motion.div
+                      initial={{ clipPath: imageClipInitial }}
+                      whileInView={{ clipPath: 'inset(0% 0% 0% 0% round 20px)' }}
+                      viewport={{ once: true, margin: '-60px' }}
+                      transition={{
+                        duration: 0.85,
+                        delay: 0.28,
+                        ease: [0.16, 1, 0.3, 1],
+                      }}
+                      className="relative w-full aspect-[16/10] rounded-[20px] sm:rounded-[24px] overflow-hidden bg-[#1B1926] border border-white/10 shadow-[0_16px_36px_rgba(0,0,0,0.5)] group"
+                    >
+                      {/* Counter-scale image parallax during reveal */}
+                      <motion.div
+                        initial={shouldReduceMotion ? { scale: 1 } : { scale: 1.15 }}
+                        whileInView={{ scale: 1 }}
+                        viewport={{ once: true, margin: '-60px' }}
+                        transition={{
+                          duration: 0.85,
+                          delay: 0.28,
+                          ease: [0.16, 1, 0.3, 1],
+                        }}
+                        className="relative w-full h-full"
+                      >
+                        <Image
+                          src={service.image}
+                          alt={service.title}
+                          fill
+                          sizes="(max-width: 1024px) 100vw, 50vw"
+                          className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                          priority={idx === 0}
+                        />
+                      </motion.div>
 
-                    {/* Gradient overlay for text contrast */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/25 pointer-events-none" />
+                      {/* Warm Coral Reveal Sweep Wipe */}
+                      {!shouldReduceMotion && (
+                        <motion.div
+                          initial={{ x: '0%' }}
+                          whileInView={{ x: imageWipeTarget }}
+                          viewport={{ once: true, margin: '-60px' }}
+                          transition={{
+                            duration: 0.8,
+                            delay: 0.28,
+                            ease: [0.16, 1, 0.3, 1],
+                          }}
+                          className="absolute inset-0 bg-[#E4521B]/35 z-20 pointer-events-none"
+                        />
+                      )}
 
-                    {/* Floating Pill Tag (Top Left) */}
-                    <div className="absolute top-3.5 left-3.5 sm:top-4 sm:left-4 z-10 px-3 py-1 rounded-full bg-white/95 backdrop-blur-md text-[#111827] text-[11px] font-sans font-bold uppercase tracking-wider shadow-sm flex items-center gap-1.5">
-                      <service.icon className="w-3.5 h-3.5 text-[#E4521B]" />
-                      <span>{service.pill}</span>
-                    </div>
+                      {/* Gradient overlay for text contrast */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 pointer-events-none" />
 
-                    {/* Floating Stat Badge (Top Right) */}
-                    <div className="absolute top-3.5 right-3.5 sm:top-4 sm:right-4 z-10 px-3 py-1.5 rounded-full bg-black/65 backdrop-blur-md text-white text-[11px] sm:text-xs font-sans font-medium flex items-center gap-1.5 shadow-sm">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#E4521B]" />
-                      <span>{service.stat}</span>
-                    </div>
+                      {/* Floating Pill Tag (Top Left) */}
+                      <div className="absolute top-3 left-3 sm:top-3.5 sm:left-3.5 z-10 px-2.5 py-1 rounded-full bg-[#12111A]/90 backdrop-blur-md text-white text-[10.5px] font-sans font-bold uppercase tracking-wider border border-white/15 shadow-sm flex items-center gap-1.5">
+                        <service.icon className="w-3.5 h-3.5 text-[#FF914D]" />
+                        <span>{service.pill}</span>
+                      </div>
 
-                    {/* Bottom Title on Image */}
-                    <div className="absolute bottom-3.5 left-4 right-4 z-10 text-white">
-                      <h3 className="font-sans font-bold text-xl sm:text-2xl leading-tight drop-shadow-md">
-                        {service.title}
-                        <span className="text-[#E4521B]">.</span>
-                      </h3>
-                    </div>
-                  </div>
+                      {/* Floating Stat Badge (Top Right) */}
+                      <div className="absolute top-3 right-3 sm:top-3.5 sm:right-3.5 z-10 px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-md text-white text-[10.5px] sm:text-xs font-sans font-medium flex items-center gap-1.5 border border-white/10 shadow-sm">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#FF914D]" />
+                        <span>{service.stat}</span>
+                      </div>
+
+                      {/* Bottom Title on Image */}
+                      <div className="absolute bottom-3 left-3.5 right-3.5 z-10 text-white">
+                        <h3 className="font-sans font-bold text-lg sm:text-xl leading-tight drop-shadow-md">
+                          {service.title}
+                          <span className="text-[#FF914D]">.</span>
+                        </h3>
+                      </div>
+                    </motion.div>
+                  </motion.div>
 
                   {/* ========================================================
-                      CONTEXT COLUMN (Swaps: Right on Card 1 & 3, Left on Card 2 & 4)
+                      CONTEXT COLUMN (Alternates: Right on 1st/3rd, Left on 2nd/4th - Enters FIRST)
                      ======================================================== */}
-                  <div
-                    className={`lg:col-span-6 flex flex-col items-start text-left ${isSwapped ? 'lg:order-1' : 'lg:order-2'
-                      }`}
+                  <motion.div
+                    initial={shouldReduceMotion ? { opacity: 1, x: 0 } : { opacity: 0, x: contextInitialX }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: '-60px' }}
+                    transition={{
+                      duration: 0.75,
+                      delay: 0,
+                      ease: [0.16, 1, 0.3, 1],
+                    }}
+                    className={`lg:col-span-6 ${isImageLeft ? 'lg:order-2' : 'lg:order-1'} order-2 flex flex-col items-start text-left`}
                   >
-
                     {/* Number & Category Eyebrow */}
-                    <div className="inline-flex items-center gap-2 mb-2.5 select-none">
-                      <span className="font-mono text-xs font-bold text-[#E4521B] px-2.5 py-0.5 rounded-md bg-[#FFF0E5] border border-[#FED7AA]">
+                    <div className="inline-flex items-center gap-2 mb-2 select-none">
+                      <span className="font-mono text-xs font-bold text-[#FF914D] px-2.5 py-0.5 rounded-md bg-[#E4521B]/20 border border-[#E4521B]/40">
                         {service.number}
                       </span>
-                      <span className="font-sans font-bold text-xs tracking-[0.14em] uppercase text-[#736B63]">
+                      <span className="font-sans font-bold text-xs tracking-[0.14em] uppercase text-[#C6C0D4]">
                         {service.category}
                       </span>
                     </div>
 
                     {/* Headline */}
-                    <h3 className="font-sans font-bold text-[22px] sm:text-[26px] lg:text-[28px] text-[#111827] leading-[1.2] tracking-[-0.03em] mb-3.5">
+                    <h3 className="font-sans font-bold text-[22px] sm:text-[25px] lg:text-[28px] text-white leading-[1.2] tracking-[-0.03em] mb-2.5">
                       {service.headline}
                     </h3>
 
                     {/* Expanded Context Descriptions */}
-                    <div className="space-y-3 font-sans text-[14.5px] sm:text-[15px] leading-[1.68] text-[#554E48] font-normal mb-5">
+                    <div className="space-y-2 font-sans text-[14px] sm:text-[14.5px] leading-[1.62] text-[#D8D4E2] font-normal mb-4">
                       <p>{service.descriptionPrimary}</p>
-                      <p className="text-[#665F58] text-[13.5px] sm:text-[14.5px]">
+                      <p className="text-[#A29CAE] text-[13px] sm:text-[13.5px]">
                         {service.descriptionSecondary}
                       </p>
                     </div>
 
-                    {/* Deliverables / Capabilities Badges (Matching WhatIsKodeToMates) */}
-                    <div className="pt-3.5 border-t border-[#F2EEE6] w-full mb-6">
-                      <p className="text-[11px] font-mono font-semibold uppercase tracking-wider text-[#8A8178] mb-2.5">
+                    {/* Deliverables / Capabilities Badges */}
+                    <div className="pt-3 border-t border-white/[0.08] w-full mb-5">
+                      <p className="text-[11px] font-mono font-semibold uppercase tracking-wider text-[#C4BFCF] mb-2">
                         Key Deliverables & Capabilities:
                       </p>
-                      <div className="flex flex-wrap gap-2">
+                      <div className="flex flex-wrap gap-1.5 sm:gap-2">
                         {service.tags.map((tag) => (
                           <span
                             key={tag}
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#F8F5EE] border border-[#EFEAE0] text-[11.5px] sm:text-xs font-sans font-medium text-[#4A4540]"
+                            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/[0.07] backdrop-blur-md border border-white/10 text-[11px] sm:text-[11.5px] font-sans font-medium text-[#F0EDF8] shadow-xs"
                           >
-                            <CheckCircle2 className="w-3.5 h-3.5 shrink-0 text-[#E4521B]" />
+                            <CheckCircle2 className="w-3.5 h-3.5 shrink-0 text-[#FF914D]" />
                             <span>{tag}</span>
                           </span>
                         ))}
                       </div>
                     </div>
 
-                    {/* CTA Action Button: Styled like 'Explore Our Community' */}
+                    {/* CTA Action Button */}
                     <Link
                       href={service.href}
-                      className="group inline-flex items-center gap-2.5 px-6 sm:px-7 py-3.5 rounded-full bg-[#E4521B] hover:bg-[#141210] text-white font-sans font-semibold text-[14px] shadow-[0_8px_20px_rgba(228,82,27,0.25)] hover:shadow-[0_10px_24px_rgba(0,0,0,0.2)] transition-all duration-300 select-none"
+                      className="group inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-[#E4521B] hover:bg-white text-white hover:text-[#12111A] font-sans font-semibold text-[13.5px] shadow-[0_6px_18px_rgba(228,82,27,0.3)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.3)] transition-all duration-300 select-none"
                     >
                       <span>{service.btnLabel}</span>
                       <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                     </Link>
 
-                  </div>
+                  </motion.div>
 
                 </div>
-              </motion.article>
+              </article>
             )
           })}
         </div>

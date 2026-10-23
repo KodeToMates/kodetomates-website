@@ -1,5 +1,6 @@
 'use client'
 
+import { useState, useEffect, useRef } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { SlitHeading } from '@/components/ui/SlitHeading'
 
@@ -592,14 +593,222 @@ const ROW_2 = TECH_ITEMS.slice(14, 28)
 
 /**
  * TechnologiesSection Component
- * Recreates the exact curved dual-marquee tech integrations banner from the reference screenshot,
- * meticulously styled to match the KodeToMates aesthetic, colors, and typography.
+ * Curved dual-marquee tech integrations banner with:
+ * 1. Scroll-Direction-Aware Infinite Reverse (scrolling down: Row 1 moves left, Row 2 moves right; scrolling up: reversed)
+ * 2. Increased pill card sizing for bolder presence, readability, and interaction
+ * 3. Smooth momentum lerping, velocity boost during active scroll, and seamless infinite wrapping
  */
 export function TechnologiesSection() {
   const shouldReduceMotion = useReducedMotion()
 
+  const row1TrackRef = useRef<HTMLDivElement>(null)
+  const row2TrackRef = useRef<HTMLDivElement>(null)
+  const row1RunRef = useRef<HTMLDivElement>(null)
+  const row2RunRef = useRef<HTMLDivElement>(null)
+  const sectionRef = useRef<HTMLElement>(null)
+
+  const [row1Width, setRow1Width] = useState(0)
+  const [row2Width, setRow2Width] = useState(0)
+  const [isHovered, setIsHovered] = useState(false)
+
+  // -1 = scroll down (Row 1 left, Row 2 right); +1 = scroll up (Row 1 right, Row 2 left)
+  const targetDirectionRef = useRef<-1 | 1>(-1)
+  const currentDirectionRef = useRef<number>(-1)
+  const targetVelocityMultiplierRef = useRef<number>(1)
+  const currentVelocityMultiplierRef = useRef<number>(1)
+  const posX1Ref = useRef<number>(0)
+  const posX2Ref = useRef<number>(0)
+  const isInitializedRef = useRef<boolean>(false)
+  const isInViewRef = useRef<boolean>(true)
+
+  // Measure single run width for each row to guarantee seamless wrapping
+  useEffect(() => {
+    const measureWidth = () => {
+      if (row1RunRef.current) {
+        const w1 = row1RunRef.current.offsetWidth || row1RunRef.current.getBoundingClientRect().width
+        if (w1 > 0) setRow1Width(w1)
+      }
+      if (row2RunRef.current) {
+        const w2 = row2RunRef.current.offsetWidth || row2RunRef.current.getBoundingClientRect().width
+        if (w2 > 0) {
+          setRow2Width(w2)
+          if (!isInitializedRef.current) {
+            posX2Ref.current = -w2 * 0.35
+            if (row2TrackRef.current) {
+              row2TrackRef.current.style.transform = `translate3d(${posX2Ref.current}px, 0, 0)`
+            }
+            isInitializedRef.current = true
+          }
+        }
+      }
+    }
+
+    measureWidth()
+
+    window.addEventListener('resize', measureWidth)
+    if (typeof document !== 'undefined' && 'fonts' in document) {
+      document.fonts.ready.then(measureWidth)
+    }
+
+    return () => {
+      window.removeEventListener('resize', measureWidth)
+    }
+  }, [])
+
+  // Viewport visibility optimization via IntersectionObserver
+  useEffect(() => {
+    if (!sectionRef.current) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isInViewRef.current = entry.isIntersecting
+      },
+      { rootMargin: '300px 0px' }
+    )
+    observer.observe(sectionRef.current)
+    return () => observer.disconnect()
+  }, [])
+
+  // Listen to window scroll & wheel events for responsive directional change
+  useEffect(() => {
+    let lastScrollY = window.scrollY
+    let scrollEndTimer: ReturnType<typeof setTimeout> | null = null
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY
+      const delta = currentScrollY - lastScrollY
+
+      if (Math.abs(delta) > 1) {
+        if (delta > 0) {
+          // Scrolling DOWN -> Row 1 moves left (-1), Row 2 moves right (+1)
+          targetDirectionRef.current = -1
+        } else {
+          // Scrolling UP -> Row 1 reverses right (+1), Row 2 reverses left (-1)
+          targetDirectionRef.current = 1
+        }
+
+        // Add smooth velocity boost during active scroll (capped at 2.5x)
+        const boost = Math.min(Math.abs(delta) * 0.04, 2.5)
+        targetVelocityMultiplierRef.current = 1 + boost
+      }
+
+      // If user scrolls all the way back to the top of the page, return to default direction
+      if (currentScrollY <= 25) {
+        targetDirectionRef.current = -1
+      }
+
+      lastScrollY = currentScrollY
+
+      if (scrollEndTimer) clearTimeout(scrollEndTimer)
+      scrollEndTimer = setTimeout(() => {
+        targetVelocityMultiplierRef.current = 1
+      }, 140)
+    }
+
+    const handleWheel = (e: WheelEvent) => {
+      if (Math.abs(e.deltaY) > 2) {
+        if (e.deltaY > 0) {
+          targetDirectionRef.current = -1
+        } else if (e.deltaY < 0) {
+          targetDirectionRef.current = 1
+        }
+
+        const boost = Math.min(Math.abs(e.deltaY) * 0.03, 2.5)
+        targetVelocityMultiplierRef.current = 1 + boost
+
+        if (scrollEndTimer) clearTimeout(scrollEndTimer)
+        scrollEndTimer = setTimeout(() => {
+          targetVelocityMultiplierRef.current = 1
+        }, 140)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    window.addEventListener('wheel', handleWheel, { passive: true })
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('wheel', handleWheel)
+      if (scrollEndTimer) clearTimeout(scrollEndTimer)
+    }
+  }, [])
+
+  // RequestAnimationFrame bidirectional physics loop
+  useEffect(() => {
+    if (row1Width <= 0 || row2Width <= 0) return
+
+    const baseSpeed1 = row1Width / 65
+    const baseSpeed2 = row2Width / 70
+
+    let animationFrameId: number
+    let lastTime = performance.now()
+
+    const loop = (now: number) => {
+      const dt = Math.min((now - lastTime) / 1000, 0.1)
+      lastTime = now
+
+      const prefersReduced =
+        typeof window !== 'undefined' &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+      if (isInViewRef.current && !isHovered && !prefersReduced) {
+        // Smooth exponential lerp for seamless direction and speed transitions
+        currentDirectionRef.current +=
+          (targetDirectionRef.current - currentDirectionRef.current) * 0.08
+        currentVelocityMultiplierRef.current +=
+          (targetVelocityMultiplierRef.current - currentVelocityMultiplierRef.current) * 0.1
+
+        const step1 =
+          currentDirectionRef.current *
+          baseSpeed1 *
+          currentVelocityMultiplierRef.current *
+          dt
+
+        const step2 =
+          -currentDirectionRef.current *
+          baseSpeed2 *
+          currentVelocityMultiplierRef.current *
+          dt
+
+        posX1Ref.current += step1
+        posX2Ref.current += step2
+
+        // Wrap seamlessly around row1Width
+        while (posX1Ref.current <= -row1Width) {
+          posX1Ref.current += row1Width
+        }
+        while (posX1Ref.current > 0) {
+          posX1Ref.current -= row1Width
+        }
+
+        // Wrap seamlessly around row2Width
+        while (posX2Ref.current <= -row2Width) {
+          posX2Ref.current += row2Width
+        }
+        while (posX2Ref.current > 0) {
+          posX2Ref.current -= row2Width
+        }
+
+        if (row1TrackRef.current) {
+          row1TrackRef.current.style.transform = `translate3d(${posX1Ref.current}px, 0, 0)`
+        }
+        if (row2TrackRef.current) {
+          row2TrackRef.current.style.transform = `translate3d(${posX2Ref.current}px, 0, 0)`
+        }
+      }
+
+      animationFrameId = requestAnimationFrame(loop)
+    }
+
+    animationFrameId = requestAnimationFrame(loop)
+
+    return () => {
+      cancelAnimationFrame(animationFrameId)
+    }
+  }, [row1Width, row2Width, isHovered])
+
   return (
     <section
+      ref={sectionRef}
       id="technologies"
       className="relative z-10 w-full py-6 sm:py-8 overflow-hidden bg-white text-[#111827] selection:bg-[#E4521B]/20 selection:text-[#E4521B]"
       aria-labelledby="technologies-heading"
@@ -608,7 +817,7 @@ export function TechnologiesSection() {
         {/* ========================================================
             CENTERED SECTION HEADER
            ======================================================== */}
-        <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-2.5 sm:mb-3.5">
+        <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-3 sm:mb-4">
           {/* Main Headline with Slit Reveal & Coral Dots */}
           <SlitHeading
             id="technologies-heading"
@@ -623,7 +832,7 @@ export function TechnologiesSection() {
       </div>
 
       {/* ========================================================
-          FULL-WIDTH CURVED DUAL-ROW MARQUEE (Spans 100% Viewport)
+          FULL-WIDTH SCROLL-DIRECTION-AWARE DUAL-ROW MARQUEE
          ======================================================== */}
       <motion.div
         initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, x: -48 }}
@@ -631,25 +840,51 @@ export function TechnologiesSection() {
         viewport={{ once: true, margin: '-60px' }}
         transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
         className="relative w-full pt-3 pb-5 sm:pt-4 sm:pb-6 select-none group overflow-hidden z-10"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
         {/* Left Edge Gradient Fade Mask */}
         <div className="absolute top-0 bottom-0 left-0 w-28 sm:w-48 lg:w-72 z-20 pointer-events-none bg-gradient-to-r from-white via-white/95 to-transparent" />
         {/* Right Edge Gradient Fade Mask */}
         <div className="absolute top-0 bottom-0 right-0 w-28 sm:w-48 lg:w-72 z-20 pointer-events-none bg-gradient-to-l from-white via-white/95 to-transparent" />
 
-        {/* Arched Perspective Container (gentle dome curvature matching screenshot) */}
-        <div className="relative flex flex-col gap-4 sm:gap-6 [perspective:1200px]">
-          {/* ROW 1: Scrolls Left */}
-          <div className="flex gap-3 sm:gap-4 w-max animate-marquee-left group-hover-pause">
-            {[...ROW_1, ...ROW_1, ...ROW_1, ...ROW_1].map((tech, idx) => (
-              <TechTile key={`row1-${tech.id}-${idx}`} tech={tech} />
+        {/* Dual Marquee Track Container */}
+        <div className="relative flex flex-col gap-4 sm:gap-5.5">
+          {/* ROW 1: Scrolls Left on Scroll Down, Reverses Right on Scroll Up */}
+          <div
+            ref={row1TrackRef}
+            className="flex w-max"
+            style={{ willChange: 'transform' }}
+          >
+            {Array.from({ length: 4 }).map((_, copyIndex) => (
+              <div
+                key={`row1-run-${copyIndex}`}
+                ref={copyIndex === 0 ? row1RunRef : undefined}
+                className="inline-flex items-center gap-3.5 sm:gap-4.5 pr-3.5 sm:pr-4.5 shrink-0"
+              >
+                {ROW_1.map((tech, idx) => (
+                  <TechTile key={`row1-${tech.id}-${copyIndex}-${idx}`} tech={tech} />
+                ))}
+              </div>
             ))}
           </div>
 
-          {/* ROW 2: Offset Scrolls Right */}
-          <div className="flex gap-3 sm:gap-4 w-max animate-marquee-right group-hover-pause pl-8">
-            {[...ROW_2, ...ROW_2, ...ROW_2, ...ROW_2].map((tech, idx) => (
-              <TechTile key={`row2-${tech.id}-${idx}`} tech={tech} />
+          {/* ROW 2: Scrolls Right on Scroll Down, Reverses Left on Scroll Up */}
+          <div
+            ref={row2TrackRef}
+            className="flex w-max"
+            style={{ willChange: 'transform' }}
+          >
+            {Array.from({ length: 4 }).map((_, copyIndex) => (
+              <div
+                key={`row2-run-${copyIndex}`}
+                ref={copyIndex === 0 ? row2RunRef : undefined}
+                className="inline-flex items-center gap-3.5 sm:gap-4.5 pr-3.5 sm:pr-4.5 shrink-0"
+              >
+                {ROW_2.map((tech, idx) => (
+                  <TechTile key={`row2-${tech.id}-${copyIndex}-${idx}`} tech={tech} />
+                ))}
+              </div>
             ))}
           </div>
         </div>
@@ -660,21 +895,22 @@ export function TechnologiesSection() {
 
 /**
  * Individual Technology Pill Tile
- * Features SVG icon, technology name, and sleek dark navbar glass styling
+ * Features SVG icon, technology name, and sleek dark navbar glass styling.
+ * Proportions increased slightly for enhanced visual impact, presence, and readability.
  */
 function TechTile({ tech }: { tech: TechnologyItem }) {
   return (
     <div
-      className="group/tile relative inline-flex items-center gap-2.5 sm:gap-3 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl sm:rounded-2xl transition-all duration-300 bg-[#12111A] border border-white/10 hover:border-[#E4521B]/60 hover:scale-105 hover:-translate-y-1 shadow-[0_4px_16px_rgba(0,0,0,0.18)] hover:shadow-[0_12px_28px_-4px_rgba(228,82,27,0.35),0_4px_12px_rgba(0,0,0,0.2)] select-none cursor-default shrink-0"
+      className="group/tile relative inline-flex items-center gap-3 sm:gap-3.5 px-5 sm:px-6 py-2.5 sm:py-3.5 rounded-2xl transition-all duration-300 bg-[#12111A] border border-white/10 hover:border-[#E4521B]/60 hover:scale-105 hover:-translate-y-1 shadow-[0_4px_18px_rgba(0,0,0,0.18)] hover:shadow-[0_12px_28px_-4px_rgba(228,82,27,0.35),0_4px_12px_rgba(0,0,0,0.2)] select-none cursor-default shrink-0"
       aria-label={tech.name}
     >
       {/* SVG Icon */}
-      <div className="w-5 h-5 sm:w-6 sm:h-6 shrink-0 flex items-center justify-center [&>svg]:w-full [&>svg]:h-full transition-transform duration-300 group-hover/tile:scale-110">
+      <div className="w-6 h-6 sm:w-7 sm:h-7 shrink-0 flex items-center justify-center [&>svg]:w-full [&>svg]:h-full transition-transform duration-300 group-hover/tile:scale-110">
         <tech.svg />
       </div>
 
       {/* Technology Name */}
-      <span className="font-sans font-semibold text-[13px] sm:text-[14px] text-white tracking-tight whitespace-nowrap">
+      <span className="font-sans font-semibold text-[14px] sm:text-[15.5px] text-white tracking-tight whitespace-nowrap">
         {tech.name}
       </span>
     </div>

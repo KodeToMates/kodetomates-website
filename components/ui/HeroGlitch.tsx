@@ -2,18 +2,22 @@
 
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 
 interface HeroGlitchProps {
   imageSrc: string
   imageAlt: string
   className?: string
+  objectPosition?: string
 }
 
 export function HeroGlitch({
   imageSrc,
   imageAlt,
   className = '',
+  objectPosition = 'object-[center_35%]',
 }: HeroGlitchProps) {
+  const shouldReduceMotion = useReducedMotion()
   const [isGlitching, setIsGlitching] = useState(false)
   const [glitchPhase, setGlitchPhase] = useState(0)
 
@@ -84,38 +88,72 @@ export function HeroGlitch({
         }
       `}</style>
 
-      {/* --- 1. BASE CINEMATIC IMAGE WITH CRT SCREEN JITTER --- */}
+      {/* --- 1. BASE CINEMATIC IMAGE WITH FRAMER MOTION ZOOM OUT & CROSS-FADE --- */}
       <div
-        className="relative w-full h-full"
+        className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none"
         style={{
           animation: isGlitching ? 'tv-screen-twitch 0.22s steps(2) infinite' : 'none',
         }}
       >
-        <Image
-          src={imageSrc}
-          alt={imageAlt}
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-[center_35%] filter brightness-[0.74] contrast-[1.12] scale-[1.02]"
-        />
+        <AnimatePresence initial={false} mode="sync">
+          <motion.div
+            key={imageSrc}
+            initial={
+              shouldReduceMotion
+                ? { opacity: 0 }
+                : { scale: 1.18, opacity: 0 }
+            }
+            animate={{
+              scale: 1.02,
+              opacity: 1,
+              transition: {
+                scale: {
+                  duration: 6,
+                  ease: [0.16, 1, 0.3, 1],
+                },
+                opacity: {
+                  duration: 1.2,
+                  ease: 'easeInOut',
+                },
+              },
+            }}
+            exit={{
+              opacity: 0,
+              transition: {
+                duration: 1.2,
+                ease: 'easeInOut',
+              },
+            }}
+            className="absolute inset-0 w-full h-full"
+            style={{ willChange: 'transform, opacity' }}
+          >
+            <Image
+              src={imageSrc}
+              alt={imageAlt}
+              fill
+              priority
+              sizes="100vw"
+              className={`object-cover ${objectPosition} filter brightness-[0.88] contrast-[1.1]`}
+            />
+          </motion.div>
+        </AnimatePresence>
       </div>
 
-      {/* --- 2. OLD TV TUBE VIGNETTE & PHOSPHOR CURVATURE (Curved CRT glass edges) --- */}
+      {/* --- 2. OLD TV TUBE VIGNETTE & PHOSPHOR CURVATURE (Soft CRT edges) --- */}
       <div
         className="absolute inset-0 pointer-events-none z-[2]"
         style={{
           background:
-            'radial-gradient(ellipse at center, transparent 65%, rgba(0,0,0,0.45) 88%, rgba(0,0,0,0.85) 100%)',
+            'radial-gradient(ellipse at center, transparent 72%, rgba(0,0,0,0.35) 100%)',
         }}
       />
 
-      {/* --- 3. DENSE CRT SCANLINES & APERTURE GRILLE (Constant TV scanlines) --- */}
+      {/* --- 3. DENSE CRT SCANLINES & APERTURE GRILLE (Subtle TV scanlines) --- */}
       <div
-        className="absolute inset-0 pointer-events-none z-[3] opacity-35 mix-blend-overlay"
+        className="absolute inset-0 pointer-events-none z-[3] opacity-10 mix-blend-overlay"
         style={{
           backgroundImage:
-            'repeating-linear-gradient(0deg, rgba(0,0,0,0.75) 0px, rgba(0,0,0,0.75) 1.5px, transparent 1.5px, transparent 3.5px)',
+            'repeating-linear-gradient(0deg, rgba(0,0,0,0.4) 0px, rgba(0,0,0,0.4) 1.5px, transparent 1.5px, transparent 3.5px)',
           animation: 'crt-phosphor-flicker 0.15s infinite',
         }}
       />

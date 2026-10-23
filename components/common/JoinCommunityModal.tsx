@@ -5,21 +5,40 @@ import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, ChevronDown, CheckCircle2, AlertCircle, Loader2, ArrowRight } from 'lucide-react'
 import { submitContactRequest } from '@/lib/api/contact'
-import { ContactRequestPayload } from '@/types/contact'
+import { ContactFormData, ContactRequestPayload } from '@/types/contact'
+import { validateContactForm } from '@/lib/validations/contact'
 
 export interface JoinCommunityModalProps {
   isOpen: boolean
   onClose: () => void
 }
 
-const TRACK_OPTIONS = [
-  'Full-Stack Web Development',
-  'AI & Autonomous Systems',
-  'Frontend Engineering & UI/UX',
-  'Backend & Cloud Architecture',
-  'Open Source Collaboration',
-  'Other / Exploring',
+const SUBJECT_OPTIONS = [
+  'General Inquiry',
+  'Project Collaboration',
+  'Join the Community',
+  'Mentorship & Learning',
+  'Technical Partnership',
+  'Website / App Development',
+  'Other',
 ]
+
+const TIMELINE_OPTIONS = [
+  'Immediate (within 1-2 weeks)',
+  'Within 1 month',
+  '1 - 3 months',
+  'Flexible / Exploring ideas',
+  'Ongoing Collaboration',
+]
+
+const initialFormData: ContactFormData = {
+  name: '',
+  email: '',
+  phone: '',
+  company: '',
+  subject: '',
+  message: '',
+}
 
 export function JoinCommunityModal({ isOpen, onClose }: JoinCommunityModalProps) {
   const isMounted = useSyncExternalStore(
@@ -27,18 +46,17 @@ export function JoinCommunityModal({ isOpen, onClose }: JoinCommunityModalProps)
     () => true,
     () => false
   )
-  const [fullName, setFullName] = useState('')
-  const [email, setEmail] = useState('')
-  const [phone, setPhone] = useState('')
-  const [track, setTrack] = useState('')
-  const [message, setMessage] = useState('')
 
+  const [formData, setFormData] = useState<ContactFormData>(initialFormData)
+  const [timeline, setTimeline] = useState('')
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
   const [errorMessage, setErrorMessage] = useState('')
 
   const handleClose = useCallback(() => {
     onClose()
     setTimeout(() => {
+      setFormData(initialFormData)
+      setTimeline('')
       setStatus('idle')
       setErrorMessage('')
     }, 200)
@@ -64,29 +82,24 @@ export function JoinCommunityModal({ isOpen, onClose }: JoinCommunityModalProps)
     }
   }, [isOpen, handleClose])
 
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+    if (status === 'error') {
+      setStatus('idle')
+      setErrorMessage('')
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    const trimmedName = fullName.trim()
-    const trimmedEmail = email.trim()
-    const trimmedMessage = message.trim()
-
-    if (!trimmedName || trimmedName.length < 2) {
+    const validation = validateContactForm(formData)
+    if (!validation.isValid) {
       setStatus('error')
-      setErrorMessage('Please enter your full name.')
-      return
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!trimmedEmail || !emailRegex.test(trimmedEmail)) {
-      setStatus('error')
-      setErrorMessage('Please enter a valid email address.')
-      return
-    }
-
-    if (!trimmedMessage || trimmedMessage.length < 6) {
-      setStatus('error')
-      setErrorMessage('Please provide a brief note on what you want to build or learn.')
+      setErrorMessage(validation.firstError || 'Please complete all required fields.')
       return
     }
 
@@ -95,25 +108,30 @@ export function JoinCommunityModal({ isOpen, onClose }: JoinCommunityModalProps)
 
     try {
       const formattedMessage = [
-        track ? `[Track: ${track}]` : '',
-        trimmedMessage,
+        timeline.trim() ? `[Timeline: ${timeline.trim()}]` : '',
+        formData.message.trim(),
       ]
         .filter(Boolean)
         .join('\n\n')
 
       const payload: ContactRequestPayload = {
-        fullName: trimmedName,
-        email: trimmedEmail,
-        phone: phone.trim() || undefined,
-        message: formattedMessage,
-        leadSource: 'Join Community Modal (Navbar)',
+        fullName: formData.name.trim(),
+        email: formData.email.trim(),
+        phone: formData.phone.trim() || undefined,
+        company: formData.company.trim() || undefined,
+        subject: formData.subject.trim() || undefined,
+        message: formattedMessage || formData.subject.trim(),
+        leadSource: 'Enquiry Modal (Navbar)',
       }
 
       await submitContactRequest(payload)
       setStatus('success')
     } catch (err: unknown) {
       setStatus('error')
-      const msg = err instanceof Error ? err.message : 'Unable to submit application. Please try again.'
+      const msg =
+        err instanceof Error
+          ? err.message
+          : 'Failed to submit enquiry. Please try again later.'
       setErrorMessage(msg)
     }
   }
@@ -126,7 +144,7 @@ export function JoinCommunityModal({ isOpen, onClose }: JoinCommunityModalProps)
         <div
           role="dialog"
           aria-modal="true"
-          aria-labelledby="join-modal-title"
+          aria-labelledby="enquiry-modal-title"
           className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6 overflow-y-auto"
         >
           {/* Backdrop */}
@@ -136,39 +154,39 @@ export function JoinCommunityModal({ isOpen, onClose }: JoinCommunityModalProps)
             exit={{ opacity: 0 }}
             transition={{ duration: 0.18 }}
             onClick={handleClose}
-            className="fixed inset-0 bg-black/65 backdrop-blur-md"
+            className="fixed inset-0 bg-black/50 backdrop-blur-md"
             aria-hidden="true"
           />
 
-          {/* Clean Glassmorphism Card */}
+          {/* Clean Borderless Glassmorphic Modal Card matching Navbar Aesthetic */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.96, y: 10 }}
+            initial={{ opacity: 0, scale: 0.96, y: 12 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.96, y: 8 }}
-            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="relative w-full max-w-[520px] my-auto rounded-2xl sm:rounded-3xl bg-[#12111A]/95 backdrop-blur-xl border border-white/10 p-6 sm:p-7 shadow-[0_20px_60px_rgba(0,0,0,0.65)] z-10"
+            exit={{ opacity: 0, scale: 0.96, y: 10 }}
+            transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+            className="relative w-full max-w-[620px] max-h-[92vh] my-auto rounded-3xl bg-[rgba(15,14,23,0.72)] backdrop-blur-2xl backdrop-saturate-180 p-6 sm:p-8 shadow-[0_24px_60px_rgba(0,0,0,0.6)] z-10 overflow-y-auto border-0"
           >
-            {/* Header: Title and Close */}
-            <div className="flex items-start justify-between gap-4 mb-5">
+            {/* Header: Title and Close Button */}
+            <div className="flex items-start justify-between gap-4 mb-5 sm:mb-6">
               <div>
                 <span className="inline-block text-[11px] font-mono font-bold tracking-[0.16em] uppercase text-[#E4521B] mb-1.5">
-                  JOIN KODETOMATES
+                  ENQUIRY KODETOMATES
                 </span>
                 <h3
-                  id="join-modal-title"
-                  className="font-sans font-bold text-[22px] sm:text-[24px] text-white tracking-[-0.025em] leading-snug"
+                  id="enquiry-modal-title"
+                  className="font-sans font-bold text-[22px] sm:text-[26px] text-white tracking-[-0.025em] leading-snug"
                 >
-                  Join the developer circle<span className="text-[#E4521B]">.</span>
+                  Let&apos;s build something great<span className="text-[#E4521B]">.</span>
                 </h3>
-                <p className="font-sans text-[13px] text-[#A6A0B2] mt-1 leading-normal">
-                  Collaborate on real repositories, pair-code with peers, and build proof-of-work.
+                <p className="font-sans text-[13.5px] text-[#C4C0D0] mt-1 leading-normal">
+                  Tell us about your project, idea, or questions and our team will get back to you within 24 hours.
                 </p>
               </div>
 
               <button
                 type="button"
                 onClick={handleClose}
-                className="w-8 h-8 rounded-full bg-white/[0.06] hover:bg-white/[0.15] text-white/60 hover:text-white flex items-center justify-center transition-colors cursor-pointer shrink-0 mt-0.5"
+                className="w-8.5 h-8.5 rounded-full bg-white/[0.08] hover:bg-white/[0.18] text-white/70 hover:text-white flex items-center justify-center transition-all cursor-pointer shrink-0 border-0 mt-0.5"
                 aria-label="Close"
               >
                 <X className="w-4 h-4" />
@@ -176,31 +194,31 @@ export function JoinCommunityModal({ isOpen, onClose }: JoinCommunityModalProps)
             </div>
 
             {status === 'success' ? (
-              /* Success State */
-              <div className="py-6 text-center">
-                <div className="w-12 h-12 rounded-full bg-[#E4521B]/15 border border-[#E4521B]/30 flex items-center justify-center text-[#E4521B] mx-auto mb-3.5">
-                  <CheckCircle2 className="w-6 h-6" />
+              /* Success Confirmation View */
+              <div className="py-8 text-center">
+                <div className="w-14 h-14 rounded-full bg-[#E4521B]/15 flex items-center justify-center text-[#E4521B] mx-auto mb-4 shadow-[0_10px_25px_rgba(228,82,27,0.2)]">
+                  <CheckCircle2 className="w-7 h-7" />
                 </div>
-                <h4 className="font-sans font-bold text-[20px] text-white tracking-[-0.02em] mb-1.5">
-                  Application received
+                <h4 className="font-sans font-bold text-[22px] text-white tracking-[-0.02em] mb-2">
+                  Enquiry Received!
                 </h4>
-                <p className="font-sans text-[13.5px] text-[#A6A0B2] max-w-sm mx-auto mb-6 leading-relaxed">
-                  Thanks, <strong className="text-white">{fullName}</strong>. We will review your application and send onboarding details to <span className="text-white font-medium">{email}</span>.
+                <p className="font-sans text-[14px] text-white/75 max-w-sm mx-auto mb-6 leading-relaxed">
+                  Thank you, <strong className="text-white">{formData.name}</strong>. We&apos;ve received your inquiry regarding <span className="text-[#E4521B] font-semibold">“{formData.subject}”</span> and our team will get back to you at <span className="text-white font-medium">{formData.email}</span> within 24 hours.
                 </p>
                 <button
                   type="button"
                   onClick={handleClose}
-                  className="px-6 py-2.5 rounded-full bg-[#E4521B] hover:bg-[#CC420F] text-white text-sm font-semibold transition-colors cursor-pointer"
+                  className="btn-pill-coral px-8 py-2.5 rounded-full text-white text-sm font-semibold transition-all cursor-pointer shadow-[0_4px_16px_rgba(228,82,27,0.35)] border-0"
                 >
                   Close
                 </button>
               </div>
             ) : (
-              /* Clean Form */
-              <form onSubmit={handleSubmit} className="space-y-3.5">
+              /* Enquiry Form (Same Fields as Contact Page) */
+              <form onSubmit={handleSubmit} className="space-y-4">
                 {status === 'error' && errorMessage && (
                   <div
-                    className="p-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-300 text-xs flex items-center gap-2 font-sans"
+                    className="p-3.5 rounded-xl bg-red-500/15 border border-red-500/30 text-red-300 text-xs sm:text-[13px] flex items-center gap-2.5 font-sans"
                     role="alert"
                   >
                     <AlertCircle className="w-4 h-4 shrink-0 text-red-400" />
@@ -208,84 +226,93 @@ export function JoinCommunityModal({ isOpen, onClose }: JoinCommunityModalProps)
                   </div>
                 )}
 
-                {/* Name & Email */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {/* Row 1: Name & Email */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                   <div>
                     <label
-                      htmlFor="join-name"
-                      className="block text-xs font-sans font-medium text-white/80 mb-1"
+                      htmlFor="modal-name"
+                      className="block text-xs font-sans font-semibold text-white/85 mb-1.5"
                     >
-                      Full Name <span className="text-[#E4521B]">*</span>
+                      Name <span className="text-[#E4521B]">*</span>
                     </label>
                     <input
-                      id="join-name"
+                      id="modal-name"
+                      name="name"
                       type="text"
                       required
-                      value={fullName}
-                      onChange={(e) => setFullName(e.target.value)}
-                      placeholder="Alex Rivera"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.05] border border-white/10 text-white placeholder-white/30 text-sm font-sans focus:outline-none focus:border-[#E4521B] focus:ring-1 focus:ring-[#E4521B] transition-all"
+                      value={formData.name}
+                      onChange={handleChange}
+                      placeholder="Your full name"
+                      disabled={status === 'submitting'}
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.08] text-white placeholder-white/35 text-sm font-sans focus:outline-none focus:bg-white/[0.14] focus:ring-2 focus:ring-[#E4521B]/60 transition-all border-0 disabled:opacity-60"
                     />
                   </div>
 
                   <div>
                     <label
-                      htmlFor="join-email"
-                      className="block text-xs font-sans font-medium text-white/80 mb-1"
+                      htmlFor="modal-email"
+                      className="block text-xs font-sans font-semibold text-white/85 mb-1.5"
                     >
-                      Email Address <span className="text-[#E4521B]">*</span>
+                      Email <span className="text-[#E4521B]">*</span>
                     </label>
                     <input
-                      id="join-email"
+                      id="modal-email"
+                      name="email"
                       type="email"
                       required
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="alex@example.com"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.05] border border-white/10 text-white placeholder-white/30 text-sm font-sans focus:outline-none focus:border-[#E4521B] focus:ring-1 focus:ring-[#E4521B] transition-all"
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="you@example.com"
+                      disabled={status === 'submitting'}
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.08] text-white placeholder-white/35 text-sm font-sans focus:outline-none focus:bg-white/[0.14] focus:ring-2 focus:ring-[#E4521B]/60 transition-all border-0 disabled:opacity-60"
                     />
                   </div>
                 </div>
 
-                {/* Phone & Primary Track Dropdown */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {/* Row 2: Phone Number & Subject */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                   <div>
                     <label
-                      htmlFor="join-phone"
-                      className="block text-xs font-sans font-medium text-white/80 mb-1"
+                      htmlFor="modal-phone"
+                      className="block text-xs font-sans font-semibold text-white/85 mb-1.5"
                     >
                       Phone Number <span className="text-white/40 font-normal">(Optional)</span>
                     </label>
                     <input
-                      id="join-phone"
+                      id="modal-phone"
+                      name="phone"
                       type="tel"
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
+                      value={formData.phone}
+                      onChange={handleChange}
                       placeholder="+1 555 123 4567"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.05] border border-white/10 text-white placeholder-white/30 text-sm font-sans focus:outline-none focus:border-[#E4521B] focus:ring-1 focus:ring-[#E4521B] transition-all"
+                      disabled={status === 'submitting'}
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.08] text-white placeholder-white/35 text-sm font-sans focus:outline-none focus:bg-white/[0.14] focus:ring-2 focus:ring-[#E4521B]/60 transition-all border-0 disabled:opacity-60"
                     />
                   </div>
 
                   <div>
                     <label
-                      htmlFor="join-track"
-                      className="block text-xs font-sans font-medium text-white/80 mb-1"
+                      htmlFor="modal-subject"
+                      className="block text-xs font-sans font-semibold text-white/85 mb-1.5"
                     >
-                      Primary Track
+                      Subject <span className="text-[#E4521B]">*</span>
                     </label>
                     <div className="relative">
                       <select
-                        id="join-track"
-                        value={track}
-                        onChange={(e) => setTrack(e.target.value)}
-                        className={`w-full px-3.5 py-2.5 pr-9 rounded-xl bg-white/[0.05] border border-white/10 text-sm font-sans appearance-none cursor-pointer focus:outline-none focus:border-[#E4521B] focus:ring-1 focus:ring-[#E4521B] transition-all ${
-                          track ? 'text-white' : 'text-white/40'
+                        id="modal-subject"
+                        name="subject"
+                        required
+                        value={formData.subject}
+                        onChange={handleChange}
+                        disabled={status === 'submitting'}
+                        className={`w-full px-3.5 py-2.5 pr-9 rounded-xl bg-white/[0.08] text-sm font-sans appearance-none cursor-pointer focus:outline-none focus:bg-white/[0.14] focus:ring-2 focus:ring-[#E4521B]/60 transition-all border-0 disabled:opacity-60 ${
+                          formData.subject ? 'text-white' : 'text-white/40'
                         }`}
                       >
                         <option value="" disabled className="bg-[#181622] text-white/50">
-                          Select your track...
+                          Choose your topic...
                         </option>
-                        {TRACK_OPTIONS.map((opt) => (
+                        {SUBJECT_OPTIONS.map((opt) => (
                           <option key={opt} value={opt} className="bg-[#181622] text-white">
                             {opt}
                           </option>
@@ -296,22 +323,77 @@ export function JoinCommunityModal({ isOpen, onClose }: JoinCommunityModalProps)
                   </div>
                 </div>
 
-                {/* Goals / Message */}
+                {/* Row 3: Company / Organisation & Preferred Timeline */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                  <div>
+                    <label
+                      htmlFor="modal-company"
+                      className="block text-xs font-sans font-semibold text-white/85 mb-1.5"
+                    >
+                      Company / Organisation <span className="text-white/40 font-normal">(Optional)</span>
+                    </label>
+                    <input
+                      id="modal-company"
+                      name="company"
+                      type="text"
+                      value={formData.company}
+                      onChange={handleChange}
+                      placeholder="e.g. Acme Studio (optional)"
+                      disabled={status === 'submitting'}
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.08] text-white placeholder-white/35 text-sm font-sans focus:outline-none focus:bg-white/[0.14] focus:ring-2 focus:ring-[#E4521B]/60 transition-all border-0 disabled:opacity-60"
+                    />
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="modal-timeline"
+                      className="block text-xs font-sans font-semibold text-white/85 mb-1.5"
+                    >
+                      Preferred Timeline <span className="text-white/40 font-normal">(Optional)</span>
+                    </label>
+                    <div className="relative">
+                      <select
+                        id="modal-timeline"
+                        name="timeline"
+                        value={timeline}
+                        onChange={(e) => setTimeline(e.target.value)}
+                        disabled={status === 'submitting'}
+                        className={`w-full px-3.5 py-2.5 pr-9 rounded-xl bg-white/[0.08] text-sm font-sans appearance-none cursor-pointer focus:outline-none focus:bg-white/[0.14] focus:ring-2 focus:ring-[#E4521B]/60 transition-all border-0 disabled:opacity-60 ${
+                          timeline ? 'text-white' : 'text-white/40'
+                        }`}
+                      >
+                        <option value="" className="bg-[#181622] text-white/50">
+                          Choose timeline (optional)...
+                        </option>
+                        {TIMELINE_OPTIONS.map((opt) => (
+                          <option key={opt} value={opt} className="bg-[#181622] text-white">
+                            {opt}
+                          </option>
+                        ))}
+                      </select>
+                      <ChevronDown className="w-4 h-4 text-white/40 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Row 4: Message / Special Requests */}
                 <div>
                   <label
-                    htmlFor="join-message"
-                    className="block text-xs font-sans font-medium text-white/80 mb-1"
+                    htmlFor="modal-message"
+                    className="block text-xs font-sans font-semibold text-white/85 mb-1.5"
                   >
-                    What do you want to build or achieve? <span className="text-[#E4521B]">*</span>
+                    Message / Special Requests <span className="text-[#E4521B]">*</span>
                   </label>
                   <textarea
-                    id="join-message"
+                    id="modal-message"
+                    name="message"
                     required
                     rows={3}
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    placeholder="Tell us what you are working on, learning goals, or ideas you want to ship..."
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.05] border border-white/10 text-white placeholder-white/30 text-sm font-sans focus:outline-none focus:border-[#E4521B] focus:ring-1 focus:ring-[#E4521B] transition-all resize-none"
+                    value={formData.message}
+                    onChange={handleChange}
+                    placeholder="Anything else we should know?"
+                    disabled={status === 'submitting'}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.08] text-white placeholder-white/35 text-sm font-sans focus:outline-none focus:bg-white/[0.14] focus:ring-2 focus:ring-[#E4521B]/60 transition-all resize-none border-0 disabled:opacity-60"
                   />
                 </div>
 
@@ -320,22 +402,22 @@ export function JoinCommunityModal({ isOpen, onClose }: JoinCommunityModalProps)
                   <button
                     type="submit"
                     disabled={status === 'submitting'}
-                    className="w-full py-2.5 sm:py-3 rounded-full bg-[#E4521B] hover:bg-[#CC420F] text-white font-sans font-semibold text-sm tracking-wide transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed shadow-sm"
+                    className="w-full btn-pill-coral py-3 rounded-full font-sans font-semibold text-sm tracking-wide transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed shadow-[0_4px_20px_rgba(228,82,27,0.4)] border-0"
                   >
                     {status === 'submitting' ? (
                       <>
                         <Loader2 className="w-4 h-4 animate-spin text-white" />
-                        <span>Submitting...</span>
+                        <span>Submitting Enquiry...</span>
                       </>
                     ) : (
                       <>
-                        <span>Submit Application</span>
+                        <span>Submit Enquiry</span>
                         <ArrowRight className="w-4 h-4 text-white" />
                       </>
                     )}
                   </button>
                   <p className="text-center text-[11.5px] text-white/40 mt-2 font-sans">
-                    We review submissions daily and respond via email.
+                    We review all enquiries promptly and respond within 24 hours.
                   </p>
                 </div>
               </form>
