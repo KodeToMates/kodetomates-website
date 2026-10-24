@@ -12,6 +12,7 @@ export interface ContactRequestPayload {
   email: string
   phone?: string
   company?: string
+  subject?: string
   message: string
   leadSource?: string
 }

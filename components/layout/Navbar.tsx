@@ -1,11 +1,12 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown, Globe, TrendingUp, RefreshCw, Sparkles, Menu, X } from 'lucide-react'
+import { JoinCommunityModal } from '@/components/common/JoinCommunityModal'
 
 
 interface SubItem {
@@ -91,6 +92,25 @@ export function Navbar() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [mobileAccordion, setMobileAccordion] = useState<string | null>(null)
+  const [joinModalOpen, setJoinModalOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  // Track window scroll to subtly adjust glassmorphism opacity & shadow
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20)
+    }
+    handleScroll()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // Allow triggering from anywhere on the page via custom event
+  useEffect(() => {
+    const handleOpen = () => setJoinModalOpen(true)
+    window.addEventListener('open-join-modal', handleOpen)
+    return () => window.removeEventListener('open-join-modal', handleOpen)
+  }, [])
 
   return (
     <motion.header
@@ -100,22 +120,23 @@ export function Navbar() {
       className="fixed top-4 sm:top-6 left-0 right-0 z-50 flex justify-center px-4 sm:px-6 pointer-events-none"
     >
       {/* ========================================================
-          FLOATING PILL NAVBAR CONTAINER (n8n Aesthetic)
-          Dark glass, subtle purple-charcoal tint, sleek border & glow
+          FLOATING PILL NAVBAR CONTAINER
+          Seamless Borderless Glassmorphism: Pure translucent frosted glass & soft ambient shadow
          ======================================================== */}
       <nav
         aria-label="Main Navigation"
-        className="pointer-events-auto relative w-full max-w-[1360px] h-[62px] sm:h-[68px] rounded-full bg-[#12111A]/90 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.08)] flex items-center justify-between px-5 sm:px-7 lg:px-8 transition-all duration-300"
+        className={`pointer-events-auto relative w-full max-w-[1360px] h-[62px] sm:h-[68px] rounded-full backdrop-blur-2xl backdrop-saturate-180 transition-all duration-300 flex items-center justify-between px-5 sm:px-7 lg:px-8 ${
+          scrolled
+            ? 'bg-[rgba(15,14,23,0.55)] shadow-[0_12px_40px_rgba(0,0,0,0.35)]'
+            : 'bg-[rgba(15,14,23,0.28)] shadow-[0_8px_32px_rgba(0,0,0,0.2)]'
+        }`}
       >
-        {/* Specular Top Rim Reflection Line */}
-        <div className="absolute inset-x-8 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none rounded-full" />
-
         {/* --- LEFT: LOGO --- */}
         <Link
           href="/"
           className="flex items-center gap-2.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E4521B] rounded-full shrink-0"
         >
-          <div className="relative w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-full p-[2px] bg-white/[0.08] border border-white/15 flex items-center justify-center shrink-0 group-hover:border-white/30 transition-colors">
+          <div className="relative w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-full p-[2px] bg-white/[0.12] backdrop-blur-md flex items-center justify-center shrink-0 group-hover:bg-white/[0.18] transition-all">
             <Image
               src="/images/brand/KM - Logo.png"
               alt="KodeToMates Mark"
@@ -131,8 +152,8 @@ export function Navbar() {
         </Link>
 
 
-        {/* --- CENTER: DESKTOP INLINE NAV LINKS (n8n Style) --- */}
-        <div className="hidden lg:flex items-center gap-6 xl:gap-8">
+        {/* --- CENTER: DESKTOP INLINE NAV LINKS --- */}
+        <div className="hidden lg:flex items-center gap-1.5 xl:gap-2.5">
           {menuItems.map((item) => {
             const isActive = pathname === item.href || (item.href !== '/' && (pathname?.startsWith(`${item.href}/`) ?? false))
             const isDropdownOpen = activeDropdown === item.title
@@ -148,17 +169,21 @@ export function Navbar() {
                   <button
                     type="button"
                     onClick={() => setActiveDropdown(isDropdownOpen ? null : item.title)}
-                    className={`flex items-center gap-1.5 text-[14px] font-sans font-medium transition-colors py-2 px-1 cursor-pointer ${isActive || isDropdownOpen ? 'text-white' : 'text-[#C4C0D0] hover:text-white'
-                      }`}
+                    className={`flex items-center gap-1.5 text-[14px] font-sans font-medium transition-all py-1.5 px-3 sm:px-3.5 rounded-full cursor-pointer border-0 ${
+                      isActive || isDropdownOpen
+                        ? 'text-white bg-white/[0.14] backdrop-blur-sm'
+                        : 'text-white/80 hover:text-white hover:bg-white/[0.1] hover:backdrop-blur-sm'
+                    }`}
                   >
                     <span>{item.title}</span>
                     <ChevronDown
-                      className={`w-3.5 h-3.5 transition-transform duration-200 stroke-[2] ${isDropdownOpen ? 'rotate-180 text-white' : 'text-[#8E8A9A]'
-                        }`}
+                      className={`w-3.5 h-3.5 transition-transform duration-200 stroke-[2] ${
+                        isDropdownOpen ? 'rotate-180 text-white' : 'text-white/60'
+                      }`}
                     />
                   </button>
 
-                  {/* Dark Glass Floating Dropdown Popover */}
+                  {/* Glassmorphic Floating Dropdown Popover */}
                   <AnimatePresence>
                     {isDropdownOpen && (
                       <motion.div
@@ -168,22 +193,22 @@ export function Navbar() {
                         transition={{ duration: 0.18, ease: 'easeOut' }}
                         className="absolute top-full left-1/2 -translate-x-1/2 pt-2.5 w-[310px] pointer-events-auto z-50"
                       >
-                        <div className="bg-[#14121D]/95 backdrop-blur-2xl border border-white/12 rounded-2xl p-2 shadow-[0_20px_50px_rgba(0,0,0,0.6)] overflow-hidden">
+                        <div className="relative bg-[rgba(18,17,29,0.78)] backdrop-blur-2xl backdrop-saturate-180 rounded-2xl p-2.5 shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden">
                           {item.dropdownItems?.map((subItem) => (
                             <Link
                               key={subItem.title}
                               href={subItem.href}
                               onClick={() => setActiveDropdown(null)}
-                              className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-white/[0.08] transition-colors group"
+                              className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-white/[0.12] hover:backdrop-blur-sm transition-all group"
                             >
-                              <div className="w-8 h-8 rounded-lg bg-white/[0.06] border border-white/10 flex items-center justify-center shrink-0 group-hover:bg-[#E4521B]/20 group-hover:border-[#E4521B]/40 transition-colors">
-                                <subItem.icon className="w-4 h-4 text-white/80 group-hover:text-[#E4521B] transition-colors" />
+                              <div className="w-8 h-8 rounded-lg bg-white/[0.1] backdrop-blur-sm flex items-center justify-center shrink-0 group-hover:bg-[#E4521B]/25 transition-all">
+                                <subItem.icon className="w-4 h-4 text-white/90 group-hover:text-[#E4521B] transition-colors" />
                               </div>
                               <div>
                                 <p className="text-white text-xs font-semibold group-hover:text-white transition-colors">
                                   {subItem.title}
                                 </p>
-                                <p className="text-white/50 text-[11px] leading-tight line-clamp-1 mt-0.5">
+                                <p className="text-white/60 text-[11px] leading-tight line-clamp-1 mt-0.5">
                                   {subItem.description}
                                 </p>
                               </div>
@@ -201,8 +226,11 @@ export function Navbar() {
               <Link
                 key={item.title}
                 href={item.href}
-                className={`text-[14px] font-sans font-medium transition-colors py-2 px-1 ${isActive ? 'text-white' : 'text-[#C4C0D0] hover:text-white'
-                  }`}
+                className={`text-[14px] font-sans font-medium transition-all py-1.5 px-3 sm:px-3.5 rounded-full border-0 ${
+                  isActive
+                    ? 'text-white bg-white/[0.14] backdrop-blur-sm font-semibold'
+                    : 'text-white/80 hover:text-white hover:bg-white/[0.1] hover:backdrop-blur-sm'
+                }`}
               >
                 {item.title}
               </Link>
@@ -214,12 +242,13 @@ export function Navbar() {
         {/* --- RIGHT: CTA BUTTON --- */}
         <div className="hidden lg:flex items-center shrink-0">
           <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-            <Link
-              href="/join"
-              className="btn-pill-coral inline-flex items-center justify-center px-5 sm:px-6 py-2.5 sm:py-3 rounded-full font-sans font-semibold text-[13.5px] sm:text-[14px] border border-transparent hover:border-white/20"
+            <button
+              type="button"
+              onClick={() => setJoinModalOpen(true)}
+              className="btn-pill-coral inline-flex items-center justify-center px-5 sm:px-6 py-2.5 sm:py-3 rounded-full font-sans font-semibold text-[13.5px] sm:text-[14px] shadow-[0_4px_20px_rgba(228,82,27,0.4)] cursor-pointer transition-all border-0"
             >
-              <span>Join KodeTomates</span>
-            </Link>
+              <span>Enquiry KodeTomates</span>
+            </button>
           </motion.div>
         </div>
 
@@ -227,17 +256,18 @@ export function Navbar() {
         {/* --- MOBILE: RIGHT ACTIONS + HAMBURGER BUTTON --- */}
         <div className="flex lg:hidden items-center gap-2.5">
           {/* Mobile Get Started CTA */}
-          <Link
-            href="/join"
-            className="btn-pill-coral inline-flex items-center justify-center px-4 py-2 rounded-full font-sans font-semibold text-xs border border-transparent hover:border-white/20"
+          <button
+            type="button"
+            onClick={() => setJoinModalOpen(true)}
+            className="btn-pill-coral inline-flex items-center justify-center px-4 py-2 rounded-full font-sans font-semibold text-xs shadow-[0_4px_16px_rgba(228,82,27,0.35)] cursor-pointer transition-all border-0"
           >
-            Join KodeTomates
-          </Link>
+            Enquiry KodeTomates
+          </button>
 
           {/* Hamburger Toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2.5 text-white/90 hover:text-white rounded-full hover:bg-white/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E4521B]"
+            className="p-2.5 text-white/90 hover:text-white rounded-full bg-white/[0.08] backdrop-blur-md hover:bg-white/[0.16] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E4521B] border-0"
             aria-label="Toggle navigation"
             aria-expanded={mobileMenuOpen}
           >
@@ -247,7 +277,7 @@ export function Navbar() {
       </nav>
 
       {/* ========================================================
-          MOBILE MENU DRAWER (Dark Glass Theme)
+          MOBILE MENU DRAWER (Glassmorphic Theme)
          ======================================================== */}
       <AnimatePresence>
         {mobileMenuOpen && (
@@ -256,7 +286,7 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.98 }}
             transition={{ duration: 0.2 }}
-            className="pointer-events-auto absolute top-full left-3 right-3 mt-3 bg-[#12111A]/95 backdrop-blur-2xl border border-white/12 rounded-2xl p-5 shadow-[0_16px_40px_rgba(0,0,0,0.6)] flex flex-col gap-2 z-50 overflow-hidden"
+            className="pointer-events-auto absolute top-full left-3 right-3 mt-3 bg-[rgba(18,17,26,0.85)] backdrop-blur-2xl backdrop-saturate-180 rounded-3xl p-5 shadow-[0_24px_50px_rgba(0,0,0,0.5)] flex flex-col gap-2 z-50 overflow-hidden"
           >
             {menuItems.map((item) => {
               const isActive = pathname === item.href
@@ -267,12 +297,13 @@ export function Navbar() {
                   <div key={item.title} className="flex flex-col">
                     <button
                       onClick={() => setMobileAccordion(isAccordionOpen ? null : item.title)}
-                      className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-white/80 hover:text-white hover:bg-white/[0.06] text-sm font-medium transition-colors cursor-pointer"
+                      className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-white/85 hover:text-white hover:bg-white/[0.1] hover:backdrop-blur-sm text-sm font-medium transition-all cursor-pointer border-0"
                     >
                       <span>{item.title}</span>
                       <ChevronDown
-                        className={`w-4 h-4 transition-transform duration-200 ${isAccordionOpen ? 'rotate-180 text-white' : 'text-white/50'
-                          }`}
+                        className={`w-4 h-4 transition-transform duration-200 ${
+                          isAccordionOpen ? 'rotate-180 text-white' : 'text-white/60'
+                        }`}
                       />
                     </button>
 
@@ -289,7 +320,7 @@ export function Navbar() {
                               key={subItem.title}
                               href={subItem.href}
                               onClick={() => setMobileMenuOpen(false)}
-                              className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-white/70 hover:text-white hover:bg-white/[0.08] text-xs transition-colors"
+                              className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-white/75 hover:text-white hover:bg-white/[0.1] text-xs transition-all border-0"
                             >
                               <subItem.icon className="w-3.5 h-3.5 text-[#E4521B]" />
                               <span>{subItem.title}</span>
@@ -307,10 +338,11 @@ export function Navbar() {
                   key={item.title}
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors ${isActive
-                    ? 'bg-white/[0.1] text-white font-semibold'
-                    : 'text-white/80 hover:text-white hover:bg-white/[0.06]'
-                    }`}
+                  className={`px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all border-0 ${
+                    isActive
+                      ? 'bg-white/[0.16] backdrop-blur-sm text-white font-semibold'
+                      : 'text-white/85 hover:text-white hover:bg-white/[0.1] hover:backdrop-blur-sm'
+                  }`}
                 >
                   {item.title}
                 </Link>
@@ -318,9 +350,28 @@ export function Navbar() {
             })}
 
 
+            {/* Mobile Drawer Join CTA */}
+            <div className="pt-2 mt-1 border-t border-white/10">
+              <button
+                type="button"
+                onClick={() => {
+                  setMobileMenuOpen(false)
+                  setJoinModalOpen(true)
+                }}
+                className="w-full btn-pill-coral py-2.5 rounded-xl font-sans font-semibold text-sm flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(228,82,27,0.35)] cursor-pointer transition-all border-0"
+              >
+                <span>Enquiry KodeTomates</span>
+              </button>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Glassmorphism Join Community Modal */}
+      <JoinCommunityModal
+        isOpen={joinModalOpen}
+        onClose={() => setJoinModalOpen(false)}
+      />
     </motion.header>
   )
 }

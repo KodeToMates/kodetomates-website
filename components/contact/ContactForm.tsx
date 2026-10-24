@@ -85,7 +85,6 @@ export function ContactForm() {
 
     // 2. Format payload according to API contract
     const formattedMessage = [
-      formData.subject.trim() ? `[Topic: ${formData.subject.trim()}]` : '',
       timeline.trim() ? `[Timeline: ${timeline.trim()}]` : '',
       formData.message.trim(),
     ]
@@ -95,8 +94,9 @@ export function ContactForm() {
     const payload: ContactRequestPayload = {
       fullName: formData.name.trim(),
       email: formData.email.trim(),
-      message: formattedMessage,
-      leadSource: 'Website',
+      subject: formData.subject.trim() || undefined,
+      message: formattedMessage || formData.subject.trim(),
+      leadSource: 'Website (Contact Page)',
     }
 
     if (formData.phone.trim()) {

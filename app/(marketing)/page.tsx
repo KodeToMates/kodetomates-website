@@ -1,8 +1,10 @@
 import { Hero } from '@/components/home/Hero'
+import { HeroTicker } from '@/components/home/HeroTicker'
 import { FloatingBackground } from '@/components/home/FloatingBackground'
 import { WhatIsKodeToMates } from '@/components/home/WhatIsKodeToMates'
 import { WhatWeDo } from '@/components/home/WhatWeDo'
 import { BuiltByKodeToMates } from '@/components/home/BuiltByKodeToMates'
+import { TestimonialsSection } from '@/components/home/TestimonialsSection'
 import { TechnologiesSection } from '@/components/home/TechnologiesSection'
 import { FinalCTASection } from '@/components/home/FinalCTASection'
 import { FAQSection } from '@/components/home/FAQSection'
@@ -17,6 +19,9 @@ export default function HomePage() {
 
       {/* Hero Section */}
       <Hero />
+
+      {/* Engineering & Ecosystem Ticker Bar */}
+      <HeroTicker />
 
       {/* Section 1: What Is KodeToMates? */}
       <WhatIsKodeToMates />
@@ -44,8 +49,15 @@ export default function HomePage() {
       {/* Section 3: Built by KodeToMates */}
       <BuiltByKodeToMates />
 
-
-
+      {/* Section 4: Testimonials */}
+      <LazySection
+        title="Testimonials"
+        tag="COMMUNITY:VOICES"
+        minHeight="600px"
+        skeletonCards={1}
+      >
+        <TestimonialsSection />
+      </LazySection>
       {/* Section 6: Join KodeToMates CTA */}
       <LazySection
         title="Join KodeToMates"
