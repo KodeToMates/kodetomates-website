@@ -8,6 +8,8 @@ export interface HeroTickerProps {
   className?: string
   duration?: number
   pauseOnHover?: boolean
+  theme?: 'light' | 'dark'
+  textColor?: string
 }
 
 export const DEFAULT_HERO_TICKER_PHRASES = [
@@ -28,15 +30,19 @@ export function HeroTicker({
   className = '',
   duration = 65,
   pauseOnHover = true,
+  theme = 'light',
+  textColor,
 }: HeroTickerProps) {
   return (
     <Ticker
       phrases={phrases}
       variant="hero"
+      theme={theme}
       duration={duration}
       pauseOnHover={pauseOnHover}
       reverseOnScrollUp={true}
       className={className}
+      textColor={textColor}
       ariaLabel="KodeToMates Ecosystem Highlights Ticker"
     />
   )

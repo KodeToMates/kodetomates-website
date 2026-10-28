@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
-import SlitTypeFaq, { FaqItem, SlitPreset } from '@/components/ui/slit-type-faq'
+import SlitTypeFaq, { FaqItem, SlitPreset } from './slit-type-faq'
 import { HOME_FAQ_ITEMS, HOME_FAQ_CATEGORIES, FAQ_TICKER_PHRASES } from '@/data/faq'
 
 export interface FAQContactConfig {

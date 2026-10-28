@@ -1,9 +1,5 @@
-import SlitTypeFaq from "@/components/ui/slit-type-faq"
+import Component from "@/components/ui/blogs";
 
-export default function SlitTypeFaqDemo() {
-  return (
-    <div className="w-full">
-      <SlitTypeFaq />
-    </div>
-  )
+export default function DemoOne() {
+  return <Component />;
 }

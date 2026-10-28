@@ -21,8 +21,19 @@
   --color-berry-crimson: #AB003E;
   --color-primary-sunset: #FF914D;
   --color-primary-berry: #AB003E;
-  --color-heading-dark: #1A1614;
+  --color-heading-dark: #161413;
+  --color-body-dark: #554E48;
+  --color-body-muted: #665F58;
   --color-body-gray: #6B645E;
+  --color-surface-sand: #FAF8F5;
+  --color-surface-dim: #F5F2EB;
+  --color-border-warm: #F0EBE1;
+  --color-border-subtle: #E8E2D9;
+  --color-border: #E8E2D9;
+  --color-foreground: #161413;
+  --color-muted-foreground: #6B645E;
+  --color-background: #FFFFFF;
+  --color-dark-bg: #0C0B0A;
   --color-terminal-navy: #161B26;
 
   --font-sans: var(--font-jakarta), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
@@ -308,6 +319,45 @@ html.lenis body {
 
 .animate-tomato-glow {
   animation: tomato-glow-pulse 3s infinite ease-in-out;
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes float-delayed {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+.animate-float-slow {
+  animation: float-slow 4s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-delayed 5s ease-in-out infinite 1.5s;
 }
 
 /* ============================================================

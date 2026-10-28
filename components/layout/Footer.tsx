@@ -88,14 +88,14 @@ export function Footer() {
               <Link href="/" className="inline-flex items-center gap-3 mb-3.5 group select-none">
                 <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full overflow-hidden flex items-center justify-center shrink-0 shadow-sm border border-white/10 group-hover:scale-105 transition-transform duration-300">
                   <Image
-                    src="/images/brand/KM - Logo.png"
+                    src="/Image-v1/KTM_Logos/Primary-Logo.png"
                     alt="KodeToMates Logo"
                     width={40}
                     height={40}
                     className="object-contain"
                   />
                 </div>
-                <span className="font-playfair text-2xl sm:text-[26px] font-bold tracking-tight text-white group-hover:text-[#FFA466] transition-colors">
+                <span className="font-sans text-2xl sm:text-[26px] font-bold tracking-[-0.03em] text-white group-hover:text-[#FFA466] transition-colors">
                   Kode<span className="text-[#E4521B]">To</span>Mates
                 </span>
               </Link>
@@ -104,7 +104,7 @@ export function Footer() {
                 The collaborative technology community where people learn systems, create real-world open source projects, and grow together.
               </p>
 
-              <p className="font-serif text-[#E4521B] text-[16px] sm:text-[17px] italic font-normal mb-5">
+              <p className="font-sans font-semibold text-[#E4521B] text-[14.5px] sm:text-[15.5px] tracking-tight mb-5">
                 Build something meaningful with us.
               </p>
 
@@ -302,7 +302,7 @@ export function Footer() {
             {/* Official Logo Mark with Radiant Drop Shadow */}
             <div className="relative w-11 h-11 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full overflow-hidden flex items-center justify-center shrink-0 drop-shadow-[0_4px_24px_rgba(228,82,27,0.7)] group-hover:scale-105 transition-transform duration-300">
               <Image
-                src="/images/brand/KM - Logo.png"
+                src="/Image-v1/KTM_Logos/Primary-Logo.png"
                 alt="KodeToMates Official Logo"
                 width={64}
                 height={64}
@@ -312,7 +312,7 @@ export function Footer() {
             </div>
 
             {/* Giant Stylized Wordmark with Soft Terracotta Glow */}
-            <span className="font-serif text-[clamp(2.3rem,5.2vw,4.4rem)] font-bold text-white tracking-[-0.03em] leading-none transition-colors drop-shadow-[0_4px_28px_rgba(228,82,27,0.35)] group-hover:text-[#FFA466]">
+            <span className="font-sans text-[clamp(2.4rem,5.5vw,4.6rem)] font-bold text-white tracking-[-0.035em] leading-none transition-colors drop-shadow-[0_4px_28px_rgba(228,82,27,0.35)] group-hover:text-[#FFA466]">
               Kode<span className="text-[#FF8F4D] group-hover:text-white transition-colors">To</span>Mates
             </span>
           </div>

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
-import { SlitHeading } from '@/components/ui/SlitHeading'
+import { SlitHeading } from '@/components/ui'
 
 // Definition of each technology item
 interface TechnologyItem {

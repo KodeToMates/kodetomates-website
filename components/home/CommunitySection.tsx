@@ -173,7 +173,7 @@ export function CommunitySection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="font-serif text-[clamp(2.4rem,4.2vw,3.8rem)] font-bold text-[#161413] leading-[1.14] tracking-[-0.02em] mb-3 sm:mb-4"
+              className="font-sans text-[clamp(2.4rem,4.2vw,3.8rem)] font-bold text-[#161413] leading-[1.14] tracking-[-0.03em] mb-3 sm:mb-4"
             >
               <div>Don&apos;t learn</div>
               <div className="bg-gradient-to-r from-[#FF914D] to-[#AB003E] bg-clip-text text-transparent mt-1">
@@ -222,7 +222,7 @@ export function CommunitySection() {
                   key={stat.label}
                   className="rounded-2xl bg-white/70 border border-[#F2DECE] p-3 sm:p-3.5 text-left shadow-[0_4px_14px_rgba(224,93,58,0.04)]"
                 >
-                  <div className="font-serif font-bold text-[20px] sm:text-[23px] text-[#161413] leading-none mb-1">
+                  <div className="font-sans font-bold text-[20px] sm:text-[23px] text-[#161413] tracking-[-0.02em] leading-none mb-1">
                     {stat.number}
                   </div>
                   <div className="font-sans text-[11.5px] sm:text-[12px] font-semibold text-[#8C7E74]">
@@ -358,11 +358,11 @@ export function CommunitySection() {
                           <div className="flex items-center justify-between mb-4">
                             <div className="flex items-center gap-3">
                               {/* Glowing Avatar */}
-                              <div className={`w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br ${member.avatarBg} shadow-[0_8px_18px_rgba(228,82,27,0.25)] flex items-center justify-center text-white font-serif font-bold text-xl select-none`}>
+                              <div className={`w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br ${member.avatarBg} shadow-[0_8px_18px_rgba(228,82,27,0.25)] flex items-center justify-center text-white font-sans font-bold text-xl select-none`}>
                                 {member.name.charAt(0)}
                               </div>
                               <div>
-                                <h4 className="font-serif font-bold text-[18px] sm:text-[19px] text-[#161413] leading-tight">
+                                <h4 className="font-sans font-bold text-[18px] sm:text-[19px] text-[#161413] tracking-[-0.02em] leading-tight">
                                   {member.name}
                                 </h4>
                                 <div className="font-sans text-[12px] text-[#8C7E74]">

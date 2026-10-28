@@ -1,11 +1,9 @@
-import { UniqueLoader } from '@/components/ui/UniqueLoader'
+import { LoaderGooeyBlobs } from '@/components/ui'
 
 export default function Loading() {
   return (
-    <UniqueLoader
-      variant="fullscreen"
-      title="KodeToMates"
-      tag="ROUTER:PAGE_SUSPENSE"
-    />
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black select-none">
+      <LoaderGooeyBlobs size={24} color="#FFFFFF" duration={1.2} />
+    </div>
   )
 }

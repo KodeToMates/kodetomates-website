@@ -5,39 +5,17 @@ import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, ChevronDown, CheckCircle2, AlertCircle, Loader2, ArrowRight } from 'lucide-react'
 import { submitContactRequest } from '@/lib/api/contact'
-import { ContactFormData, ContactRequestPayload } from '@/types/contact'
+import {
+  ContactFormData,
+  ContactRequestPayload,
+  CONTACT_SUBJECT_OPTIONS,
+  initialContactFormData,
+} from '@/types/contact'
 import { validateContactForm } from '@/lib/validations/contact'
 
 export interface JoinCommunityModalProps {
   isOpen: boolean
   onClose: () => void
-}
-
-const SUBJECT_OPTIONS = [
-  'General Inquiry',
-  'Project Collaboration',
-  'Join the Community',
-  'Mentorship & Learning',
-  'Technical Partnership',
-  'Website / App Development',
-  'Other',
-]
-
-const TIMELINE_OPTIONS = [
-  'Immediate (within 1-2 weeks)',
-  'Within 1 month',
-  '1 - 3 months',
-  'Flexible / Exploring ideas',
-  'Ongoing Collaboration',
-]
-
-const initialFormData: ContactFormData = {
-  name: '',
-  email: '',
-  phone: '',
-  company: '',
-  subject: '',
-  message: '',
 }
 
 export function JoinCommunityModal({ isOpen, onClose }: JoinCommunityModalProps) {
@@ -47,16 +25,14 @@ export function JoinCommunityModal({ isOpen, onClose }: JoinCommunityModalProps)
     () => false
   )
 
-  const [formData, setFormData] = useState<ContactFormData>(initialFormData)
-  const [timeline, setTimeline] = useState('')
+  const [formData, setFormData] = useState<ContactFormData>(initialContactFormData)
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
   const [errorMessage, setErrorMessage] = useState('')
 
   const handleClose = useCallback(() => {
     onClose()
     setTimeout(() => {
-      setFormData(initialFormData)
-      setTimeline('')
+      setFormData(initialContactFormData)
       setStatus('idle')
       setErrorMessage('')
     }, 200)
@@ -107,20 +83,13 @@ export function JoinCommunityModal({ isOpen, onClose }: JoinCommunityModalProps)
     setErrorMessage('')
 
     try {
-      const formattedMessage = [
-        timeline.trim() ? `[Timeline: ${timeline.trim()}]` : '',
-        formData.message.trim(),
-      ]
-        .filter(Boolean)
-        .join('\n\n')
-
       const payload: ContactRequestPayload = {
         fullName: formData.name.trim(),
         email: formData.email.trim(),
         phone: formData.phone.trim() || undefined,
         company: formData.company.trim() || undefined,
         subject: formData.subject.trim() || undefined,
-        message: formattedMessage || formData.subject.trim(),
+        message: formData.message.trim() || formData.subject.trim(),
         leadSource: 'Enquiry Modal (Navbar)',
       }
 
@@ -269,7 +238,7 @@ export function JoinCommunityModal({ isOpen, onClose }: JoinCommunityModalProps)
                   </div>
                 </div>
 
-                {/* Row 2: Phone Number & Subject */}
+                {/* Row 2: Phone Number & Company / Organisation */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                   <div>
                     <label
@@ -292,41 +261,6 @@ export function JoinCommunityModal({ isOpen, onClose }: JoinCommunityModalProps)
 
                   <div>
                     <label
-                      htmlFor="modal-subject"
-                      className="block text-xs font-sans font-semibold text-white/85 mb-1.5"
-                    >
-                      Subject <span className="text-[#E4521B]">*</span>
-                    </label>
-                    <div className="relative">
-                      <select
-                        id="modal-subject"
-                        name="subject"
-                        required
-                        value={formData.subject}
-                        onChange={handleChange}
-                        disabled={status === 'submitting'}
-                        className={`w-full px-3.5 py-2.5 pr-9 rounded-xl bg-white/[0.08] text-sm font-sans appearance-none cursor-pointer focus:outline-none focus:bg-white/[0.14] focus:ring-2 focus:ring-[#E4521B]/60 transition-all border-0 disabled:opacity-60 ${
-                          formData.subject ? 'text-white' : 'text-white/40'
-                        }`}
-                      >
-                        <option value="" disabled className="bg-[#181622] text-white/50">
-                          Choose your topic...
-                        </option>
-                        {SUBJECT_OPTIONS.map((opt) => (
-                          <option key={opt} value={opt} className="bg-[#181622] text-white">
-                            {opt}
-                          </option>
-                        ))}
-                      </select>
-                      <ChevronDown className="w-4 h-4 text-white/40 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Row 3: Company / Organisation & Preferred Timeline */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                  <div>
-                    <label
                       htmlFor="modal-company"
                       className="block text-xs font-sans font-semibold text-white/85 mb-1.5"
                     >
@@ -343,36 +277,38 @@ export function JoinCommunityModal({ isOpen, onClose }: JoinCommunityModalProps)
                       className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.08] text-white placeholder-white/35 text-sm font-sans focus:outline-none focus:bg-white/[0.14] focus:ring-2 focus:ring-[#E4521B]/60 transition-all border-0 disabled:opacity-60"
                     />
                   </div>
+                </div>
 
-                  <div>
-                    <label
-                      htmlFor="modal-timeline"
-                      className="block text-xs font-sans font-semibold text-white/85 mb-1.5"
+                {/* Row 3: Subject Dropdown */}
+                <div>
+                  <label
+                    htmlFor="modal-subject"
+                    className="block text-xs font-sans font-semibold text-white/85 mb-1.5"
+                  >
+                    Subject <span className="text-[#E4521B]">*</span>
+                  </label>
+                  <div className="relative">
+                    <select
+                      id="modal-subject"
+                      name="subject"
+                      required
+                      value={formData.subject}
+                      onChange={handleChange}
+                      disabled={status === 'submitting'}
+                      className={`w-full px-3.5 py-2.5 pr-9 rounded-xl bg-white/[0.08] text-sm font-sans appearance-none cursor-pointer focus:outline-none focus:bg-white/[0.14] focus:ring-2 focus:ring-[#E4521B]/60 transition-all border-0 disabled:opacity-60 ${
+                        formData.subject ? 'text-white' : 'text-white/40'
+                      }`}
                     >
-                      Preferred Timeline <span className="text-white/40 font-normal">(Optional)</span>
-                    </label>
-                    <div className="relative">
-                      <select
-                        id="modal-timeline"
-                        name="timeline"
-                        value={timeline}
-                        onChange={(e) => setTimeline(e.target.value)}
-                        disabled={status === 'submitting'}
-                        className={`w-full px-3.5 py-2.5 pr-9 rounded-xl bg-white/[0.08] text-sm font-sans appearance-none cursor-pointer focus:outline-none focus:bg-white/[0.14] focus:ring-2 focus:ring-[#E4521B]/60 transition-all border-0 disabled:opacity-60 ${
-                          timeline ? 'text-white' : 'text-white/40'
-                        }`}
-                      >
-                        <option value="" className="bg-[#181622] text-white/50">
-                          Choose timeline (optional)...
+                      <option value="" disabled className="bg-[#181622] text-white/50">
+                        Choose your topic...
+                      </option>
+                      {CONTACT_SUBJECT_OPTIONS.map((opt) => (
+                        <option key={opt} value={opt} className="bg-[#181622] text-white">
+                          {opt}
                         </option>
-                        {TIMELINE_OPTIONS.map((opt) => (
-                          <option key={opt} value={opt} className="bg-[#181622] text-white">
-                            {opt}
-                          </option>
-                        ))}
-                      </select>
-                      <ChevronDown className="w-4 h-4 text-white/40 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
-                    </div>
+                      ))}
+                    </select>
+                    <ChevronDown className="w-4 h-4 text-white/40 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                   </div>
                 </div>
 

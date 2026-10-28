@@ -13,40 +13,17 @@ import {
   Copy,
   Check,
 } from 'lucide-react'
-import { ContactFormData, ContactRequestPayload } from '@/types/contact'
+import {
+  ContactFormData,
+  ContactRequestPayload,
+  CONTACT_SUBJECT_OPTIONS,
+  initialContactFormData,
+} from '@/types/contact'
 import { validateContactForm } from '@/lib/validations/contact'
 import { submitContactRequest } from '@/lib/api/contact'
 
-const SUBJECT_OPTIONS = [
-  'General Inquiry',
-  'Project Collaboration',
-  'Join the Community',
-  'Mentorship & Learning',
-  'Technical Partnership',
-  'Website / App Development',
-  'Other',
-]
-
-const TIMELINE_OPTIONS = [
-  'Immediate (within 1-2 weeks)',
-  'Within 1 month',
-  '1 - 3 months',
-  'Flexible / Exploring ideas',
-  'Ongoing Collaboration',
-]
-
-const initialFormData: ContactFormData = {
-  name: '',
-  email: '',
-  phone: '',
-  company: '',
-  subject: '',
-  message: '',
-}
-
 export function ContactForm() {
-  const [formData, setFormData] = useState<ContactFormData>(initialFormData)
-  const [timeline, setTimeline] = useState('')
+  const [formData, setFormData] = useState<ContactFormData>(initialContactFormData)
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
   const [errorMessage, setErrorMessage] = useState('')
   const [serverSuccessMessage, setServerSuccessMessage] = useState('')
@@ -84,19 +61,12 @@ export function ContactForm() {
     setErrorMessage('')
 
     // 2. Format payload according to API contract
-    const formattedMessage = [
-      timeline.trim() ? `[Timeline: ${timeline.trim()}]` : '',
-      formData.message.trim(),
-    ]
-      .filter(Boolean)
-      .join('\n\n')
-
     const payload: ContactRequestPayload = {
       fullName: formData.name.trim(),
       email: formData.email.trim(),
       subject: formData.subject.trim() || undefined,
-      message: formattedMessage || formData.subject.trim(),
-      leadSource: 'Website (Contact Page)',
+      message: formData.message.trim() || formData.subject.trim(),
+      leadSource: 'Website (Contact Page-CTA)',
     }
 
     if (formData.phone.trim()) {
@@ -122,8 +92,7 @@ export function ContactForm() {
   }
 
   const handleReset = () => {
-    setFormData(initialFormData)
-    setTimeline('')
+    setFormData(initialContactFormData)
     setStatus('idle')
     setErrorMessage('')
     setServerSuccessMessage('')
@@ -165,7 +134,7 @@ export function ContactForm() {
               <CheckCircle2 className="w-10 h-10 sm:w-12 sm:h-12" />
             </div>
 
-            <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#1A1817] mb-3">
+            <h3 className="font-sans text-2xl sm:text-3xl font-bold tracking-[-0.03em] text-[#1A1817] mb-3">
               Message Sent Successfully!
             </h3>
 
@@ -247,7 +216,7 @@ export function ContactForm() {
                 </div>
               </div>
 
-              {/* Row 2: Phone Number & Subject Dropdown */}
+              {/* Row 2: Phone Number & Company / Organisation */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                 <div className="flex flex-col gap-1.5">
                   <label
@@ -269,38 +238,6 @@ export function ContactForm() {
                 </div>
                 <div className="flex flex-col gap-1.5">
                   <label
-                    htmlFor="contact-subject"
-                    className="font-sans font-semibold text-xs sm:text-[13px] text-[#1A1817]"
-                  >
-                    Subject
-                  </label>
-                  <div className="relative">
-                    <select
-                      id="contact-subject"
-                      name="subject"
-                      value={formData.subject}
-                      onChange={handleChange}
-                      required
-                      disabled={status === 'submitting'}
-                      className={`w-full px-4 py-3 pr-10 rounded-2xl bg-[#F8F9FA] border border-neutral-200 text-sm sm:text-[14.5px] font-sans transition-all duration-200 focus:outline-none focus:bg-white focus:border-[#E4521B] focus:ring-3 focus:ring-[#E4521B]/10 disabled:opacity-60 appearance-none cursor-pointer ${formData.subject ? 'text-[#141210]' : 'text-neutral-400'
-                        }`}
-                    >
-                      <option value="" disabled>Choose your topic...</option>
-                      {SUBJECT_OPTIONS.map((opt) => (
-                        <option key={opt} value={opt} className="text-[#141210] bg-white py-1.5">
-                          {opt}
-                        </option>
-                      ))}
-                    </select>
-                    <ChevronDown className="w-4 h-4 text-neutral-400 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-                  </div>
-                </div>
-              </div>
-
-              {/* Row 3: Company / Organisation & Preferred Timeline */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
-                <div className="flex flex-col gap-1.5">
-                  <label
                     htmlFor="contact-company"
                     className="font-sans font-semibold text-xs sm:text-[13px] text-[#1A1817]"
                   >
@@ -317,32 +254,35 @@ export function ContactForm() {
                     className="w-full px-4 py-3 rounded-2xl bg-[#F8F9FA] border border-neutral-200 text-[#141210] text-sm sm:text-[14.5px] placeholder-neutral-400 font-sans transition-all duration-200 focus:outline-none focus:bg-white focus:border-[#E4521B] focus:ring-3 focus:ring-[#E4521B]/10 disabled:opacity-60"
                   />
                 </div>
-                <div className="flex flex-col gap-1.5">
-                  <label
-                    htmlFor="contact-timeline"
-                    className="font-sans font-semibold text-xs sm:text-[13px] text-[#1A1817]"
+              </div>
+
+              {/* Row 3: Subject Dropdown */}
+              <div className="flex flex-col gap-1.5">
+                <label
+                  htmlFor="contact-subject"
+                  className="font-sans font-semibold text-xs sm:text-[13px] text-[#1A1817]"
+                >
+                  Subject
+                </label>
+                <div className="relative">
+                  <select
+                    id="contact-subject"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    required
+                    disabled={status === 'submitting'}
+                    className={`w-full px-4 py-3 pr-10 rounded-2xl bg-[#F8F9FA] border border-neutral-200 text-sm sm:text-[14.5px] font-sans transition-all duration-200 focus:outline-none focus:bg-white focus:border-[#E4521B] focus:ring-3 focus:ring-[#E4521B]/10 disabled:opacity-60 appearance-none cursor-pointer ${formData.subject ? 'text-[#141210]' : 'text-neutral-400'
+                      }`}
                   >
-                    Preferred Timeline
-                  </label>
-                  <div className="relative">
-                    <select
-                      id="contact-timeline"
-                      name="timeline"
-                      value={timeline}
-                      onChange={(e) => setTimeline(e.target.value)}
-                      disabled={status === 'submitting'}
-                      className={`w-full px-4 py-3 pr-10 rounded-2xl bg-[#F8F9FA] border border-neutral-200 text-sm sm:text-[14.5px] font-sans transition-all duration-200 focus:outline-none focus:bg-white focus:border-[#E4521B] focus:ring-3 focus:ring-[#E4521B]/10 disabled:opacity-60 appearance-none cursor-pointer ${timeline ? 'text-[#141210]' : 'text-neutral-400'
-                        }`}
-                    >
-                      <option value="">Choose timeline (optional)...</option>
-                      {TIMELINE_OPTIONS.map((opt) => (
-                        <option key={opt} value={opt} className="text-[#141210] bg-white py-1.5">
-                          {opt}
-                        </option>
-                      ))}
-                    </select>
-                    <ChevronDown className="w-4 h-4 text-neutral-400 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-                  </div>
+                    <option value="" disabled>Choose your topic...</option>
+                    {CONTACT_SUBJECT_OPTIONS.map((opt) => (
+                      <option key={opt} value={opt} className="text-[#141210] bg-white py-1.5">
+                        {opt}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown className="w-4 h-4 text-neutral-400 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                 </div>
               </div>
 

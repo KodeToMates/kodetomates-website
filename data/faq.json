@@ -1,0 +1,345 @@
+{
+  "categories": [
+    "About",
+    "Community",
+    "Membership",
+    "Learning",
+    "Projects",
+    "Support"
+  ],
+  "ticker": [
+    "LEARN TOGETHER",
+    "BUILD REAL PRODUCTS",
+    "COLLABORATE AS A TEAM",
+    "GROW & LEAD",
+    "100% PRACTICAL",
+    "OPEN SOURCE REPOSITORIES",
+    "VERIFIABLE PROOF OF WORK"
+  ],
+  "items": [
+    {
+      "id": "what-is-kodetomates",
+      "question": "What is KodeToMates?",
+      "answer": "KodeToMates is an open ecosystem designed for developers, builders, and creative technologists who want to break beyond passive tutorials. We bridge the critical gap between understanding syntax and shipping production-grade software through active pair-coding, collaborative GitHub repositories, and peer code reviews.",
+      "category": "About"
+    },
+    {
+      "id": "who-can-join",
+      "question": "Who can join KodeToMates?",
+      "answer": "Anyone passionate about building, learning, and creating technology can join. Whether you are a student, self-taught builder, frontend developer, backend engineer, AI researcher, or UI/UX designer — there is an active space for you to build and collaborate.",
+      "category": "Community"
+    },
+    {
+      "id": "is-it-free",
+      "question": "Is KodeToMates free to join?",
+      "answer": "Yes, 100%! Joining our core community, discussions, open-source repositories, and weekly collaborative workshops is completely free.",
+      "category": "Membership"
+    },
+    {
+      "id": "learning-resources",
+      "question": "What kind of learning resources are available?",
+      "answer": "We provide curated roadmaps, production codebases, architecture teardowns, live workshops, code reviews, and community-driven documentation across full-stack web, generative AI agents, and systems design.",
+      "category": "Learning"
+    },
+    {
+      "id": "real-projects",
+      "question": "Can I work on real production software?",
+      "answer": "Absolutely. Practical execution is our cornerstone. You can initiate your own project, join existing community sprints, build developer utilities, or contribute to deployed open-source tools to build verifiable proof of work.",
+      "category": "Projects"
+    },
+    {
+      "id": "how-to-connect",
+      "question": "How do I connect and collaborate with other members?",
+      "answer": "Through our active Discord and Slack channels, weekly demo sprints, pair programming rooms, and collaborative project repositories where you experience the same workflows used by high-performing tech teams.",
+      "category": "Community"
+    },
+    {
+      "id": "mentorship-support",
+      "question": "Who can I contact for mentorship and support?",
+      "answer": "Our maintainers and community mentors are active daily in our discussion channels. You can also reach out directly through our Contact page for guidance, technical reviews, or partnership inquiries.",
+      "category": "Support"
+    }
+  ],
+  "pages": {
+    "home": {
+      "eyebrow": "QUICK ANSWERS & FAQ",
+      "headline": "Frequently asked questions.\n<span style=\"color: var(--color-primary-orange)\">Clear answers for builders.</span>",
+      "intro": "Find quick answers regarding our community sprints, live pair-coding sessions, practical learning roadmaps, and verifiable proof of work."
+    },
+    "website-dev": {
+      "eyebrow": "QUICK ANSWERS & FAQ",
+      "headline": "Frequently Asked Questions.\n<span style=\"color: var(--color-primary-orange)\">Clear answers for your website project.</span>",
+      "intro": "Common questions about our website design and development services, scoping, responsiveness, modern standards, and delivery timelines.",
+      "categories": [
+        "All",
+        "Architecture",
+        "Design & Dev",
+        "Mobile",
+        "Redesign",
+        "Standards",
+        "Timeline"
+      ],
+      "ticker": [
+        "STATIC & DYNAMIC WEBSITES",
+        "RESPONSIVE ON ALL DEVICES",
+        "CLEAN ARCHITECTURE",
+        "TRANSPARENT TIMELINE",
+        "NO FLEETING GIMMICKS",
+        "MODERN DESIGN STANDARDS"
+      ],
+      "items": [
+        {
+          "id": "static-and-dynamic",
+          "question": "Do you design static and dynamic websites?",
+          "answer": "Yes. We can plan static or dynamic website experiences based on the project requirements and the functionality agreed for delivery.",
+          "category": "Architecture"
+        },
+        {
+          "id": "design-vs-development",
+          "question": "What is the difference between website design and development?",
+          "answer": "Website design focuses on the structure, appearance, and user experience. Development implements the design and builds the site’s working behaviour and functionality. Some projects include both; others may require only one.",
+          "category": "Design & Dev"
+        },
+        {
+          "id": "mobile-devices",
+          "question": "Will my website work on mobile devices?",
+          "answer": "Responsive behaviour is part of the design and review approach. The final result should be checked against the agreed range of devices, browsers, and features.",
+          "category": "Mobile"
+        },
+        {
+          "id": "redesign-existing",
+          "question": "Can you redesign an existing website?",
+          "answer": "A redesign can be scoped around the current site, what needs to improve, and which content or functionality should be retained.",
+          "category": "Redesign"
+        },
+        {
+          "id": "design-trends",
+          "question": "Do you use the latest design trends?",
+          "answer": "We follow modern design patterns where they improve clarity or usability. We prioritise the needs of your users and brand over trends that do not serve a clear purpose.",
+          "category": "Standards"
+        },
+        {
+          "id": "project-timeline",
+          "question": "How long does a website take?",
+          "answer": "Timing depends on the number of pages, content readiness, functionality, review cycles, and project scope. A realistic timeline can be discussed after requirements are understood.",
+          "category": "Timeline"
+        }
+      ]
+    },
+    "seo": {
+      "eyebrow": "FAQS",
+      "headline": "Frequently Asked Questions.\n<span style=\"color: var(--color-primary-orange)\">Clear answers for search optimisation.</span>",
+      "intro": "Straightforward answers about our search engine optimisation approach, realistic timelines, and practical expectations.",
+      "categories": [
+        "All",
+        "Timeline",
+        "Rankings",
+        "Scope"
+      ],
+      "ticker": [
+        "ONGOING OPTIMISATION",
+        "MEASURABLE PROGRESS",
+        "SOUND PRACTICES",
+        "PRACTICAL EXPECTATIONS",
+        "USEFUL CONTENT",
+        "TAILORED SCOPE"
+      ],
+      "items": [
+        {
+          "id": "how-long-does-seo-take",
+          "question": "How long does SEO take?",
+          "answer": "SEO usually requires ongoing work, and meaningful changes can take time. The timeline depends on the site, competition, and the improvements made.",
+          "category": "Timeline"
+        },
+        {
+          "id": "can-you-guarantee-first-page-rankings",
+          "question": "Can you guarantee first-page rankings?",
+          "answer": "No responsible SEO service can guarantee a particular ranking. The focus should be on sound practices, useful content, and measurable improvements.",
+          "category": "Rankings"
+        },
+        {
+          "id": "can-you-improve-an-existing-website",
+          "question": "Can you improve an existing website?",
+          "answer": "Yes, an existing site can be reviewed and improvements can be scoped based on its current condition and goals.",
+          "category": "Scope"
+        }
+      ]
+    },
+    "website-redesign": {
+      "eyebrow": "QUICK ANSWERS & FAQ",
+      "headline": "Frequently Asked Questions.\n<span style=\"color: var(--color-primary-orange)\">Clear answers for your redesign.</span>",
+      "intro": "Straightforward answers about our website redesign approach, content retention, technical rebuilds, and search equity preservation.",
+      "categories": [
+        "All",
+        "Rebuild Scope",
+        "Content Migration",
+        "SEO & Visibility"
+      ],
+      "ticker": [
+        "REBUILD OR REFRESH",
+        "CONTENT RETENTION",
+        "SEO-AWARE MIGRATION",
+        "ZERO TECH DEBT",
+        "TRANSPARENT PROCESS",
+        "MODERN ARCHITECTURE"
+      ],
+      "items": [
+        {
+          "id": "new-website-from-scratch",
+          "question": "Will we need a new website from scratch?",
+          "answer": "Not always. The right approach depends on the existing site, its technology, and what needs to change. Some projects need a refresh; others need a more complete rebuild.",
+          "category": "Rebuild Scope"
+        },
+        {
+          "id": "keep-existing-content",
+          "question": "Can we keep our existing content?",
+          "answer": "Where appropriate, useful content can be retained, edited, reorganised, or migrated as part of the agreed scope.",
+          "category": "Content Migration"
+        },
+        {
+          "id": "redesign-affect-seo",
+          "question": "Will the redesign affect SEO?",
+          "answer": "Changes to URLs, content, and site structure can affect search visibility. Planning redirects and preserving useful content can help reduce avoidable disruption, but outcomes cannot be guaranteed.",
+          "category": "SEO & Visibility"
+        }
+      ]
+    },
+    "about": {
+      "eyebrow": "FREQUENTLY ASKED QUESTIONS",
+      "headline": "Got questions?\n<span style=\"color: #E4521B\">Everything you need to know about us.</span>",
+      "intro": "Find clear answers about how KodeToMates operates, how we collaborate with businesses, our engineering standards, and how builders can get involved.",
+      "categories": [
+        "All",
+        "About KodeToMates",
+        "Client & Work",
+        "Community",
+        "Engineering"
+      ],
+      "ticker": [
+        "LEARN TOGETHER · BUILD TOGETHER",
+        "FROM IDEAS TO WORKING OUTCOMES",
+        "TRANSPARENT DELIVERY MILESTONES",
+        "CLEAN CODE & MODERN ENGINEERING",
+        "OPEN COLLABORATION & SHARED CRAFT"
+      ],
+      "items": [
+        {
+          "id": "about-what-makes-different",
+          "question": "What is KodeToMates and what makes it different?",
+          "answer": "KodeToMates is an open technology ecosystem where learning meets practice. Unlike traditional tutorial sites or rigid agencies, we bring curious developers, designers, and founders together to collaborate on real projects, build production-grade web applications, and turn ideas into tangible, useful digital outcomes.",
+          "category": "About KodeToMates"
+        },
+        {
+          "id": "about-work-with-businesses",
+          "question": "How do you work with businesses and founders?",
+          "answer": "We partner with businesses and entrepreneurs who have an idea, an operational bottleneck, or a digital experience that needs improvement. Through our 6-step process—from Discovery and Architecture to Clean Implementation and Launch—we build practical, high-performance solutions aligned with your business goals.",
+          "category": "Client & Work"
+        },
+        {
+          "id": "about-join-or-collaborate",
+          "question": "Can developers and designers join or collaborate with the community?",
+          "answer": "Yes! We welcome curious builders, developers, and creative thinkers who want to move beyond tutorials. KodeToMates provides a collaborative space to experiment with modern frameworks, participate in peer code reviews, contribute to open projects, and build verifiable proof of work.",
+          "category": "Community"
+        },
+        {
+          "id": "about-tech-practices",
+          "question": "What technologies and engineering practices do you follow?",
+          "answer": "We build with modern, production-tested stacks including Next.js, React, TypeScript, Tailwind CSS, PostgreSQL, edge runtimes, WebGL, and AI agent workflows. We emphasize clean system design, sub-second edge latency, WCAG AA accessibility, and maintainable, well-documented codebases.",
+          "category": "Engineering"
+        },
+        {
+          "id": "about-progress-communication",
+          "question": "How is progress communicated throughout a project?",
+          "answer": "We believe good collaboration starts with openness and clear expectations. We develop in manageable milestones, share regular working progress demos, maintain living documentation, and ensure you understand exactly how the solution is taking shape at every stage.",
+          "category": "Client & Work"
+        },
+        {
+          "id": "about-start-collaboration",
+          "question": "How can someone get in touch or start a collaboration?",
+          "answer": "You can reach out directly via our Contact page or connect through our community channels. Whether you have a project ready to build, want to explore a problem, or are interested in collaborating with our team, we're always excited to discuss a practical way forward.",
+          "category": "Community"
+        }
+      ]
+    },
+    "digital-invitation": {
+      "eyebrow": "FREQUENTLY ASKED QUESTIONS",
+      "headline": "Got questions?\n<span style=\"color: #E4521B\">Everything you need to know.</span>",
+      "intro": "Find clear answers regarding custom invitations, WhatsApp sharing, live RSVP tracking, and turn-around times.",
+      "categories": [
+        "All",
+        "General",
+        "Customization",
+        "Sharing & RSVPs"
+      ],
+      "ticker": [
+        "Instant WhatsApp Delivery",
+        "Real-Time RSVP Tracking",
+        "1-Click Venue Navigation",
+        "Zero App Downloads Needed",
+        "Ready in 2–3 Business Days"
+      ],
+      "items": [
+        {
+          "id": "invitation-what-is",
+          "question": "What is a digital invitation?",
+          "answer": "A digital invitation is an online invitation that you can customize and share with guests through WhatsApp, email, or a link. It opens directly in any web browser without requiring your guests to install any apps.",
+          "category": "General"
+        },
+        {
+          "id": "invitation-can-customize",
+          "question": "Can I customize my invitation?",
+          "answer": "Yes! You can personalize your invitation with names, event details, photos, custom color palettes, background acoustic music, and heartfelt messages. Two free design revisions are included with every project.",
+          "category": "Customization"
+        },
+        {
+          "id": "invitation-types",
+          "question": "What types of invitations can I create?",
+          "answer": "You can create invitations for weddings, engagements, receptions, birthdays, housewarmings (Griha Pravesham), baby showers, seemantham, naming ceremonies, and other special family milestones.",
+          "category": "General"
+        },
+        {
+          "id": "invitation-share-with-guests",
+          "question": "How can I share my invitation with guests?",
+          "answer": "You can share your digital invitation using WhatsApp, email, SMS, QR code, or any shareable link. When shared on WhatsApp, it displays a rich personalized thumbnail card preview.",
+          "category": "Sharing & RSVPs"
+        },
+        {
+          "id": "invitation-include-details",
+          "question": "Can I include event details in my invitation?",
+          "answer": "Yes! You can add multi-day ceremony timelines, auspicious muhurtham dates, feast timings, dress codes, bride & groom stories, and 1-click Google Maps / Uber venue directions.",
+          "category": "Customization"
+        },
+        {
+          "id": "invitation-track-rsvps",
+          "question": "Can I track guest responses (RSVPs)?",
+          "answer": "Yes! If RSVP functionality is selected, guests confirm their attendance, meal preferences, and guest headcount in seconds. Responses instantly sync to your personal live dashboard and WhatsApp.",
+          "category": "Sharing & RSVPs"
+        },
+        {
+          "id": "invitation-need-app",
+          "question": "Do my guests need to install an app?",
+          "answer": "No. Guests can view your shared invitation directly in their web browser (Safari, Chrome, WhatsApp in-app browser) on mobile, tablet, and desktop without installing anything.",
+          "category": "Sharing & RSVPs"
+        },
+        {
+          "id": "invitation-update-after-sharing",
+          "question": "Can I update my invitation after sharing it?",
+          "answer": "Yes! Because it is a live web invitation, changes to ceremony timings, live stream links, or venue updates can be made instantly in the cloud without needing to re-send new cards or links to guests.",
+          "category": "Customization"
+        },
+        {
+          "id": "invitation-pricing",
+          "question": "Are digital invitations free?",
+          "answer": "Pricing depends on the invitation design and the features you choose (such as custom domains, music playlists, live RSVP dashboards, and multi-day ceremony hubs). We offer transparent, affordable packages with no hidden fees.",
+          "category": "General"
+        },
+        {
+          "id": "invitation-get-started",
+          "question": "How do I get started with a digital invitation?",
+          "answer": "Browse our invitation designs, choose your favorite celebration theme, tell us your event details and vision on WhatsApp, and we will deliver a custom draft for your approval within 2–3 business days.",
+          "category": "General"
+        }
+      ]
+    }
+  }
+}

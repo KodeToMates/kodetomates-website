@@ -3,8 +3,8 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
-import { HeroSparks } from '@/components/ui/HeroSparks'
-import { HeroGlitch } from '@/components/ui/HeroGlitch'
+import { HeroSparks } from './HeroSparks'
+import { HeroGlitch } from './HeroGlitch'
 import { ArrowUpRight } from 'lucide-react'
 
 interface HeadingItem {

@@ -28,8 +28,8 @@ export function Header() {
     <header className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
       <div className="pointer-events-auto w-full max-w-5xl bg-surface-paper/85 backdrop-blur-xl border border-white/50 rounded-full shadow-[0_8px_32px_rgba(26,24,23,0.08)] px-3 py-2.5 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3 pl-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-terracotta rounded-full">
-          <Image src="/images/brand/KM - Logo.png" alt="KodeToMates" width={32} height={32} className="object-contain" priority />
-          <span className="font-playfair font-bold text-[clamp(17px,1.4vw,22px)] tracking-[-0.03em] text-[#1A1614] hidden sm:block">
+          <Image src="/Image-v1/KTM_Logos/Primary-Logo.png" alt="KodeToMates" width={40} height={40} className="object-contain" priority />
+          <span className="font-sans font-bold text-[clamp(17px,1.4vw,22px)] tracking-[-0.03em] text-[#1A1614] hidden sm:block">
             Kode<span className="text-[#E4521B]">To</span>Mates
           </span>
         </Link>

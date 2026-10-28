@@ -7,6 +7,25 @@ export interface ContactFormData {
   message: string
 }
 
+export const CONTACT_SUBJECT_OPTIONS = [
+  'General Inquiry',
+  'Project Collaboration',
+  'Join the Community',
+  'Mentorship & Learning',
+  'Technical Partnership',
+  'Website / App Development',
+  'Other',
+] as const
+
+export const initialContactFormData: ContactFormData = {
+  name: '',
+  email: '',
+  phone: '',
+  company: '',
+  subject: '',
+  message: '',
+}
+
 export interface ContactRequestPayload {
   fullName: string
   email: string
