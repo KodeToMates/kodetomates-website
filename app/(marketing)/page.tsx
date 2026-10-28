@@ -8,7 +8,7 @@ import { TestimonialsSection } from '@/components/home/TestimonialsSection'
 import { TechnologiesSection } from '@/components/home/TechnologiesSection'
 import { FinalCTASection } from '@/components/home/FinalCTASection'
 import { FAQSection } from '@/components/home/FAQSection'
-import { LazySection } from '@/components/ui/LazySection'
+import { LazySection } from '@/components/ui'
 
 export default function HomePage() {
   return (
@@ -80,4 +80,3 @@ export default function HomePage() {
     </div>
   )
 }
-

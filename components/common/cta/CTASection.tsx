@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
-import { SlitHeading } from '@/components/ui/SlitHeading'
+import { SlitHeading } from '@/components/ui'
 
 export interface CTAButtonConfig {
   label: string
@@ -86,7 +86,7 @@ export function CTASection({
   return (
     <section
       id={id}
-      className={`relative z-10 w-full ${sectionBgColor} py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 selection:bg-[#E4521B]/30 selection:text-white ${className}`}
+      className={`relative z-10 w-full ${sectionBgColor} py-6 sm:py-8 lg:py-10 px-4 sm:px-6 lg:px-8 selection:bg-[#E4521B]/30 selection:text-white ${className}`}
       aria-labelledby={`${id}-heading`}
     >
       {/* --- CENTERED CARD CONTAINER --- */}

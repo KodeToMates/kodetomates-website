@@ -5,87 +5,9 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronDown, Globe, TrendingUp, RefreshCw, Sparkles, Menu, X } from 'lucide-react'
+import { ChevronDown, Menu, X } from 'lucide-react'
 import { JoinCommunityModal } from '@/components/common/JoinCommunityModal'
-
-
-interface SubItem {
-  icon: React.ElementType
-  title: string
-  description: string
-  href: string
-}
-
-interface MenuItem {
-  title: string
-  href: string
-  hasDropdown: boolean
-  dropdownItems?: SubItem[]
-}
-
-const menuItems: MenuItem[] = [
-  {
-    title: 'Home',
-    href: '/',
-    hasDropdown: false
-  },
-  {
-    title: 'What We Do',
-    href: '/what-we-do',
-    hasDropdown: true,
-    dropdownItems: [
-      {
-        icon: Globe,
-        title: 'Website Dev',
-        description: 'Modern, high-performance web applications',
-        href: '/what-we-do/website-dev'
-      },
-      {
-        icon: TrendingUp,
-        title: 'SEO',
-        description: 'Search visibility, audits & ranking growth',
-        href: '/what-we-do/seo'
-      },
-      {
-        icon: RefreshCw,
-        title: 'Website Redesign',
-        description: 'Transform outdated sites into sleek experiences',
-        href: '/what-we-do/website-redesign'
-      },
-      {
-        icon: Sparkles,
-        title: 'Digital Invitation',
-        description: 'Interactive RSVP & curated digital invitations',
-        href: '/what-we-do/digital-invitation'
-      }
-    ]
-  },
-  {
-    title: 'Projects',
-    href: '/projects',
-    hasDropdown: false
-  },
-  {
-    title: 'About Us',
-    href: '/about',
-    hasDropdown: false
-  },
-  {
-    title: 'Blog',
-    href: '/blog',
-    hasDropdown: false
-  },
-  {
-    title: 'FAQ',
-    href: '/faq',
-    hasDropdown: false
-  },
-  {
-    title: 'Contact',
-    href: '/contact',
-    hasDropdown: false
-  }
-]
+import { MAIN_NAV_ITEMS, NAVBAR_CTA } from '@/config/navigation'
 
 export function Navbar() {
   const pathname = usePathname()
@@ -136,25 +58,25 @@ export function Navbar() {
           href="/"
           className="flex items-center gap-2.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E4521B] rounded-full shrink-0"
         >
-          <div className="relative w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-full p-[2px] bg-white/[0.12] backdrop-blur-md flex items-center justify-center shrink-0 group-hover:bg-white/[0.18] transition-all">
+          <div className="relative w-9.5 h-9.5 sm:w-11 sm:h-11 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform duration-200">
             <Image
-              src="/images/brand/KM - Logo.png"
+              src="/Image-v1/KTM_Logos/Primary-Logo.png"
               alt="KodeToMates Mark"
-              width={28}
-              height={28}
-              className="object-contain"
+              width={44}
+              height={44}
+              className="w-full h-full object-contain"
               priority
             />
           </div>
-          <span className="font-sans font-bold text-[16px] sm:text-[17.5px] tracking-tight text-white transition-colors">
-            KodeToMates<span className="text-[#E4521B]"></span>
+          <span className="font-sans font-bold text-[16.5px] sm:text-[18px] tracking-tight text-white transition-colors">
+            Kode<span className="text-[#E4521B]">To</span>Mates
           </span>
         </Link>
 
 
         {/* --- CENTER: DESKTOP INLINE NAV LINKS --- */}
         <div className="hidden lg:flex items-center gap-1.5 xl:gap-2.5">
-          {menuItems.map((item) => {
+          {MAIN_NAV_ITEMS.map((item) => {
             const isActive = pathname === item.href || (item.href !== '/' && (pathname?.startsWith(`${item.href}/`) ?? false))
             const isDropdownOpen = activeDropdown === item.title
 
@@ -201,8 +123,8 @@ export function Navbar() {
                               onClick={() => setActiveDropdown(null)}
                               className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-white/[0.12] hover:backdrop-blur-sm transition-all group"
                             >
-                              <div className="w-8 h-8 rounded-lg bg-white/[0.1] backdrop-blur-sm flex items-center justify-center shrink-0 group-hover:bg-[#E4521B]/25 transition-all">
-                                <subItem.icon className="w-4 h-4 text-white/90 group-hover:text-[#E4521B] transition-colors" />
+                              <div className="w-8 h-8 rounded-lg bg-[#E4521B]/15 border border-[#E4521B]/20 backdrop-blur-sm flex items-center justify-center shrink-0 group-hover:bg-[#E4521B] group-hover:border-[#E4521B] transition-all shadow-[0_0_12px_rgba(228,82,27,0.15)]">
+                                <subItem.icon className="w-4 h-4 text-[#E4521B] group-hover:text-white transition-colors" />
                               </div>
                               <div>
                                 <p className="text-white text-xs font-semibold group-hover:text-white transition-colors">
@@ -247,7 +169,7 @@ export function Navbar() {
               onClick={() => setJoinModalOpen(true)}
               className="btn-pill-coral inline-flex items-center justify-center px-5 sm:px-6 py-2.5 sm:py-3 rounded-full font-sans font-semibold text-[13.5px] sm:text-[14px] shadow-[0_4px_20px_rgba(228,82,27,0.4)] cursor-pointer transition-all border-0"
             >
-              <span>Enquiry KodeTomates</span>
+              <span>{NAVBAR_CTA.label}</span>
             </button>
           </motion.div>
         </div>
@@ -261,7 +183,7 @@ export function Navbar() {
             onClick={() => setJoinModalOpen(true)}
             className="btn-pill-coral inline-flex items-center justify-center px-4 py-2 rounded-full font-sans font-semibold text-xs shadow-[0_4px_16px_rgba(228,82,27,0.35)] cursor-pointer transition-all border-0"
           >
-            Enquiry KodeTomates
+            {NAVBAR_CTA.label}
           </button>
 
           {/* Hamburger Toggle */}
@@ -288,7 +210,7 @@ export function Navbar() {
             transition={{ duration: 0.2 }}
             className="pointer-events-auto absolute top-full left-3 right-3 mt-3 bg-[rgba(18,17,26,0.85)] backdrop-blur-2xl backdrop-saturate-180 rounded-3xl p-5 shadow-[0_24px_50px_rgba(0,0,0,0.5)] flex flex-col gap-2 z-50 overflow-hidden"
           >
-            {menuItems.map((item) => {
+            {MAIN_NAV_ITEMS.map((item) => {
               const isActive = pathname === item.href
               const isAccordionOpen = mobileAccordion === item.title
 
@@ -320,9 +242,11 @@ export function Navbar() {
                               key={subItem.title}
                               href={subItem.href}
                               onClick={() => setMobileMenuOpen(false)}
-                              className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-white/75 hover:text-white hover:bg-white/[0.1] text-xs transition-all border-0"
+                              className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-white/75 hover:text-white hover:bg-white/[0.1] text-xs transition-all border-0 group"
                             >
-                              <subItem.icon className="w-3.5 h-3.5 text-[#E4521B]" />
+                              <div className="w-6 h-6 rounded-md bg-[#E4521B]/15 flex items-center justify-center shrink-0 group-hover:bg-[#E4521B] transition-colors">
+                                <subItem.icon className="w-3.5 h-3.5 text-[#E4521B] group-hover:text-white transition-colors" />
+                              </div>
                               <span>{subItem.title}</span>
                             </Link>
                           ))}
@@ -360,7 +284,7 @@ export function Navbar() {
                 }}
                 className="w-full btn-pill-coral py-2.5 rounded-xl font-sans font-semibold text-sm flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(228,82,27,0.35)] cursor-pointer transition-all border-0"
               >
-                <span>Enquiry KodeTomates</span>
+                <span>{NAVBAR_CTA.label}</span>
               </button>
             </div>
           </motion.div>

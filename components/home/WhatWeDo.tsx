@@ -12,7 +12,7 @@ import {
   ArrowRight,
   CheckCircle2,
 } from 'lucide-react'
-import { SlitHeading } from '@/components/ui/SlitHeading'
+import { SlitHeading } from '@/components/ui'
 
 interface ServiceItem {
   id: string
@@ -200,13 +200,13 @@ export function WhatWeDo() {
   return (
     <section
       id="what-we-do"
-      className="relative z-10 w-full py-8 sm:py-10 md:py-12 lg:py-14 overflow-hidden scroll-mt-24 bg-[#12111A] rounded-t-2xl rounded-b-2xl sm:rounded-t-3xl sm:rounded-b-3xl text-white selection:bg-[#E4521B]/30 selection:text-white"
+      className="relative z-10 w-full py-6 sm:py-7 md:py-8 overflow-hidden scroll-mt-24 bg-[#12111A] rounded-t-2xl rounded-b-2xl sm:rounded-t-3xl sm:rounded-b-3xl text-white selection:bg-[#E4521B]/30 selection:text-white"
       aria-labelledby="what-we-do-heading"
     >
       <div className="relative max-w-[1380px] mx-auto px-6 sm:px-8 lg:px-10 xl:px-12 z-10">
 
         {/* Section Header: Centered Position with Reduced Margin */}
-        <div className="flex flex-col items-center text-center mb-4 sm:mb-6">
+        <div className="flex flex-col items-center text-center mb-3 sm:mb-4">
 
           {/* Main Headline with Slit Reveal & Coral Dots */}
           <SlitHeading

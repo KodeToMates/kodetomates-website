@@ -13,7 +13,7 @@ import {
   MotionStyle,
 } from 'framer-motion'
 import { ArrowRight, CheckCircle2 } from 'lucide-react'
-import { SlitHeading } from '@/components/ui/SlitHeading'
+import { SlitHeading } from '@/components/ui'
 
 export interface StackedCardItem {
   id: string
@@ -115,8 +115,8 @@ export function StackedCardsSection({
     window.scrollTo({ top: targetY, behavior: 'smooth' })
   }
 
-  // Section height scales with card count (3 cards: 260vh, 4 cards: 320vh)
-  const sectionHeightClass = isThree ? 'h-[260vh]' : 'h-[320vh]'
+  // Section height scales with card count (3 cards: 200vh, 4 cards: 250vh)
+  const sectionHeightClass = isThree ? 'h-[200vh]' : 'h-[250vh]'
 
   return (
     <section
@@ -126,8 +126,8 @@ export function StackedCardsSection({
       aria-labelledby={`${sectionId}-heading`}
     >
       {/* Pinned Viewport Container (stays sticky on screen while user scrolls through all cards) */}
-      <div className={`sticky top-0 h-screen w-full flex overflow-hidden bg-white z-10 ${contentAlign === 'top' ? 'items-start pt-[6vh]' : 'items-center'}`}>
-        <div className={`relative w-full max-w-[1380px] mx-auto px-6 sm:px-8 lg:px-10 xl:px-12 h-full flex flex-col ${contentAlign === 'top' ? 'justify-start' : 'justify-center'}`}>
+      <div className={`sticky top-0 h-screen w-full flex overflow-hidden bg-white z-10 ${contentAlign === 'top' ? 'items-start pt-3 sm:pt-4' : 'items-center'}`}>
+        <div className={`relative w-full max-w-[1380px] mx-auto px-6 sm:px-8 lg:px-10 xl:px-12 h-full flex flex-col ${contentAlign === 'top' ? 'justify-start pt-1 sm:pt-2' : 'justify-center'}`}>
           {/* Main 2-Column Balanced Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-center w-full">
             {/* ========================================================

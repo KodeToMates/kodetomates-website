@@ -138,7 +138,7 @@ export function ResourcesSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="font-serif text-[clamp(2.4rem,4.2vw,3.8rem)] font-bold text-[#161413] leading-[1.14] tracking-[-0.02em] mb-3 sm:mb-4"
+              className="font-sans text-[clamp(2.4rem,4.2vw,3.8rem)] font-bold text-[#161413] leading-[1.14] tracking-[-0.03em] mb-3 sm:mb-4"
             >
               <div>Practical knowledge</div>
               <div className="bg-gradient-to-r from-[#FF914D] to-[#AB003E] bg-clip-text text-transparent mt-1">
@@ -267,7 +267,7 @@ export function ResourcesSection() {
                   </div>
 
                   {/* Resource Title */}
-                  <h3 className="font-serif text-[clamp(1.35rem,1.5vw,1.75rem)] font-bold text-[#161413] tracking-[-0.01em] mb-2.5 group-hover:text-[#E4521B] transition-colors leading-[1.25]">
+                  <h3 className="font-sans text-[clamp(1.35rem,1.5vw,1.75rem)] font-bold text-[#161413] tracking-[-0.02em] mb-2.5 group-hover:text-[#E4521B] transition-colors leading-[1.25]">
                     {resource.title}
                   </h3>
 

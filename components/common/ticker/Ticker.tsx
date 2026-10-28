@@ -31,6 +31,8 @@ export interface TickerProps {
   textColor?: string
   /** Custom background color override */
   bgColor?: string
+  /** Theme mode for brand styling: 'light' (default) | 'dark' (brand obsidian #0C0B0A with coral dots) */
+  theme?: 'light' | 'dark'
   /**
    * If true, moving direction responds to user scroll:
    * scrolling down moves forward (left), scrolling up reverts direction (right).
@@ -65,9 +67,12 @@ export function Ticker({
   textColor,
   bgColor,
   reverseOnScrollUp,
+  theme = 'light',
 }: TickerProps) {
   const [isPaused, setIsPaused] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
+
+  const isDark = theme === 'dark'
 
   // Default reverseOnScrollUp to true for 'hero' variant
   const shouldReverseOnScrollUp =
@@ -76,11 +81,19 @@ export function Ticker({
   // Variant-based styling presets
   // 'hero' has increased height (py-7 sm:py-8 lg:py-10), while 'faq' remains py-2.5
   const variantStyles = {
-    hero: 'w-full bg-[#FAF7F2] border-y border-[#EDE8DF] py-7 sm:py-8 lg:py-10',
-    faq: 'w-full bg-transparent border-y border-[#F0EBE1] py-2.5 my-4 sm:my-6',
+    hero: isDark
+      ? 'w-full bg-[#0C0B0A] border-y border-white/10 py-7 sm:py-8 lg:py-10 text-white'
+      : 'w-full bg-[#FAF7F2] border-y border-[#EDE8DF] py-7 sm:py-8 lg:py-10',
+    faq: isDark
+      ? 'w-full bg-transparent border-y border-white/10 py-2.5 my-4 sm:my-6 text-white'
+      : 'w-full bg-transparent border-y border-[#F0EBE1] py-2.5 my-4 sm:my-6',
     banner: 'w-full bg-[#141210] border-y border-white/10 py-3 text-white',
     clean: 'w-full bg-transparent py-2',
   }[variant]
+
+  const defaultTextColor = isDark ? '#FFFFFF' : '#E4521B'
+  const activeTextColor = textColor || defaultTextColor
+  const dotColor = isDark ? '#E4521B' : (textColor || '#E4521B')
 
   const animDirection = direction === 'right' ? 'kt-ticker-slide-right' : 'kt-ticker-slide-left'
 
@@ -382,7 +395,7 @@ export function Ticker({
                 {[...phrases, ...phrases].map((phrase, idx) => (
                   <span
                     className={`kt-ticker-item ${isHero ? 'kt-ticker-item-hero' : ''} ${itemClassName}`}
-                    style={{ color: textColor || '#E4521B' }}
+                    style={{ color: activeTextColor }}
                     key={idx}
                   >
                     {phrase}
@@ -391,7 +404,7 @@ export function Ticker({
                     ) : (
                       <span
                         className="kt-ticker-dot"
-                        style={{ backgroundColor: textColor || '#E4521B' }}
+                        style={{ backgroundColor: dotColor }}
                         aria-hidden="true"
                       />
                     )}
