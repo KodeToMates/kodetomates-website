@@ -175,17 +175,8 @@ export function Navbar() {
         </div>
 
 
-        {/* --- MOBILE: RIGHT ACTIONS + HAMBURGER BUTTON --- */}
-        <div className="flex lg:hidden items-center gap-2.5">
-          {/* Mobile Get Started CTA */}
-          <button
-            type="button"
-            onClick={() => setJoinModalOpen(true)}
-            className="btn-pill-coral inline-flex items-center justify-center px-4 py-2 rounded-full font-sans font-semibold text-xs shadow-[0_4px_16px_rgba(228,82,27,0.35)] cursor-pointer transition-all border-0"
-          >
-            {NAVBAR_CTA.label}
-          </button>
-
+        {/* --- MOBILE: HAMBURGER BUTTON --- */}
+        <div className="flex lg:hidden items-center">
           {/* Hamburger Toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

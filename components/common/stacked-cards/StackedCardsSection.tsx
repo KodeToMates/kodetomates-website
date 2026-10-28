@@ -115,19 +115,19 @@ export function StackedCardsSection({
     window.scrollTo({ top: targetY, behavior: 'smooth' })
   }
 
-  // Section height scales with card count (3 cards: 200vh, 4 cards: 250vh)
-  const sectionHeightClass = isThree ? 'h-[200vh]' : 'h-[250vh]'
+  // Section height scales with card count (3 cards: 180vh, 4 cards: 215vh) to avoid excessive dead scroll
+  const sectionHeightClass = isThree ? 'h-[180vh]' : 'h-[215vh]'
 
   return (
     <section
       ref={sectionRef}
       id={sectionId}
-      className={`relative w-full bg-white selection:bg-[#E4521B]/20 selection:text-[#E4521B] ${sectionHeightClass} ${className}`}
+      className={`relative w-full bg-white selection:bg-[#E4521B]/20 selection:text-[#E4521B] ${sectionHeightClass} -mb-16 sm:-mb-20 lg:-mb-24 ${className}`}
       aria-labelledby={`${sectionId}-heading`}
     >
       {/* Pinned Viewport Container (stays sticky on screen while user scrolls through all cards) */}
-      <div className={`sticky top-0 h-screen w-full flex overflow-hidden bg-white z-10 ${contentAlign === 'top' ? 'items-start pt-3 sm:pt-4' : 'items-center'}`}>
-        <div className={`relative w-full max-w-[1380px] mx-auto px-6 sm:px-8 lg:px-10 xl:px-12 h-full flex flex-col ${contentAlign === 'top' ? 'justify-start pt-1 sm:pt-2' : 'justify-center'}`}>
+      <div className={`sticky top-0 h-screen w-full flex overflow-hidden bg-white z-10 ${contentAlign === 'top' ? 'items-center lg:items-start pt-6 sm:pt-8 lg:pt-12' : 'items-center'}`}>
+        <div className={`relative w-full max-w-[1380px] mx-auto px-6 sm:px-8 lg:px-10 xl:px-12 h-full flex flex-col ${contentAlign === 'top' ? 'justify-center lg:justify-start lg:pt-4' : 'justify-center'}`}>
           {/* Main 2-Column Balanced Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-center w-full">
             {/* ========================================================
