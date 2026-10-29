@@ -16,8 +16,7 @@ import {
   Loader2,
   Lock,
 } from 'lucide-react'
-import { submitContactRequest } from '@/lib/api/contact'
-import { ContactRequestPayload } from '@/types/contact'
+import { submitSeoAuditRequest } from '@/lib/api/seoAudit'
 
 interface SeoFormData {
   fullName: string
@@ -110,31 +109,22 @@ export function SeoEnquiryForm() {
     setStatus('submitting')
     setErrorMessage('')
 
-    const formattedMessage = [
-      `[Target Website: ${formData.websiteUrl.trim()}]`,
-      `[Primary SEO Goal: ${formData.primaryGoal}]`,
-      `[Current Traffic: ${formData.monthlyTraffic}]`,
-      formData.notes.trim() ? `[Notes/Competitors: ${formData.notes.trim()}]` : '',
-    ]
-      .filter(Boolean)
-      .join('\n\n')
-
-    const payload: ContactRequestPayload = {
-      fullName: formData.fullName.trim(),
-      email: formData.email.trim(),
-      subject: `SEO Audit Request: ${formData.websiteUrl.trim()}`,
-      message: formattedMessage,
-      leadSource: 'SEO Page - Wall Mounted Hero Enquiry Form',
-    }
-
     try {
-      const response = await submitContactRequest(payload)
+      const response = await submitSeoAuditRequest({
+        fullName: formData.fullName.trim(),
+        email: formData.email.trim(),
+        websiteUrl: formData.websiteUrl.trim(),
+        primaryGoal: formData.primaryGoal,
+        monthlyTraffic: formData.monthlyTraffic,
+        notes: formData.notes.trim() || undefined,
+      })
       setServerMessage(response.message || 'Audit request registered successfully.')
       setStatus('success')
-    } catch {
-      // Graceful fallback for offline/local environment so user can still see complete success UI
-      setServerMessage('We received your domain information and our technical SEO team has queued your audit.')
-      setStatus('success')
+    } catch (err) {
+      setStatus('error')
+      setErrorMessage(
+        err instanceof Error ? err.message : 'Failed to submit audit request. Please try again.'
+      )
     }
   }
 

@@ -117,12 +117,13 @@ export function StackedCardsSection({
 
   // Section height scales with card count (3 cards: 180vh, 4 cards: 215vh) to avoid excessive dead scroll
   const sectionHeightClass = isThree ? 'h-[180vh]' : 'h-[215vh]'
+  const marginClass = className?.includes('mb-') ? '' : '-mb-16 sm:-mb-20 lg:-mb-24'
 
   return (
     <section
       ref={sectionRef}
       id={sectionId}
-      className={`relative w-full bg-white selection:bg-[#E4521B]/20 selection:text-[#E4521B] ${sectionHeightClass} -mb-16 sm:-mb-20 lg:-mb-24 ${className}`}
+      className={`relative w-full bg-white selection:bg-[#E4521B]/20 selection:text-[#E4521B] ${sectionHeightClass} ${marginClass} ${className}`}
       aria-labelledby={`${sectionId}-heading`}
     >
       {/* Pinned Viewport Container (stays sticky on screen while user scrolls through all cards) */}

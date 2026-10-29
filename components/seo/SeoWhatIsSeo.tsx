@@ -38,12 +38,7 @@ export function SeoWhatIsSeo() {
             className="lg:col-span-6 flex flex-col justify-center"
           >
             {/* Eyebrow Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FAF0EB] border border-[#F5D8C7] mb-5 w-fit select-none shadow-xs">
-              <span className="w-2 h-2 rounded-full bg-[#E4521B] animate-pulse" />
-              <span className="font-sans font-bold text-xs sm:text-[13px] tracking-wider uppercase text-[#E4521B]">
-                WHAT IS SEO
-              </span>
-            </div>
+
 
             {/* Main Headline with Home Slit Reveal Animation */}
             <SlitHeading
@@ -177,7 +172,7 @@ export function SeoWhatIsSeo() {
               {/* Large Pristine Image Container — NO BADGES, MAXIMUM SIZE */}
               <div className="relative w-full h-[480px] sm:h-[580px] lg:h-[640px] xl:h-[700px] rounded-[32px] sm:rounded-[40px] overflow-hidden border border-neutral-200/90 bg-[#FAF8F5] shadow-[0_25px_65px_-15px_rgba(0,0,0,0.14)] group">
                 <Image
-                  src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1400&auto=format&fit=crop&q=85"
+                  src="/Image-v1/seo_page/what-is-seo.jpg"
                   alt="Search Engine Optimization Analytics and Architecture Telemetry"
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"

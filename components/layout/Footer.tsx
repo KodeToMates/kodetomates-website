@@ -116,12 +116,7 @@ export function Footer() {
               A collaborative technology community & digital engineering studio. We build production-ready software, high-converting platforms, and scalable digital experiences.
             </p>
 
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#E4521B]/10 border border-[#E4521B]/25 mb-6">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#E4521B] animate-pulse" />
-              <span className="font-sans font-semibold text-[#E4521B] text-[12.5px] tracking-wide">
-                Build something meaningful with us.
-              </span>
-            </div>
+
 
             {/* Social Icons Row with Instagram & Facebook */}
             <div className="flex flex-wrap items-center gap-2.5">

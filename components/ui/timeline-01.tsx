@@ -9,42 +9,42 @@ export const SEO_APPROACH_TIMELINE_DATA: TimelineItem[] = [
   {
     title: "Understand",
     description:
-      "Learn about your business, audience, services, competitors, and goals.",
+      "We begin with an in-depth discovery into your business model, customer journey, core services, and commercial growth objectives. By analyzing competitive search dynamics and market demand, we uncover how your target audience searches, what questions they need answered, and where your current digital presence has untapped potential. This strategic foundation ensures every SEO initiative directly supports customer acquisition, pipeline revenue, and long-term brand authority rather than superficial vanity metrics.",
     date: "01 • Understand",
     image:
-      "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1200",
+      "/Image-v1/seo_page/our_approuch/understand.jpg",
   },
   {
     title: "Review",
     description:
-      "Assess the existing website and identify practical opportunities.",
+      "We conduct a comprehensive technical, architectural, and on-page audit across your entire website ecosystem. This includes evaluating crawl efficiency, indexing health, Core Web Vitals, mobile responsiveness, semantic tag structures, and internal linking networks. We also review historical ranking trajectories, existing content depth, and competitive search gaps to pinpoint technical bottlenecks that prevent search engine crawlers from accurately discovering, indexing, and ranking your high-value pages.",
     date: "02 • Review",
     image:
-      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200",
+      "/Image-v1/seo_page/our_approuch/review.jpg",
   },
   {
     title: "Prioritise",
     description:
-      "Agree on the changes that matter most and fit the project scope.",
+      "Rather than handing over an overwhelming, generic punch list of hundreds of minor tasks, we distill our audit findings into a focused, high-impact implementation roadmap. Every recommendation is scored by commercial impact, search intent value, and implementation complexity. Together, we establish a transparent, phased sprint plan that aligns with your engineering capacity, marketing goals, and priority business milestones for maximum return on effort.",
     date: "03 • Prioritise",
     image:
-      "https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=1200",
+      "/Image-v1/seo_page/our_approuch/prioritize.jpg",
   },
   {
     title: "Improve",
     description:
-      "Make or recommend the agreed technical, content, and page-level changes.",
+      "Our team executes and collaborates on the agreed-upon technical enhancements, structured data schemas, Core Web Vitals performance tuning, and on-page content refinements. We optimize page titles, meta descriptions, content hierarchy, and semantic keyword coverage to satisfy both user intent and Google algorithms. Every update is systematically tested across production environments to safeguard site stability, speed, and search compliance.",
     date: "04 • Improve",
     image:
-      "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1200",
+      "/Image-v1/seo_page/our_approuch/Improve.jpg",
   },
   {
     title: "Measure",
     description:
-      "Review available data and refine the approach as more information becomes available.",
+      "Sustainable SEO thrives on continuous measurement, data validation, and iterative refinement. Using Google Search Console, Google Analytics 4, and enterprise rank tracking tools, we monitor organic impressions, click-through rates, keyword shifts, and conversion events. As performance data matures, we identify emerging search opportunities, refine landing pages, and proactively adapt your SEO roadmap to algorithm updates and evolving market behavior.",
     date: "05 • Measure",
     image:
-      "https://images.unsplash.com/photo-1551288049-bbda38a10ad5?q=80&w=1200",
+      "/Image-v1/seo_page/our_approuch/Measure.jpg",
   },
 ];
 

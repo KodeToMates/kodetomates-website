@@ -62,13 +62,15 @@ export function WebsiteRedesignWhySection() {
   return (
     <StackedCardsSection
       sectionId="why-redesign"
+      className="mb-0"
       contentAlign="center"
       eyebrow="WHY REDESIGN?"
       titleLine1="Your website has changed"
       titleLine2='<span className="text-[var(--color-primary-orange)]">Your website should too</span>'
       descriptionParagraphs={[
-        'As a business grows, an older website can stop reflecting its services, brand, or customers.',
-        'A redesign gives you the opportunity to rethink the experience, make information easier to find, and create a site that better supports your current goals—without changing things just for the sake of it.',
+        'As your business grows and evolves, an older website gradually falls behind - accumulating confusing navigation, outdated messaging, and technical debt that no longer reflects your current quality, scale, or clientele.',
+        'A purposeful redesign gives you the opportunity to rethink the end-to-end user experience, establish an intuitive visual hierarchy, and build a digital flagship that commands instant credibility from first glance.',
+        'Beyond surface-level aesthetics, we re-engineer your foundation with a blazing-fast, edge-optimized Next.js architecture. This ensures sub-second load times, superior search indexing, and streamlined conversion paths that turn visitors into qualified leads.',
       ]}
       cards={REDESIGN_WHY_CARDS}
       ctaButton={{

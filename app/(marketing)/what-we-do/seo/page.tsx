@@ -26,13 +26,13 @@ export default function SEOPage() {
       {/* 2. What is SEO — Left Context, Right Image, Pure White Background */}
       <SeoWhatIsSeo />
 
-      {/* 3. Interactive Scroll Velocity Showcase */}
-      <SeoScrollVelocity />
-
       {/* 3. What SEO Can Include - Full Brand Orange Feature Carousel */}
       <SeoWhatIsIncluded />
 
-      {/* 4. What SEO Can Include - Structured Deliverables Timeline */}
+      {/* 4. Interactive Scroll Velocity Showcase (Cards Scroll) */}
+      <SeoScrollVelocity />
+
+      {/* 5. What SEO Can Include - Structured Deliverables Timeline ("Our SEO approach") */}
       <SeoDeliverablesTimeline />
 
       {/* 5. Client Testimonials - Home Page Testimonials UI with SEO Props */}

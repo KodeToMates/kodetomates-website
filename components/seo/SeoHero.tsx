@@ -27,7 +27,7 @@ const SEO_HEADINGS: SeoHeadingItem[] = [
   },
   {
     lines: [
-      'Engineering-Led SEO.',
+      'Engineered SEO.',
       'Turn Organic Search',
       'Into Real Revenue.',
     ],
@@ -114,7 +114,7 @@ export function SeoHero() {
                     slit={0}
                     textColor="#FFFFFF"
                     dotColor="#E4521B"
-                    className="w-full text-white text-[clamp(36px,5.2vw,78px)] leading-[1.08] tracking-[-0.035em] drop-shadow-[0_4px_24px_rgba(0,0,0,0.7)]"
+                    className="w-full text-white text-[clamp(34px,4.9vw,74px)] leading-[1.08] tracking-[-0.035em] drop-shadow-[0_4px_24px_rgba(0,0,0,0.7)]"
                   />
                 </div>
               </AnimatePresence>
