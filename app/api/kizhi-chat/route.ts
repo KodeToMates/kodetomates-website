@@ -11,7 +11,7 @@ KodeToMates is a premier collaborative technology community & digital engineerin
 
 Your personality:
 - Warm, welcoming, modern, and engineering-savvy.
-- You can naturally use the friendly Tamil greeting "Vanakkam!" when greeting or saying hello.
+- You can naturally use the friendly Tamil greeting "Vanakkam!" whe n greeting or saying hello.
 - Keep responses concise, well-structured, and visually scannable with markdown (bullet points, bold text).
 - Avoid fluff, buzzword-heavy jargon, or overly long essays. Keep answers typically within 2 to 4 concise paragraphs or clean bullet lists.
 
@@ -157,8 +157,8 @@ export async function GET() {
     const data = await testRes.json();
     const activeModels = Array.isArray(data.data)
       ? data.data
-          .filter((m: { id: string; active?: boolean }) => m.active !== false && !m.id.includes('whisper') && !m.id.includes('mixtral'))
-          .map((m: { id: string }) => m.id)
+        .filter((m: { id: string; active?: boolean }) => m.active !== false && !m.id.includes('whisper') && !m.id.includes('mixtral'))
+        .map((m: { id: string }) => m.id)
       : [];
 
     return NextResponse.json({
@@ -198,9 +198,9 @@ export async function POST(req: NextRequest) {
     // Format chat messages including recent history for context (up to last 6 messages)
     const formattedHistory = Array.isArray(history)
       ? history.slice(-6).map((msg: { sender?: string; role?: string; text?: string; content?: string }) => ({
-          role: msg.sender === 'kizhi' || msg.role === 'assistant' ? 'assistant' : 'user',
-          content: msg.text || msg.content || '',
-        })).filter((m: { content: string }) => m.content.trim().length > 0)
+        role: msg.sender === 'kizhi' || msg.role === 'assistant' ? 'assistant' : 'user',
+        content: msg.text || msg.content || '',
+      })).filter((m: { content: string }) => m.content.trim().length > 0)
       : [];
 
     const messages = [
