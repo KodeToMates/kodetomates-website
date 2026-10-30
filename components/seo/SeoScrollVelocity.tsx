@@ -6,42 +6,42 @@ import { ScrollVelocity } from '@/components/ui/scroll-velocity'
 
 const CASE_STUDY_IMAGES = [
   {
-    title: 'Moonbeam Analytics',
+    title: 'Technical SEO & Crawl Health',
     thumbnail:
       'https://cdn.21st.dev/assets/mirror/b4/b493a13f9145ec00ad856a1e4f957fb43cc9cc96b77d4083897dc61d53bc823e.jpg',
   },
   {
-    title: 'Cursor AI Workspace',
+    title: 'High-Intent Keyword Strategy',
     thumbnail:
       'https://cdn.21st.dev/assets/mirror/11/11f69b7de2dc6933e8b291bbd959534c500a993c41c2a52bde7d1ca50c20d659.jpg',
   },
   {
-    title: 'Rogue Architecture',
+    title: 'On-Page Content Architecture',
     thumbnail:
       'https://cdn.21st.dev/assets/mirror/71/71299170ad9fee3c654ef7a73edc7e827a1688ee578545ad0b8096b5652750ce.jpg',
   },
   {
-    title: 'Editorially SaaS',
+    title: 'Core Web Vitals & Page Speed',
     thumbnail:
       'https://cdn.21st.dev/assets/mirror/5f/5fe0d32ab00ecf0bb8ac509cb9aafa2cc55fa7c54b8c905dcdfc946ff30936f7.jpg',
   },
   {
-    title: 'Editrix AI Platform',
+    title: 'Semantic Topical Authority',
     thumbnail:
       'https://cdn.21st.dev/assets/mirror/55/55a9d54cba84561cab160b55f06311fcdab76cd5803ec6361bce19113596dd13.jpg',
   },
   {
-    title: 'Modern Digital Experience',
+    title: 'Local SEO & Google Business',
     thumbnail:
       'https://cdn.21st.dev/assets/mirror/b4/b493a13f9145ec00ad856a1e4f957fb43cc9cc96b77d4083897dc61d53bc823e.jpg',
   },
   {
-    title: 'Next.js App Router Platform',
+    title: 'Schema Markup & Rich Snippets',
     thumbnail:
       'https://cdn.21st.dev/assets/mirror/11/11f69b7de2dc6933e8b291bbd959534c500a993c41c2a52bde7d1ca50c20d659.jpg',
   },
   {
-    title: 'Search Intent Optimization',
+    title: 'Search Performance Analytics',
     thumbnail:
       'https://cdn.21st.dev/assets/mirror/71/71299170ad9fee3c654ef7a73edc7e827a1688ee578545ad0b8096b5652750ce.jpg',
   },
@@ -75,7 +75,7 @@ export function SeoScrollVelocity() {
                 />
                 {/* Image bottom vignette */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent opacity-90 group-hover:opacity-75 transition-opacity" />
-                <div className="absolute bottom-3 left-3.5 text-[11px] sm:text-xs font-sans font-medium text-white drop-shadow-md">
+                <div className="absolute bottom-3 left-3.5 right-3.5 text-[10px] sm:text-xs font-sans font-semibold text-white drop-shadow-md tracking-wider uppercase truncate">
                   {title}
                 </div>
               </div>

@@ -87,14 +87,6 @@ function TimelineItemRow({
       <p className="text-sm sm:text-base lg:text-[16.5px] text-muted-foreground leading-relaxed font-sans max-w-xl">
         {item.description}
       </p>
-
-      {/* Step Pill */}
-      <div className="pt-1">
-        <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-[12px] font-mono font-medium text-body-dark bg-neutral-100">
-          <span className="w-1.5 h-1.5 rounded-full bg-primary-orange" />
-          Stage 0{index + 1} of 0{totalItems}
-        </span>
-      </div>
     </div>
   );
 

@@ -1,3 +1,5 @@
+import { NotFoundPage } from '@/components/ui/404-page-not-found'
+
 export default function NotFound() {
-  return <div>Not Found </div>
+  return <NotFoundPage />
 }

@@ -43,6 +43,7 @@ export function WebsiteRedesignSignalsSection() {
             title="Visual Style"
             subtitle="When Design Feels Dated"
             theme="light"
+            className="pt-2 sm:pt-4"
           />
 
           {/* Center Main Headline & Description */}
@@ -163,6 +164,7 @@ export function WebsiteRedesignSignalsSection() {
             title="UX Architecture"
             subtitle="Frictionless Navigation"
             theme="orange"
+            className="pt-2 sm:pt-4"
           />
 
           {/* Center Main Headline & Description */}
@@ -282,6 +284,7 @@ export function WebsiteRedesignSignalsSection() {
             title="Mobile Responsiveness"
             subtitle="Thumb-Native Fluidity"
             theme="dark"
+            className="pt-2 sm:pt-4"
           />
 
           {/* Center Main Headline & Description */}
@@ -401,6 +404,7 @@ export function WebsiteRedesignSignalsSection() {
             title="Content Hierarchy"
             subtitle="Clarity & Structure"
             theme="light"
+            className="pt-2 sm:pt-4"
           />
 
           {/* Center Main Headline & Description */}
@@ -520,6 +524,7 @@ export function WebsiteRedesignSignalsSection() {
             title="Strategic Evolution"
             subtitle="Matching Current Scale"
             theme="light"
+            className="pt-2 sm:pt-4"
           />
 
           {/* Center Main Headline & Description */}

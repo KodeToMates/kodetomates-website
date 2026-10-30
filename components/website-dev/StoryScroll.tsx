@@ -15,6 +15,7 @@ function cx(...parts: Array<string | undefined | false | null>): string {
 
 export interface FlowSectionProps {
   className?: string
+  innerClassName?: string
   style?: React.CSSProperties
   children: React.ReactNode
   'aria-label'?: string
@@ -22,6 +23,7 @@ export interface FlowSectionProps {
 
 export const FlowSection: React.FC<FlowSectionProps> = ({
   className,
+  innerClassName,
   style = {},
   children,
   'aria-label': ariaLabel,
@@ -34,7 +36,8 @@ export const FlowSection: React.FC<FlowSectionProps> = ({
     <div
       data-flow-inner
       className={cx(
-        'flow-art-container relative flex min-h-screen w-full flex-col justify-between gap-6 px-6 sm:px-10 lg:px-16 pt-[clamp(3.5rem,7vw,5rem)] pb-12 sm:pb-16',
+        'flow-art-container relative flex min-h-screen w-full flex-col justify-between gap-6 px-6 sm:px-10 lg:px-16 pt-[clamp(4.5rem,8vw,6.5rem)] pb-12 sm:pb-16',
+        innerClassName,
         'will-change-transform',
       )}
       style={{ transformOrigin: 'bottom left', ...style }}
