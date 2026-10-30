@@ -4,7 +4,9 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
-// Inline SVG brand icons for socials
+// ========================================================
+// Inline SVG Brand Icons for Social Platforms
+// ========================================================
 function GithubIcon({ className = 'w-4 h-4' }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -33,6 +35,22 @@ function LinkedinIcon({ className = 'w-4 h-4' }: { className?: string }) {
   )
 }
 
+function InstagramIcon({ className = 'w-4 h-4' }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+    </svg>
+  )
+}
+
+function FacebookIcon({ className = 'w-4 h-4' }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+    </svg>
+  )
+}
+
 function DiscordIcon({ className = 'w-4 h-4' }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -43,264 +61,280 @@ function DiscordIcon({ className = 'w-4 h-4' }: { className?: string }) {
 
 export function Footer() {
   return (
-    <footer className="relative w-full bg-gradient-to-b from-[#7A2207] via-[#521604] to-[#200701] overflow-hidden selection:bg-[#E4521B]/40 selection:text-white">
+    <footer className="relative w-full bg-[#0C0B0A] text-[#A69B92] overflow-hidden selection:bg-[#E4521B]/35 selection:text-white">
 
       {/* ========================================================
-          AMBIENT RADIANT TERRACOTTA & PEACH GLOWS (BRAND PRIMARY SHADES)
+          AMBIENT RADIANT BRAND ORANGE GLOWS (Subtle & Luxurious)
          ======================================================== */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-        {/* Core luminous terracotta radial burst behind watermark */}
+        {/* Top subtle orange edge beam */}
+        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#E4521B]/40 to-transparent" />
+
+        {/* Ambient warm orange core glow behind center */}
         <div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 w-[1000px] h-[380px] rounded-full blur-[120px] opacity-85"
+          className="absolute -top-32 left-1/2 -translate-x-1/2 w-[900px] h-[340px] rounded-full blur-[140px] opacity-25"
           style={{
-            background: 'radial-gradient(ellipse at center, #E4521B 0%, #B8380A 45%, rgba(40, 10, 2, 0.1) 85%)',
+            background: 'radial-gradient(ellipse at center, #E4521B 0%, #FF914D 40%, transparent 75%)',
           }}
         />
-        {/* Top subtle peach rim glow */}
+
+        {/* Bottom subtle terracotta glow */}
         <div
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-[850px] h-[200px] rounded-full blur-[90px] opacity-40"
+          className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[1100px] h-[300px] rounded-full blur-[130px] opacity-20"
           style={{
-            background: 'radial-gradient(circle, #FFA466 0%, rgba(122, 34, 7, 0) 70%)',
+            background: 'radial-gradient(ellipse at center, #E4521B 0%, rgba(228,82,27,0) 70%)',
           }}
         />
       </div>
 
       {/* ========================================================
-          PART 1: NAVIGATION & BRAND CARD
-          Sleek reduced height with prominent rounded bottom curve
+          MAIN CONTENT CONTAINER
          ======================================================== */}
-      <div className="relative w-full bg-[#0E0C0A] text-[#A69B92] rounded-b-[36px] sm:rounded-b-[48px] md:rounded-b-[56px] border-b border-white/10 shadow-[0_20px_44px_rgba(0,0,0,0.65)] pt-12 sm:pt-14 pb-12 sm:pb-14 px-6 sm:px-8 lg:px-12 z-20">
+      <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-16 sm:pt-20 pb-12 sm:pb-16 z-10">
 
-        {/* Ambient warm glow in upper card */}
-        <div
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[200px] rounded-full blur-[100px] pointer-events-none opacity-20"
-          style={{
-            background: 'radial-gradient(circle, #E4521B 0%, rgba(228,82,27,0) 70%)',
-          }}
-          aria-hidden="true"
-        />
+        {/* Grid: Brand Column + Navigation Links */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-14 pb-14 border-b border-white/[0.08]">
 
-        <div className="relative max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12">
-
-            {/* Brand Col */}
-            <div className="md:col-span-4 flex flex-col items-start">
-              <Link href="/" className="inline-flex items-center gap-3 mb-3.5 group select-none">
-                <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full overflow-hidden flex items-center justify-center shrink-0 shadow-sm border border-white/10 group-hover:scale-105 transition-transform duration-300">
-                  <Image
-                    src="/Image-v1/KTM_Logos/Primary-Logo.png"
-                    alt="KodeToMates Logo"
-                    width={40}
-                    height={40}
-                    className="object-contain"
-                  />
-                </div>
-                <span className="font-sans text-2xl sm:text-[26px] font-bold tracking-[-0.03em] text-white group-hover:text-[#FFA466] transition-colors">
-                  Kode<span className="text-[#E4521B]">To</span>Mates
-                </span>
-              </Link>
-
-              <p className="font-sans text-[13.5px] sm:text-[14px] leading-[1.6] text-[#A69B92] max-w-sm mb-4">
-                The collaborative technology community where people learn systems, create real-world open source projects, and grow together.
-              </p>
-
-              <p className="font-sans font-semibold text-[#E4521B] text-[14.5px] sm:text-[15.5px] tracking-tight mb-5">
-                Build something meaningful with us.
-              </p>
-
-              {/* Social Icons row */}
-              <div className="flex items-center gap-2.5">
-                <a
-                  href="https://github.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-8.5 h-8.5 rounded-full bg-[#1F1916] hover:bg-[#E4521B] text-white flex items-center justify-center transition-all duration-300 border border-[#302722] hover:border-[#E4521B] shadow-sm"
-                  aria-label="GitHub"
-                >
-                  <GithubIcon className="w-3.5 h-3.5" />
-                </a>
-                <a
-                  href="https://twitter.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-8.5 h-8.5 rounded-full bg-[#1F1916] hover:bg-[#E4521B] text-white flex items-center justify-center transition-all duration-300 border border-[#302722] hover:border-[#E4521B] shadow-sm"
-                  aria-label="Twitter / X"
-                >
-                  <TwitterIcon className="w-3.5 h-3.5" />
-                </a>
-                <a
-                  href="https://discord.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-8.5 h-8.5 rounded-full bg-[#1F1916] hover:bg-[#E4521B] text-white flex items-center justify-center transition-all duration-300 border border-[#302722] hover:border-[#E4521B] shadow-sm"
-                  aria-label="Discord"
-                >
-                  <DiscordIcon className="w-3.5 h-3.5" />
-                </a>
-                <a
-                  href="https://linkedin.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-8.5 h-8.5 rounded-full bg-[#1F1916] hover:bg-[#E4521B] text-white flex items-center justify-center transition-all duration-300 border border-[#302722] hover:border-[#E4521B] shadow-sm"
-                  aria-label="LinkedIn"
-                >
-                  <LinkedinIcon className="w-3.5 h-3.5" />
-                </a>
+          {/* Left Column: Brand, Mission, & Socials */}
+          <div className="md:col-span-5 lg:col-span-4 flex flex-col items-start">
+            <Link href="/" className="inline-flex items-center gap-3 mb-4 group select-none">
+              <div className="relative w-10 h-10 rounded-full overflow-hidden flex items-center justify-center shrink-0 border border-white/10 ring-2 ring-[#E4521B]/30 shadow-[0_0_20px_rgba(228,82,27,0.3)] group-hover:scale-105 transition-transform duration-300 bg-[#161413]">
+                <Image
+                  src="/Image-v1/KTM_Logos/Primary-Logo.png"
+                  alt="KodeToMates Logo"
+                  width={40}
+                  height={40}
+                  className="object-contain"
+                />
               </div>
+              <span className="font-sans text-2xl sm:text-[26px] font-bold tracking-[-0.03em] text-white group-hover:text-[#FFA466] transition-colors">
+                Kode<span className="text-[#E4521B]">To</span>Mates
+              </span>
+            </Link>
+
+            <p className="font-sans text-[14px] leading-relaxed text-[#8E857E] max-w-sm mb-4">
+              A collaborative technology community & digital engineering studio. We build production-ready software, high-converting platforms, and scalable digital experiences.
+            </p>
+
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#E4521B]/10 border border-[#E4521B]/25 mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#E4521B] animate-pulse" />
+              <span className="font-sans font-semibold text-[#E4521B] text-[12.5px] tracking-wide">
+                Build something meaningful with us.
+              </span>
             </div>
 
-            {/* Nav Links Columns */}
-            <div className="md:col-span-8 grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8 text-[13.5px]">
-              <div>
-                <h4 className="font-sans font-bold text-white text-[12px] tracking-wider uppercase mb-3.5">
-                  What We Do
-                </h4>
-                <ul className="space-y-2.5 font-medium text-[#B8ADA4]">
-                  <li>
-                    <Link href="/what-we-do/website-dev" className="hover:text-[#E4521B] transition-colors">
-                      Website Dev
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/what-we-do/seo" className="hover:text-[#E4521B] transition-colors">
-                      SEO
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/what-we-do/website-redesign" className="hover:text-[#E4521B] transition-colors">
-                      Website Redesign
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/what-we-do/digital-invitation" className="hover:text-[#E4521B] transition-colors">
-                      Digital Invitation
-                    </Link>
-                  </li>
-                </ul>
-              </div>
+            {/* Social Icons Row with Instagram & Facebook */}
+            <div className="flex flex-wrap items-center gap-2.5">
+              <a
+                href="https://github.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-xl bg-white/[0.05] hover:bg-[#E4521B] text-[#A69B92] hover:text-white flex items-center justify-center transition-all duration-300 border border-white/[0.08] hover:border-[#E4521B] shadow-sm hover:shadow-[0_4px_16px_rgba(228,82,27,0.4)] hover:-translate-y-0.5 active:translate-y-0"
+                aria-label="GitHub"
+              >
+                <GithubIcon className="w-4 h-4" />
+              </a>
+              <a
+                href="https://twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-xl bg-white/[0.05] hover:bg-[#E4521B] text-[#A69B92] hover:text-white flex items-center justify-center transition-all duration-300 border border-white/[0.08] hover:border-[#E4521B] shadow-sm hover:shadow-[0_4px_16px_rgba(228,82,27,0.4)] hover:-translate-y-0.5 active:translate-y-0"
+                aria-label="Twitter / X"
+              >
+                <TwitterIcon className="w-4 h-4" />
+              </a>
+              <a
+                href="https://linkedin.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-xl bg-white/[0.05] hover:bg-[#E4521B] text-[#A69B92] hover:text-white flex items-center justify-center transition-all duration-300 border border-white/[0.08] hover:border-[#E4521B] shadow-sm hover:shadow-[0_4px_16px_rgba(228,82,27,0.4)] hover:-translate-y-0.5 active:translate-y-0"
+                aria-label="LinkedIn"
+              >
+                <LinkedinIcon className="w-4 h-4" />
+              </a>
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-xl bg-white/[0.05] hover:bg-[#E4521B] text-[#A69B92] hover:text-white flex items-center justify-center transition-all duration-300 border border-white/[0.08] hover:border-[#E4521B] shadow-sm hover:shadow-[0_4px_16px_rgba(228,82,27,0.4)] hover:-translate-y-0.5 active:translate-y-0"
+                aria-label="Instagram"
+              >
+                <InstagramIcon className="w-4 h-4" />
+              </a>
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-xl bg-white/[0.05] hover:bg-[#E4521B] text-[#A69B92] hover:text-white flex items-center justify-center transition-all duration-300 border border-white/[0.08] hover:border-[#E4521B] shadow-sm hover:shadow-[0_4px_16px_rgba(228,82,27,0.4)] hover:-translate-y-0.5 active:translate-y-0"
+                aria-label="Facebook"
+              >
+                <FacebookIcon className="w-4 h-4" />
+              </a>
+              <a
+                href="https://discord.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-xl bg-white/[0.05] hover:bg-[#E4521B] text-[#A69B92] hover:text-white flex items-center justify-center transition-all duration-300 border border-white/[0.08] hover:border-[#E4521B] shadow-sm hover:shadow-[0_4px_16px_rgba(228,82,27,0.4)] hover:-translate-y-0.5 active:translate-y-0"
+                aria-label="Discord"
+              >
+                <DiscordIcon className="w-4 h-4" />
+              </a>
+            </div>
+          </div>
 
-              <div>
-                <h4 className="font-sans font-bold text-white text-[12px] tracking-wider uppercase mb-3.5">
-                  Industries & Tech
-                </h4>
-                <ul className="space-y-2.5 font-medium text-[#B8ADA4]">
-                  <li>
-                    <Link href="/projects" className="hover:text-[#E4521B] transition-colors">
-                      Distributed Systems
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/projects" className="hover:text-[#E4521B] transition-colors">
-                      Agentic AI & LLMs
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/projects" className="hover:text-[#E4521B] transition-colors">
-                      Full-Stack Next.js
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/projects" className="hover:text-[#E4521B] transition-colors">
-                      3D WebGL & Canvas
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/projects" className="hover:text-[#E4521B] transition-colors">
-                      Cloud & Kubernetes
-                    </Link>
-                  </li>
-                </ul>
-              </div>
+          {/* Right Columns: Categorized Navigation Links */}
+          <div className="md:col-span-7 lg:col-span-8 grid grid-cols-2 sm:grid-cols-4 gap-7 sm:gap-8 text-[13.5px]">
 
-              <div>
-                <h4 className="font-sans font-bold text-white text-[12px] tracking-wider uppercase mb-3.5">
-                  Community
-                </h4>
-                <ul className="space-y-2.5 font-medium text-[#B8ADA4]">
-                  <li>
-                    <Link href="/join" className="hover:text-[#E4521B] transition-colors">
-                      Join KodeToMates
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/#community" className="hover:text-[#E4521B] transition-colors">
-                      Code of Conduct
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/about" className="hover:text-[#E4521B] transition-colors">
-                      Mates Hall of Fame
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/join" className="hover:text-[#E4521B] transition-colors">
-                      Weekly Demo Days
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/contact" className="hover:text-[#E4521B] transition-colors">
-                      Contact Mentors
-                    </Link>
-                  </li>
-                </ul>
-              </div>
+            {/* Column 1: Services */}
+            <div>
+              <h4 className="font-sans font-bold text-white text-[12px] tracking-wider uppercase mb-4 flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#E4521B]" />
+                <span>What We Do</span>
+              </h4>
+              <ul className="space-y-2.5 font-medium text-[#9E938B]">
+                <li>
+                  <Link href="/what-we-do/website-dev" className="hover:text-[#E4521B] transition-colors">
+                    Website Dev
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/what-we-do/seo" className="hover:text-[#E4521B] transition-colors">
+                    SEO & Growth
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/what-we-do/website-redesign" className="hover:text-[#E4521B] transition-colors">
+                    Website Redesign
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/what-we-do/digital-invitation" className="hover:text-[#E4521B] transition-colors">
+                    Digital Invitation
+                  </Link>
+                </li>
+              </ul>
+            </div>
 
-              <div>
-                <h4 className="font-sans font-bold text-white text-[12px] tracking-wider uppercase mb-3.5">
-                  Company
-                </h4>
-                <ul className="space-y-2.5 font-medium text-[#B8ADA4]">
-                  <li>
-                    <Link href="/about" className="hover:text-[#E4521B] transition-colors">
-                      About Us
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/blog" className="hover:text-[#E4521B] transition-colors">
-                      Blog
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/faq" className="hover:text-[#E4521B] transition-colors">
-                      FAQ
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/contact" className="hover:text-[#E4521B] transition-colors">
-                      Contact
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/privacy" className="hover:text-[#E4521B] transition-colors">
-                      Privacy Policy
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/terms" className="hover:text-[#E4521B] transition-colors">
-                      Terms of Service
-                    </Link>
-                  </li>
-                </ul>
-              </div>
+            {/* Column 2: Tech & Focus */}
+            <div>
+              <h4 className="font-sans font-bold text-white text-[12px] tracking-wider uppercase mb-4 flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#E4521B]" />
+                <span>Engineering</span>
+              </h4>
+              <ul className="space-y-2.5 font-medium text-[#9E938B]">
+                <li>
+                  <Link href="/projects" className="hover:text-[#E4521B] transition-colors">
+                    Next.js & React
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/projects" className="hover:text-[#E4521B] transition-colors">
+                    Autonomous AI & Agents
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/projects" className="hover:text-[#E4521B] transition-colors">
+                    3D Canvas & WebGL
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/projects" className="hover:text-[#E4521B] transition-colors">
+                    Distributed Systems
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/projects" className="hover:text-[#E4521B] transition-colors">
+                    Cloud & Edge Ops
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* Column 3: Community */}
+            <div>
+              <h4 className="font-sans font-bold text-white text-[12px] tracking-wider uppercase mb-4 flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#E4521B]" />
+                <span>Community</span>
+              </h4>
+              <ul className="space-y-2.5 font-medium text-[#9E938B]">
+                <li>
+                  <Link href="/join" className="hover:text-[#E4521B] transition-colors">
+                    Join KodeToMates
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/#community" className="hover:text-[#E4521B] transition-colors">
+                    Code of Conduct
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/about" className="hover:text-[#E4521B] transition-colors">
+                    Mates Hall of Fame
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/join" className="hover:text-[#E4521B] transition-colors">
+                    Weekly Demo Days
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/contact" className="hover:text-[#E4521B] transition-colors">
+                    Contact Mentors
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* Column 4: Company */}
+            <div>
+              <h4 className="font-sans font-bold text-white text-[12px] tracking-wider uppercase mb-4 flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#E4521B]" />
+                <span>Company</span>
+              </h4>
+              <ul className="space-y-2.5 font-medium text-[#9E938B]">
+                <li>
+                  <Link href="/about" className="hover:text-[#E4521B] transition-colors">
+                    About Us
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/blog" className="hover:text-[#E4521B] transition-colors">
+                    Engineering Blog
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/faq" className="hover:text-[#E4521B] transition-colors">
+                    FAQ
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/contact" className="hover:text-[#E4521B] transition-colors">
+                    Contact
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/privacy" className="hover:text-[#E4521B] transition-colors">
+                    Privacy Policy
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/terms" className="hover:text-[#E4521B] transition-colors">
+                    Terms of Service
+                  </Link>
+                </li>
+              </ul>
             </div>
 
           </div>
         </div>
 
-      </div>
-
-      {/* ========================================================
-          PART 2: CURVED TERRACOTTA BANNER WITH LOGO & WATERMARK
-          Tighter, compact vertical proportions
-         ======================================================== */}
-      <div className="relative w-full pt-8 sm:pt-10 md:pt-12 pb-7 sm:pb-8 px-6 sm:px-8 lg:px-12 flex flex-col items-center z-10">
-        <div className="relative max-w-7xl w-full mx-auto flex flex-col items-center">
-
-          {/* Centered Stylized Watermark Logo with Official Logo Mark */}
-          <div className="my-3 sm:my-5 md:my-6 flex items-center justify-center gap-3.5 sm:gap-5 group select-none cursor-default">
-
+        {/* ========================================================
+            BOTTOM BRAND SHOWCASE: Official Logo & Glow Wordmark
+           ======================================================== */}
+        <div className="pt-10 sm:pt-14 pb-8 flex flex-col items-center">
+          <div className="flex items-center justify-center gap-3.5 sm:gap-5 group select-none cursor-default mb-8">
             {/* Official Logo Mark with Radiant Drop Shadow */}
-            <div className="relative w-11 h-11 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full overflow-hidden flex items-center justify-center shrink-0 drop-shadow-[0_4px_24px_rgba(228,82,27,0.7)] group-hover:scale-105 transition-transform duration-300">
+            <div className="relative w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden flex items-center justify-center shrink-0 drop-shadow-[0_4px_24px_rgba(228,82,27,0.7)] group-hover:scale-105 transition-transform duration-300 bg-[#161413] border border-white/10">
               <Image
                 src="/Image-v1/KTM_Logos/Primary-Logo.png"
                 alt="KodeToMates Official Logo"
@@ -311,39 +345,41 @@ export function Footer() {
               />
             </div>
 
-            {/* Giant Stylized Wordmark with Soft Terracotta Glow */}
-            <span className="font-sans text-[clamp(2.4rem,5.5vw,4.6rem)] font-bold text-white tracking-[-0.035em] leading-none transition-colors drop-shadow-[0_4px_28px_rgba(228,82,27,0.35)] group-hover:text-[#FFA466]">
-              Kode<span className="text-[#FF8F4D] group-hover:text-white transition-colors">To</span>Mates
+            {/* Giant Stylized Wordmark */}
+            <span className="font-sans text-[clamp(2.4rem,6vw,5rem)] font-bold text-white tracking-[-0.035em] leading-none transition-colors drop-shadow-[0_4px_28px_rgba(228,82,27,0.3)]">
+              Kode<span className="text-[#E4521B]">To</span>Mates
             </span>
           </div>
 
-          {/* Bottom Copyright & Legal Line in Warm Harmonious Tones */}
-          <div className="w-full pt-5 sm:pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3.5 text-[12.5px] sm:text-[13px] text-[#E8BA9E]">
-
-            {/* Copyright Left */}
+          {/* Bottom Copyright & Legal Line */}
+          <div className="w-full pt-6 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-4 text-[12.5px] sm:text-[13px] text-[#7E756E]">
+            {/* Copyright */}
             <div className="font-sans font-normal">
-              <span>© KodeToMates 2026, All rights reserved</span>
+              <span>© {new Date().getFullYear()} KodeToMates. All rights reserved.</span>
             </div>
 
-            {/* Legal Links Right */}
-            <div className="flex flex-wrap items-center justify-center gap-5 sm:gap-7 font-sans font-medium">
-              <Link href="/terms" className="hover:text-white transition-colors">
-                Terms and Conditions
+            {/* Live Operational Status Tag */}
+
+
+            {/* Legal Links */}
+            <div className="flex flex-wrap items-center justify-center gap-5 sm:gap-6 font-sans font-medium text-[#8E857E]">
+              <Link href="/terms" className="hover:text-[#E4521B] transition-colors">
+                Terms of Service
               </Link>
-              <Link href="/privacy" className="hover:text-white transition-colors">
+              <Link href="/privacy" className="hover:text-[#E4521B] transition-colors">
                 Privacy Policy
               </Link>
-              <Link href="/terms" className="hover:text-white transition-colors">
-                End User License Agreement
+              <Link href="/contact" className="hover:text-[#E4521B] transition-colors">
+                Support
               </Link>
-
             </div>
-
           </div>
-
         </div>
+
       </div>
 
     </footer>
   )
 }
+
+export default Footer

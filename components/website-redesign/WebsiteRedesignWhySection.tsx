@@ -62,7 +62,7 @@ export function WebsiteRedesignWhySection() {
   return (
     <StackedCardsSection
       sectionId="why-redesign"
-      contentAlign="top"
+      contentAlign="center"
       eyebrow="WHY REDESIGN?"
       titleLine1="Your website has changed"
       titleLine2='<span className="text-[var(--color-primary-orange)]">Your website should too</span>'

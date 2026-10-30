@@ -75,7 +75,7 @@ export function WhatIsKodeToMates() {
         href: '/community',
       }}
       className="-mt-[1px]"
-      contentAlign="top"
+      contentAlign="center"
     />
   )
 }
