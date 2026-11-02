@@ -74,7 +74,7 @@ export function WhatIsKodeToMates() {
         label: 'Explore Our Community',
         href: '/community',
       }}
-      className="-mt-[1px]"
+      className="pt-6 sm:pt-8 lg:pt-0 -mt-[1px]"
       contentAlign="center"
     />
   )

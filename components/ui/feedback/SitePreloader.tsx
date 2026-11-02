@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useCallback, useRef, useSyncExternalStore } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { GooeyLoader } from './GooeyLoader'
-import { X } from 'lucide-react'
 
 export interface SitePreloaderProps {
   /** Minimum duration in ms before finishing to ensure smooth animation perception (default: 1100ms) */
@@ -29,7 +28,6 @@ function SitePreloaderContent({
 }: SitePreloaderProps) {
   const [isVisible, setIsVisible] = useState(() => !checkAlreadySeen(oncePerSession))
   const [progress, setProgress] = useState(0)
-  const [canDismiss, setCanDismiss] = useState(false)
   const startTimeRef = useRef<number>(0)
   const animFrameRef = useRef<number | null>(null)
 
@@ -86,8 +84,6 @@ function SitePreloaderContent({
       win.lenis?.stop?.()
     }
 
-    const dismissTimer = setTimeout(() => setCanDismiss(true), 350)
-
     // Smooth progress simulation with organic curve
     const updateProgress = () => {
       const elapsed = Date.now() - startTimeRef.current
@@ -129,7 +125,6 @@ function SitePreloaderContent({
     ;(window as unknown as { __replayPreloader?: () => void }).__replayPreloader = handleReplayEvent
 
     return () => {
-      clearTimeout(dismissTimer)
       if (animFrameRef.current) {
         cancelAnimationFrame(animFrameRef.current)
       }
@@ -161,23 +156,6 @@ function SitePreloaderContent({
           aria-live="polite"
           aria-label="Loading"
         >
-          {/* Quick Skip Button (Top Right) */}
-          {canDismiss && (
-            <motion.button
-              initial={{ opacity: 0, y: -6 }}
-              animate={{ opacity: 1, y: 0 }}
-              onClick={handleSkip}
-              className="absolute top-6 right-6 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/15 text-white/60 hover:text-white text-xs font-mono backdrop-blur-md border border-white/10 shadow-xs transition-all cursor-pointer z-20"
-              title="Skip (Esc)"
-            >
-              <span>Skip</span>
-              <kbd className="px-1.5 py-0.5 rounded bg-white/10 text-[10px] text-white/60 font-sans border border-white/10">
-                Esc
-              </kbd>
-              <X className="w-3 h-3 text-white/60" />
-            </motion.button>
-          )}
-
           {/* Centered White Gooey Blobs Loading UI */}
           <motion.div
             key="white-gooey-loader"

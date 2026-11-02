@@ -117,7 +117,7 @@ export function StackedCardsSection({
 
   // Section height scales with card count (3 cards: 180vh, 4 cards: 215vh) to avoid excessive dead scroll
   const sectionHeightClass = isThree ? 'h-[180vh]' : 'h-[215vh]'
-  const marginClass = className?.includes('mb-') ? '' : '-mb-16 sm:-mb-20 lg:-mb-24'
+  const marginClass = className?.includes('mb-') ? '' : 'mb-10 sm:mb-14 lg:-mb-24'
 
   return (
     <section
@@ -127,10 +127,20 @@ export function StackedCardsSection({
       aria-labelledby={`${sectionId}-heading`}
     >
       {/* Pinned Viewport Container (stays sticky on screen while user scrolls through all cards) */}
-      <div className={`sticky top-0 h-screen w-full flex overflow-hidden bg-white z-10 ${contentAlign === 'top' ? 'items-center lg:items-start pt-6 sm:pt-8 lg:pt-12' : 'items-center'}`}>
-        <div className={`relative w-full max-w-[1380px] mx-auto px-6 sm:px-8 lg:px-10 xl:px-12 h-full flex flex-col ${contentAlign === 'top' ? 'justify-center lg:justify-start lg:pt-4' : 'justify-center'}`}>
+      <div
+        className={`sticky top-0 h-screen w-full flex overflow-hidden bg-white z-10 pt-20 pb-8 sm:pt-24 sm:pb-10 lg:pt-0 lg:pb-0 ${
+          contentAlign === 'top'
+            ? 'items-center lg:items-start lg:pt-12'
+            : 'items-center'
+        }`}
+      >
+        <div
+          className={`relative w-full max-w-[1380px] mx-auto px-5 sm:px-8 lg:px-10 xl:px-12 h-full flex flex-col justify-center ${
+            contentAlign === 'top' ? 'lg:justify-start lg:pt-4' : 'lg:justify-center'
+          }`}
+        >
           {/* Main 2-Column Balanced Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-center w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-10 xl:gap-12 items-center w-full">
             {/* ========================================================
                 LEFT COLUMN: Sticky Editorial Heading, Copy, & Navigation
                ======================================================== */}
@@ -168,29 +178,29 @@ export function StackedCardsSection({
                     ]}
                     showAccentLine={true}
                     slit={slit}
-                    className="text-[clamp(26px,2.8vw,48px)] xl:text-[clamp(32px,3.1vw,52px)] mb-3"
+                    className="text-[clamp(24px,2.8vw,48px)] xl:text-[clamp(32px,3.1vw,52px)] mb-2 sm:mb-3"
                   />
                 )
               })()}
 
               {/* Description Paragraphs: Rich Mission & Practical Context */}
-              <div className="space-y-3 font-sans text-[14.5px] sm:text-[15.5px] leading-[1.68] text-[#554E48] font-normal max-w-xl mb-6">
+              <div className="space-y-2 sm:space-y-3 font-sans text-[13.5px] sm:text-[15.5px] leading-[1.6] sm:leading-[1.68] text-[#554E48] font-normal max-w-xl mb-3 sm:mb-6">
                 {descriptionParagraphs.map((para, idx) => (
-                  <p key={idx} className={idx > 0 ? 'text-[#665F58] text-[13.5px] sm:text-[14.5px]' : ''}>
+                  <p key={idx} className={idx > 0 ? 'text-[#665F58] text-[13px] sm:text-[14.5px] hidden sm:block' : ''}>
                     {para}
                   </p>
                 ))}
               </div>
 
               {/* Pillar Switcher Navigation (Interactive Pills that update with scroll) */}
-              <div className="flex flex-wrap items-center gap-2 mb-6 select-none">
+              <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-3 sm:mb-6 select-none">
                 {cards.map((pillar, idx) => {
                   const isActive = activeCard === idx
                   return (
                     <button
                       key={pillar.id}
                       onClick={() => scrollToCard(idx)}
-                      className={`px-3 sm:px-3.5 py-1.5 rounded-full text-xs sm:text-[13px] font-sans font-semibold transition-all duration-300 focus:outline-none flex items-center gap-1.5 cursor-pointer ${
+                      className={`px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-[13px] font-sans font-semibold transition-all duration-300 focus:outline-none flex items-center gap-1.5 cursor-pointer ${
                         isActive
                           ? 'bg-[#141210] text-white shadow-md shadow-black/10 scale-105'
                           : 'bg-[#F5F2EB] text-[#554E48] hover:bg-[#EBE6DC] hover:text-[#111827]'
@@ -207,22 +217,22 @@ export function StackedCardsSection({
 
               {/* Dynamic Bottom CTA Action Button(s) */}
               {ctaButton && (
-                <div className="flex flex-wrap items-center gap-4 sm:gap-5 select-none pt-1">
+                <div className="flex flex-wrap items-center gap-3 sm:gap-5 select-none pt-0 sm:pt-1">
                   <Link
                     href={ctaButton.href}
-                    className="group inline-flex items-center gap-2.5 px-6 sm:px-7 py-3.5 rounded-full bg-[#E4521B] hover:bg-[#141210] text-white font-sans font-semibold text-[14px] shadow-[0_8px_20px_rgba(228,82,27,0.25)] hover:shadow-[0_10px_24px_rgba(0,0,0,0.2)] transition-all duration-300 cursor-pointer"
+                    className="group inline-flex items-center gap-2 px-5 sm:px-7 py-2.5 sm:py-3.5 rounded-full bg-[#E4521B] hover:bg-[#141210] text-white font-sans font-semibold text-[13px] sm:text-[14px] shadow-[0_8px_20px_rgba(228,82,27,0.25)] hover:shadow-[0_10px_24px_rgba(0,0,0,0.2)] transition-all duration-300 cursor-pointer"
                   >
                     <span>{ctaButton.label}</span>
-                    <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                    <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform duration-300 group-hover:translate-x-1" />
                   </Link>
 
                   {ctaButton.secondary && (
                     <Link
                       href={ctaButton.secondary.href}
-                      className="group inline-flex items-center gap-1.5 font-sans font-semibold text-[14.5px] text-[#A0350B] hover:text-[#E4521B] underline underline-offset-4 decoration-[#E4521B]/40 hover:decoration-[#E4521B] transition-colors duration-200 cursor-pointer"
+                      className="group inline-flex items-center gap-1.5 font-sans font-semibold text-[13px] sm:text-[14.5px] text-[#A0350B] hover:text-[#E4521B] underline underline-offset-4 decoration-[#E4521B]/40 hover:decoration-[#E4521B] transition-colors duration-200 cursor-pointer"
                     >
                       <span>{ctaButton.secondary.label}</span>
-                      <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                      <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform duration-300 group-hover:translate-x-1" />
                     </Link>
                   )}
                 </div>
@@ -237,10 +247,10 @@ export function StackedCardsSection({
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: '-60px' }}
               transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="lg:col-span-6 relative w-full flex items-center justify-center lg:justify-start py-4 sm:py-6"
+              className="lg:col-span-6 relative w-full flex items-center justify-center lg:justify-start py-2 sm:py-4 lg:py-6"
             >
               {/* Stack Stage: Fixed frame holding all layered cards */}
-              <div className="relative w-full max-w-[520px] xl:max-w-[560px] h-[520px] sm:h-[560px] lg:h-[580px]">
+              <div className="relative w-full max-w-[520px] xl:max-w-[560px] h-[360px] sm:h-[460px] lg:h-[580px]">
                 {cards.map((card, idx) => (
                   <StackedCardRender
                     key={card.id}
@@ -452,11 +462,11 @@ function CardFrame({
         zIndex,
         pointerEvents: isActive ? 'auto' : 'none',
       }}
-      className="absolute inset-0 w-full h-full rounded-[28px] sm:rounded-[32px] bg-white border border-[#E8E4DC] shadow-[0_20px_50px_rgba(0,0,0,0.08)] p-5 sm:p-6 flex flex-col justify-between overflow-hidden group select-none origin-bottom-left will-change-transform"
+      className="absolute inset-0 w-full h-full rounded-[22px] sm:rounded-[32px] bg-white border border-[#E8E4DC] shadow-[0_12px_36px_rgba(0,0,0,0.06)] sm:shadow-[0_20px_50px_rgba(0,0,0,0.08)] p-3.5 sm:p-6 flex flex-col justify-between overflow-hidden group select-none origin-bottom-left will-change-transform"
       data-index={index}
     >
       {/* Top Section: High-Res Photo with Badges */}
-      <div className="relative w-full aspect-[16/10] rounded-[20px] sm:rounded-[24px] overflow-hidden mb-4 sm:mb-5 bg-[#FAF7F2] shrink-0">
+      <div className="relative w-full aspect-[16/9] sm:aspect-[16/10] rounded-[16px] sm:rounded-[24px] overflow-hidden mb-2.5 sm:mb-5 bg-[#FAF7F2] shrink-0">
         <Image
           src={card.image}
           alt={card.title}
@@ -471,14 +481,14 @@ function CardFrame({
 
         {/* Floating Stat Badge (Top Right) */}
         {card.stat && (
-          <div className="absolute top-3.5 right-3.5 sm:top-4 sm:right-4 z-10 px-2.5 sm:px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-white text-[11px] sm:text-xs font-sans font-medium">
+          <div className="absolute top-2.5 right-2.5 sm:top-4 sm:right-4 z-10 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-black/60 backdrop-blur-md text-white text-[10px] sm:text-xs font-sans font-medium">
             {card.stat}
           </div>
         )}
 
         {/* Bottom Title on Image */}
-        <div className="absolute bottom-3.5 left-4 right-4 z-10 text-white">
-          <h3 className="font-sans font-bold text-2xl sm:text-[28px] leading-[1.04] tracking-[-0.035em] drop-shadow-md">
+        <div className="absolute bottom-2.5 left-3 right-3 sm:bottom-3.5 sm:left-4 sm:right-4 z-10 text-white">
+          <h3 className="font-sans font-bold text-xl sm:text-2xl lg:text-[28px] leading-[1.04] tracking-[-0.035em] drop-shadow-md">
             {card.title}
             <span className="text-[#E4521B]">.</span>
           </h3>
@@ -486,27 +496,27 @@ function CardFrame({
       </div>
 
       {/* Middle Section: Headline & Description */}
-      <div className="flex-1 flex flex-col justify-between">
+      <div className="flex-1 flex flex-col justify-between min-h-0">
         <div>
-          <p className="font-sans font-bold text-[15px] sm:text-[17px] text-[#111827] leading-snug tracking-[-0.025em] mb-2">
+          <p className="font-sans font-bold text-[13.5px] sm:text-[17px] text-[#111827] leading-snug tracking-[-0.025em] mb-1 sm:mb-2">
             {card.headline}
           </p>
-          <p className="font-sans text-[13px] sm:text-[14px] leading-relaxed text-[#554E48] line-clamp-3">
+          <p className="font-sans text-[12px] sm:text-[14px] leading-relaxed text-[#554E48] line-clamp-2 sm:line-clamp-3">
             {card.description}
           </p>
         </div>
 
         {/* Bottom Feature Tags */}
         {card.tags && card.tags.length > 0 && (
-          <div className="pt-3 border-t border-[#F2EEE6] mt-3">
-            <div className="flex flex-wrap gap-1.5 sm:gap-2">
+          <div className="pt-2 sm:pt-3 border-t border-[#F2EEE6] mt-2 sm:mt-3">
+            <div className="flex flex-wrap gap-1 sm:gap-2">
               {card.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#F8F5EE] border border-[#EFEAE0] text-[11px] sm:text-xs font-sans font-medium text-[#4A4540]"
+                  className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg bg-[#F8F5EE] border border-[#EFEAE0] text-[10px] sm:text-xs font-sans font-medium text-[#4A4540]"
                 >
                   <CheckCircle2
-                    className="w-3 h-3 shrink-0"
+                    className="w-2.5 h-2.5 sm:w-3 sm:h-3 shrink-0"
                     style={{ color: card.accentColor || '#E4521B' }}
                   />
                   <span>{tag}</span>

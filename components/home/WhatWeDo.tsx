@@ -52,7 +52,7 @@ const SERVICES: ServiceItem[] = [
       'Production API Integrations',
     ],
     stat: '99+ PageSpeed Score',
-    image: '/images/services/website-dev-mockup.jpg',
+    image: '/Image-v1/Home_page/website-develop.jpg',
     href: '/what-we-do/website-dev',
     btnLabel: 'Explore Website Development',
     icon: Code2,
@@ -76,7 +76,7 @@ const SERVICES: ServiceItem[] = [
       'Schema & Core Web Vitals',
     ],
     stat: 'Top 10 Google Rankings',
-    image: '/images/services/seo-mockup.jpg',
+    image: '/Image-v1/Home_page/seo.jpg',
     href: '/what-we-do/seo',
     btnLabel: 'Explore SEO & Digital Growth',
     icon: Search,
@@ -100,7 +100,7 @@ const SERVICES: ServiceItem[] = [
       'Modern Interactive Micro-animations',
     ],
     stat: '3x Better Conversion Lift',
-    image: '/images/services/website-redesign-mockup.jpg',
+    image: '/Image-v1/Home_page/website-redesign.jpg',
     href: '/what-we-do/website-redesign',
     btnLabel: 'Explore Website Redesign',
     icon: Sparkles,
@@ -124,7 +124,7 @@ const SERVICES: ServiceItem[] = [
       'Instant WhatsApp & SMS Share',
     ],
     stat: '100% Mobile Optimized',
-    image: '/images/services/digital-invitation-mockup.jpg',
+    image: '/Image-v1/Home_page/digital-invitation.jpg',
     href: '/what-we-do/digital-invitation',
     btnLabel: 'Explore Digital Invitations',
     icon: Mail,
@@ -239,16 +239,14 @@ export function WhatWeDo() {
                 key={pillar.id}
                 href={`#${pillar.id}`}
                 onClick={(e) => handlePillarClick(e, pillar.id)}
-                className={`px-3.5 sm:px-4 py-1.5 rounded-full text-xs sm:text-[13px] font-sans font-semibold transition-all duration-300 flex items-center gap-1.5 backdrop-blur-md shadow-xs group focus:outline-none cursor-pointer ${
-                  isActive
-                    ? 'bg-[#E4521B] text-white border border-[#E4521B] shadow-md shadow-[#E4521B]/35 scale-105'
-                    : 'bg-white/[0.08] hover:bg-white/[0.15] text-[#E0DCED] hover:text-white border border-white/10 hover:border-white/25'
-                }`}
+                className={`px-3.5 sm:px-4 py-1.5 rounded-full text-xs sm:text-[13px] font-sans font-semibold transition-all duration-300 flex items-center gap-1.5 backdrop-blur-md shadow-xs group focus:outline-none cursor-pointer ${isActive
+                  ? 'bg-[#E4521B] text-white border border-[#E4521B] shadow-md shadow-[#E4521B]/35 scale-105'
+                  : 'bg-white/[0.08] hover:bg-white/[0.15] text-[#E0DCED] hover:text-white border border-white/10 hover:border-white/25'
+                  }`}
               >
                 <span
-                  className={`text-[10px] font-mono transition-colors duration-300 ${
-                    isActive ? 'text-white' : 'text-[#FF914D] group-hover:text-[#FFA366]'
-                  }`}
+                  className={`text-[10px] font-mono transition-colors duration-300 ${isActive ? 'text-white' : 'text-[#FF914D] group-hover:text-[#FFA366]'
+                    }`}
                 >
                   {pillar.number}
                 </span>
@@ -258,18 +256,12 @@ export function WhatWeDo() {
           })}
         </motion.div>
 
-        {/* 4 Category Showcases: Left image with reveal animation, right context entering from left */}
+        {/* 4 Category Showcases: Alternating image & context layout */}
         <div className="space-y-4 sm:space-y-5 lg:space-y-6">
           {SERVICES.map((service, idx) => {
             const isImageLeft = idx % 2 === 0
-            const imageInitialX = shouldReduceMotion ? 0 : isImageLeft ? -80 : 80
-            const imageClipInitial = shouldReduceMotion
-              ? 'inset(0% 0% 0% 0% round 20px)'
-              : isImageLeft
-              ? 'inset(0% 100% 0% 0% round 20px)'
-              : 'inset(0% 0% 0% 100% round 20px)'
-            const imageWipeTarget = isImageLeft ? '102%' : '-102%'
-            const contextInitialX = shouldReduceMotion ? 0 : isImageLeft ? 80 : -80
+            const imageInitialX = shouldReduceMotion ? 0 : isImageLeft ? -40 : 40
+            const contextInitialX = shouldReduceMotion ? 0 : isImageLeft ? 40 : -40
 
             return (
               <article
@@ -283,36 +275,30 @@ export function WhatWeDo() {
                       IMAGE COLUMN (Alternates: Left on 1st/3rd, Right on 2nd/4th)
                      ======================================================== */}
                   <motion.div
-                    initial={shouldReduceMotion ? { opacity: 1, x: 0 } : { opacity: 0, x: imageInitialX }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, margin: '-60px' }}
+                    initial={
+                      shouldReduceMotion
+                        ? { opacity: 1, x: 0, scale: 1 }
+                        : { opacity: 0, x: imageInitialX, scale: 0.98 }
+                    }
+                    whileInView={{ opacity: 1, x: 0, scale: 1 }}
+                    viewport={{ once: true, margin: '-40px' }}
                     transition={{
-                      duration: 0.85,
-                      delay: 0.28,
+                      duration: 0.75,
+                      delay: 0.08,
                       ease: [0.16, 1, 0.3, 1],
                     }}
                     className={`lg:col-span-6 ${isImageLeft ? 'lg:order-1' : 'lg:order-2'} order-1 relative w-full`}
                   >
-                    {/* Clip-Path Reveal Container */}
-                    <motion.div
-                      initial={{ clipPath: imageClipInitial }}
-                      whileInView={{ clipPath: 'inset(0% 0% 0% 0% round 20px)' }}
-                      viewport={{ once: true, margin: '-60px' }}
-                      transition={{
-                        duration: 0.85,
-                        delay: 0.28,
-                        ease: [0.16, 1, 0.3, 1],
-                      }}
-                      className="relative w-full aspect-[16/10] rounded-[20px] sm:rounded-[24px] overflow-hidden bg-[#1B1926] border border-white/10 shadow-[0_16px_36px_rgba(0,0,0,0.5)] group"
-                    >
-                      {/* Counter-scale image parallax during reveal */}
+                    {/* Visual Card Container */}
+                    <div className="relative w-full aspect-[16/10] rounded-[20px] sm:rounded-[24px] overflow-hidden bg-[#1B1926] border border-white/10 hover:border-[#E4521B]/40 shadow-[0_16px_36px_rgba(0,0,0,0.5)] group transition-colors duration-300">
+                      {/* Counter-scale image parallax on reveal */}
                       <motion.div
-                        initial={shouldReduceMotion ? { scale: 1 } : { scale: 1.15 }}
+                        initial={shouldReduceMotion ? { scale: 1 } : { scale: 1.08 }}
                         whileInView={{ scale: 1 }}
-                        viewport={{ once: true, margin: '-60px' }}
+                        viewport={{ once: true, margin: '-40px' }}
                         transition={{
                           duration: 0.85,
-                          delay: 0.28,
+                          delay: 0.08,
                           ease: [0.16, 1, 0.3, 1],
                         }}
                         className="relative w-full h-full"
@@ -327,18 +313,18 @@ export function WhatWeDo() {
                         />
                       </motion.div>
 
-                      {/* Warm Coral Reveal Sweep Wipe */}
+                      {/* Warm Coral Luminous Shimmer Sweep on Reveal */}
                       {!shouldReduceMotion && (
                         <motion.div
-                          initial={{ x: '0%' }}
-                          whileInView={{ x: imageWipeTarget }}
-                          viewport={{ once: true, margin: '-60px' }}
+                          initial={{ x: '-100%', opacity: 0.7 }}
+                          whileInView={{ x: '100%', opacity: 0 }}
+                          viewport={{ once: true, margin: '-40px' }}
                           transition={{
-                            duration: 0.8,
-                            delay: 0.28,
+                            duration: 0.9,
+                            delay: 0.15,
                             ease: [0.16, 1, 0.3, 1],
                           }}
-                          className="absolute inset-0 bg-[#E4521B]/35 z-20 pointer-events-none"
+                          className="absolute inset-0 bg-gradient-to-r from-transparent via-[#E4521B]/30 to-transparent z-20 pointer-events-none"
                         />
                       )}
 
@@ -364,16 +350,16 @@ export function WhatWeDo() {
                           <span className="text-[#FF914D]">.</span>
                         </h3>
                       </div>
-                    </motion.div>
+                    </div>
                   </motion.div>
 
                   {/* ========================================================
-                      CONTEXT COLUMN (Alternates: Right on 1st/3rd, Left on 2nd/4th - Enters FIRST)
+                      CONTEXT COLUMN (Alternates: Right on 1st/3rd, Left on 2nd/4th)
                      ======================================================== */}
                   <motion.div
                     initial={shouldReduceMotion ? { opacity: 1, x: 0 } : { opacity: 0, x: contextInitialX }}
                     whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, margin: '-60px' }}
+                    viewport={{ once: true, margin: '-40px' }}
                     transition={{
                       duration: 0.75,
                       delay: 0,

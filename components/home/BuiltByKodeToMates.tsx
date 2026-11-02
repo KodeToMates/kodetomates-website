@@ -12,7 +12,7 @@ const PROJECTS_CARDS: StackedCardItem[] = [
     headline: 'Tools that make development faster, simpler & collaborative',
     description:
       "We're exploring tools that make development faster, simpler and more collaborative — from streamlined local workflows to smarter engineering utilities and dev-kits.",
-    image: '/images/projects/laptop-ai-desk.jpg',
+    image: '/Image-v1/Home_page/developer-tools.jpg',
     tags: ['Developer Experience', 'Productivity Utilities', 'CLI & Workflows', 'Open Source'],
     stat: 'Active Research',
     accentColor: '#E4521B',
@@ -26,7 +26,7 @@ const PROJECTS_CARDS: StackedCardItem[] = [
     headline: 'Removing friction and helping developers focus on creating',
     description:
       "We're researching how generative AI, agent orchestration, and automated pipelines can remove mechanical friction, save development hours, and accelerate engineering breakthroughs.",
-    image: '/images/projects/ai-automation-desk.jpg',
+    image: '/Image-v1/Home_page/ai-automations.jpg',
     tags: ['Autonomous Agents', 'LLM Chains', 'Workflow Automation', 'Semantic Search'],
     stat: 'AI Prototypes',
     accentColor: '#059669',
@@ -40,7 +40,7 @@ const PROJECTS_CARDS: StackedCardItem[] = [
     headline: 'Open to ideas, partnerships & building together',
     description:
       "We're open to ideas, partnerships and collaborations. If you have a project idea, a problem to solve, or just want to build production-grade software together — let's build.",
-    image: '/images/projects/community-sticky-notes.jpg',
+    image: '/Image-v1/Home_page/community-projects.jpg',
     tags: ['Collaborative Repos', 'Open Source', 'Sprint Hackathons', 'Peer Building'],
     stat: 'Public Repos',
     accentColor: '#7C3AED',
@@ -68,6 +68,7 @@ export function BuiltByKodeToMates() {
           href: '/contact',
         },
       }}
+      className="mb-0"
     />
   )
 }
