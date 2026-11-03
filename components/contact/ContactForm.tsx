@@ -170,7 +170,7 @@ export function ContactForm() {
                   role="alert"
                 >
                   <AlertCircle className="w-5 h-5 shrink-0 text-red-600" />
-                  <span>{errorMessage}</span>
+                   <span>{errorMessage}</span>
                 </motion.div>
               )}
 

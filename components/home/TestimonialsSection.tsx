@@ -13,27 +13,27 @@ export type { Review } from './TestimonialSlider'
 export const TESTIMONIALS: Review[] = [
   {
     id: 1,
-    name: 'Ashley Chen',
+    name: 'Soundarya',
     role: 'Full-Stack Developer',
     affiliation: 'KodeToMates Community',
     quote:
       'KodeToMates completely changed how I approach software. Building alongside real engineers, shipping real code - it\'s nothing like following tutorials alone.',
     imageSrc:
-      'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&h=800&fit=crop&crop=face',
+      '/Image-v1/Home_page/testimonils/soundarya.jpg',
     thumbnailSrc:
-      'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=100&h=120&fit=crop&crop=face',
+      '/Image-v1/Home_page/testimonils/soundarya.jpg',
   },
   {
     id: 2,
-    name: 'Marcus Rivera',
+    name: 'Aakash',
     role: 'Backend Engineer',
     affiliation: 'Open Source Contributor',
     quote:
       'The pair-coding sessions and PR reviews taught me more in 3 months than a year of self-study. The community genuinely cares about quality and growth.',
     imageSrc:
-      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=800&fit=crop&crop=face',
+      '/Image-v1/Home_page/testimonils/akash.jpg',
     thumbnailSrc:
-      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=120&fit=crop&crop=face',
+      '/Image-v1/Home_page/testimonils/akash.jpg',
   },
   {
     id: 3,
@@ -98,7 +98,7 @@ export interface TestimonialsSectionProps {
 
 export function TestimonialsSection({
   id = 'testimonials',
-  eyebrow = 'COMMUNITY VOICES',
+  eyebrow = '',
   headingLines = [
     'What our builders <span style="color: #FFE3D4">have to say.</span>',
   ],
@@ -113,10 +113,10 @@ export function TestimonialsSection({
   const shouldReduceMotion = useReducedMotion()
 
   return (
-    <div className={cn('w-full', wrapperBg, className)}>
+    <div className={cn('w-full pt-4 sm:pt-6 lg:pt-8', wrapperBg, className)}>
       <section
         id={id}
-        className="relative w-full bg-primary-orange text-white rounded-t-[32px] rounded-b-[32px] sm:rounded-t-[48px] sm:rounded-b-[48px] lg:rounded-t-[56px] lg:rounded-b-[56px] border-t border-b border-white/20 scroll-mt-24 py-12 sm:py-16 lg:py-20 selection:bg-white/30 selection:text-white overflow-hidden shadow-2xl"
+        className="relative w-full bg-primary-orange text-white rounded-t-[32px] rounded-b-[32px] sm:rounded-t-[48px] sm:rounded-b-[48px] lg:rounded-t-[56px] lg:rounded-b-[56px] border-t border-b border-white/20 scroll-mt-24 pt-20 sm:pt-24 md:pt-28 lg:pt-32 pb-14 sm:pb-18 lg:pb-22 selection:bg-white/30 selection:text-white overflow-hidden shadow-2xl"
         aria-labelledby={`${id}-heading`}
       >
         {/* Subtle Ambient Radial Highlight on Orange */}
@@ -129,7 +129,7 @@ export function TestimonialsSection({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="text-center mb-6 sm:mb-8"
+            className="text-center mb-8 sm:mb-10 lg:mb-12"
           >
             {/* Eyebrow Pill */}
             {eyebrow && (
