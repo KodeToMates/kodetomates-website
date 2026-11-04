@@ -43,7 +43,7 @@ export default function AboutPage() {
       <AboutWhoWeWorkWith />
 
       {/* 8. People — Meet the people behind the ideas */}
-      <AboutTeamSection />
+      {/* <AboutTeamSection /> */}
 
       {/* 9. Questions — Frequently Asked Questions */}
       <AboutFAQ />

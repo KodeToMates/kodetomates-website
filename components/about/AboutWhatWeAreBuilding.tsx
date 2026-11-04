@@ -32,7 +32,7 @@ const DIGITAL_EXPERIENCE_CARDS: ExampleCardItem[] = [
     category: 'Web Apps',
     tag: 'Modern Web',
     icon: Globe2,
-    image: '/images/services/website-dev.jpg',
+    image: "/Image-v1/about_page/What-We'e-Building/modern-applications.jpg",
   },
   {
     title: 'Brand Showcase & Presence',
@@ -40,7 +40,7 @@ const DIGITAL_EXPERIENCE_CARDS: ExampleCardItem[] = [
     category: 'Showcase',
     tag: 'Brand Experience',
     icon: Sparkles,
-    image: '/images/services/website-redesign.jpg',
+    image: "/Image-v1/about_page/What-We'e-Building/brand.jpg",
   },
   {
     title: 'Digital Event Invitations',
@@ -48,7 +48,7 @@ const DIGITAL_EXPERIENCE_CARDS: ExampleCardItem[] = [
     category: 'Experiences',
     tag: 'Interactive Link',
     icon: MousePointerClick,
-    image: '/images/services/digital-invitation.jpg',
+    image: "/Image-v1/about_page/What-We'e-Building/digital-invitation.jpg",
   },
 ]
 
@@ -60,7 +60,7 @@ const PRODUCT_PROBLEM_CARDS: ExampleCardItem[] = [
     category: 'Tools',
     tag: 'Productivity',
     icon: Building2,
-    image: '/images/projects/developer-tools.png',
+    image: '/Image-v1/dev_page/custom-dashboard.jpg',
   },
   {
     title: 'Automated Business Workflows',
@@ -68,7 +68,7 @@ const PRODUCT_PROBLEM_CARDS: ExampleCardItem[] = [
     category: 'Automation',
     tag: 'Efficiency',
     icon: Zap,
-    image: '/images/projects/ai-automation-desk.jpg',
+    image: '/Image-v1/Home_page/ai-automations.jpg',
   },
   {
     title: 'Community Collaboration Hubs',
@@ -76,7 +76,7 @@ const PRODUCT_PROBLEM_CARDS: ExampleCardItem[] = [
     category: 'Software',
     tag: 'Community',
     icon: Target,
-    image: '/images/projects/community-projects.png',
+    image: '/Image-v1/Home_page/community-projects.jpg',
   },
 ]
 
@@ -88,7 +88,7 @@ const EXPERIMENT_LEARNING_CARDS: ExampleCardItem[] = [
     category: 'Canvas',
     tag: 'Interactive 3D',
     icon: Sparkles,
-    image: '/images/hero-coding-creative.jpg',
+    image: '/Image-v1/dev_page/Interactive-Web-Portals.jpg',
   },
   {
     title: 'AI Workflow Prototypes',
@@ -96,7 +96,7 @@ const EXPERIMENT_LEARNING_CARDS: ExampleCardItem[] = [
     category: 'Exploration',
     tag: 'AI Labs',
     icon: Cpu,
-    image: '/images/projects/ai-automation.png',
+    image: '/Image-v1/about_page/explore.jpg',
   },
   {
     title: 'Collaborative Code Spikes',
@@ -104,7 +104,7 @@ const EXPERIMENT_LEARNING_CARDS: ExampleCardItem[] = [
     category: 'Prototypes',
     tag: 'Weekend Spikes',
     icon: Layers,
-    image: '/Image-v1/Home_page/build-real-products.jpg',
+    image: '/Image-v1/about_page/build.jpg',
   },
 ]
 
@@ -116,7 +116,7 @@ const SHARED_KNOWLEDGE_CARDS: ExampleCardItem[] = [
     category: 'Docs',
     tag: 'Playbooks',
     icon: FileCode2,
-    image: '/images/projects/community-sticky-notes.jpg',
+    image: '/Image-v1/dev_page/Documentation-Guides.jpg',
   },
   {
     title: 'Design System Guidelines',
@@ -124,7 +124,7 @@ const SHARED_KNOWLEDGE_CARDS: ExampleCardItem[] = [
     category: 'Guidelines',
     tag: 'Design System',
     icon: BookOpen,
-    image: '/Image-v1/Home_page/Learn-together.jpg',
+    image: '/Image-v1/dev_page/Consistent-Components.jpg',
   },
   {
     title: 'Project Retrospectives',
@@ -132,7 +132,7 @@ const SHARED_KNOWLEDGE_CARDS: ExampleCardItem[] = [
     category: 'Retrospectives',
     tag: 'Lessons Learned',
     icon: CheckCircle2,
-    image: '/Image-v1/Home_page/grow & lead.jpg',
+    image: '/Image-v1/about_page/deliver-improve.jpg',
   },
 ]
 

@@ -170,7 +170,7 @@ export function ContactForm() {
                   role="alert"
                 >
                   <AlertCircle className="w-5 h-5 shrink-0 text-red-600" />
-                   <span>{errorMessage}</span>
+                  <span>{errorMessage}</span>
                 </motion.div>
               )}
 
@@ -341,7 +341,7 @@ export function ContactForm() {
             <div className="lg:col-span-5 xl:col-span-5 relative w-full h-[380px] sm:h-[460px] lg:h-auto min-h-[380px] lg:min-h-full rounded-[26px] sm:rounded-[28px] overflow-hidden shadow-[0_8px_24px_rgba(26,24,23,0.06)] flex flex-col justify-between p-5 sm:p-6 group">
               {/* Background scenic photo */}
               <Image
-                src="/images/contact-journey.jpg"
+                src="/Image-v1/contact-us.jpg"
                 alt="Scenic road representing your journey with KodeToMates"
                 fill
                 sizes="(max-width: 1024px) 100vw, 42vw"
