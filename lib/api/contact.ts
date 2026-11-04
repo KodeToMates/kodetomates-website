@@ -1,15 +1,28 @@
 import { ContactRequestPayload, ContactSuccessResponse } from '@/types/contact'
 
+const PRODUCTION_API_URL = 'https://kodetomates-backend.onrender.com/api/v1'
+const LOCAL_API_URL = 'http://localhost:8081/api/v1'
+
 /**
  * Returns the configured API base URL, stripped of any trailing slash.
- * Defaults to the local Spring Boot backend (http://localhost:8081/api/v1).
+ * 
+ * Resolution order:
+ * 1. process.env.NEXT_PUBLIC_API_BASE_URL (if configured in Vercel or .env.local)
+ * 2. If running in production (e.g. Vercel deployment): https://kodetomates-backend.onrender.com/api/v1
+ * 3. If running in local development: http://localhost:8081/api/v1
  */
 export function getApiBaseUrl(): string {
   const envUrl = process.env.NEXT_PUBLIC_API_BASE_URL
   if (envUrl && envUrl.trim().length > 0) {
     return envUrl.trim().replace(/\/+$/, '')
   }
-  return 'http://localhost:8081/api/v1'
+
+  // Safety guard: Never call localhost in a production deployment
+  if (process.env.NODE_ENV === 'production') {
+    return PRODUCTION_API_URL
+  }
+
+  return LOCAL_API_URL
 }
 
 /**
