@@ -11,8 +11,8 @@ const WHO_WE_WORK_WITH_CARDS: StackedCardItem[] = [
     title: 'Businesses & Founders',
     headline: 'Explore the problem and chart a practical way forward',
     description:
-      'You have an idea, a process that could work better, or a digital experience that needs improvement. We can explore the problem with you and discuss a practical way forward.',
-    image: '/Image-v1/Home_page/home-hero-1.jpg',
+      'You have an ambitious idea, an inefficient workflow, or an existing web product that needs modernization. We partner with you to unpack the real problem, validate market assumptions, and build resilient software roadmaps that turn vision into measurable business value.',
+    image: '/Image-v1/dev_page/business-website.jpg',
     tags: ['Problem Discovery', 'Digital Products', 'Process Improvement', 'Practical Roadmaps'],
     stat: 'Founders',
     accentColor: '#E4521B',
@@ -24,8 +24,8 @@ const WHO_WE_WORK_WITH_CARDS: StackedCardItem[] = [
     title: 'Developers & Tech Enthusiasts',
     headline: 'Learn, experiment, share knowledge, and build together',
     description:
-      'You enjoy learning, experimenting, sharing knowledge, and contributing to meaningful projects. KodeToMates is a place to connect around those interests.',
-    image: '/Image-v1/Home_page/build-real-products.jpg',
+      'You thrive on hands-on architecture spikes, diving deep into modern web runtimes, and shipping open-source code. KodeToMates offers a collaborative sandbox where engineers level up through peer code reviews, shared repositories, and production-grade challenges.',
+    image: '/Image-v1/Home_page/developer-tools.jpg',
     tags: ['Hands-on Spikes', 'Modern Frameworks', 'Peer Code Reviews', 'Open Repos'],
     stat: 'Developers',
     accentColor: '#059669',
@@ -37,8 +37,8 @@ const WHO_WE_WORK_WITH_CARDS: StackedCardItem[] = [
     title: 'Designers & Creative Thinkers',
     headline: 'Connect thoughtful human design with sound engineering',
     description:
-      'You care about how technology feels and works for people. We value the connection between thoughtful design and good engineering.',
-    image: '/images/projects/community-sticky-notes.jpg',
+      'You care deeply about user psychology, fluid motion, and typography that breathes. We bridge the gap between Figma designs and production code, transforming creative concepts into accessible, 60fps interactive systems with complete visual harmony.',
+    image: '/Image-v1/about_page/design.jpg',
     tags: ['Thoughtful UI/UX', 'User Psychology', 'Design Systems', 'Craft & Details'],
     stat: 'Designers',
     accentColor: '#7C3AED',
@@ -50,8 +50,8 @@ const WHO_WE_WORK_WITH_CARDS: StackedCardItem[] = [
     title: 'Mentors & Collaborators',
     headline: 'Exchange knowledge, offer perspectives, and help teams grow',
     description:
-      'You have experience, ideas, or perspectives that can help people grow and projects improve. We welcome opportunities to exchange knowledge and collaborate.',
-    image: '/Image-v1/Home_page/grow & lead.jpg',
+      'You bring battle-tested industry experience, architectural judgment, and high-leverage technical insight. We create meaningful touchpoints for senior leaders to mentor emerging builders, conduct design critiques, and shape the direction of ambitious digital products.',
+    image: '/Image-v1/Home_page/community-projects.jpg',
     tags: ['Knowledge Exchange', 'Constructive Feedback', 'Technical Guidance', 'Mutual Growth'],
     stat: 'Mentors',
     accentColor: '#D97706',
@@ -62,11 +62,13 @@ export function AboutWhoWeWorkWith() {
   return (
     <StackedCardsSection
       sectionId="who-we-work-with"
-      eyebrow=""
+      eyebrow="Collaborative Network"
       titleLine1="Who we"
       titleLine2='<span className="text-[var(--color-primary-orange)]">work with</span>'
       descriptionParagraphs={[
-        "We believe good collaboration starts with openness, shared expectations, and respect for one another's contributions.",
+        "Great products and enduring digital experiences are never built in isolation. We partner with ambitious founders, inquisitive engineers, thoughtful designers, and experienced mentors who care deeply about craft, transparency, and sustainable execution.",
+        "Whether we are co-creating a new brand platform from scratch, untangling complex web architecture, or hosting knowledge-sharing sessions, our engagements are anchored in mutual respect, direct feedback loops, and measurable impact.",
+        "Every collaborator brings a distinct perspective to the table. Explore the different ways we plug into your journey—from high-velocity technical advisory to hands-on engineering sprints.",
       ]}
       cards={WHO_WE_WORK_WITH_CARDS}
       ctaButton={{

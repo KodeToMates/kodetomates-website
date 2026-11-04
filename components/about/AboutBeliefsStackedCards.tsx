@@ -39,7 +39,7 @@ const BELIEFS: BeliefItem[] = [
     title: '01. Learn continuously',
     headline: 'Stay curious. Keep exploring.',
     description:
-      'Technology never stands still, and neither should we. We explore new tools, strengthen our fundamentals, share knowledge, and learn from both successes and mistakes.',
+      'Technology evolves at breakneck speed, and staying relevant requires relentless curiosity. We dig beneath the surface of modern runtimes and architectural patterns, fortify our core fundamentals, and openly share technical discoveries. By analyzing both production triumphs and unexpected edge cases, we turn every challenge into a repeatable masterclass for our entire community.',
     tag: 'Continuous Exploration · Shared Fundamentals',
     category: 'MINDSET',
     image: '/Image-v1/Home_page/Learn-together.jpg',
@@ -50,7 +50,7 @@ const BELIEFS: BeliefItem[] = [
     title: '02. Build to understand',
     headline: 'Concepts into reality.',
     description:
-      'Reading and experimenting are important, but building helps us connect the dots. We turn concepts into working projects, test our assumptions, and learn from the results.',
+      'Reading documentation and studying theory only takes you so far—true engineering mastery is forged by shipping real software. We bridge the gap between abstract concepts and production reality by architecting working applications from the ground up, stress-testing our assumptions under real workloads, and refining implementation through tangible hands-on execution.',
     tag: 'Working Projects · Tested Assumptions',
     category: 'CRAFT',
     image: '/Image-v1/Home_page/build-real-products.jpg',
@@ -61,10 +61,10 @@ const BELIEFS: BeliefItem[] = [
     title: '03. Collaborate openly',
     headline: 'Better questions. Stronger solutions.',
     description:
-      "Different perspectives lead to better questions and stronger solutions. We value sharing ideas, reviewing one another's work, communicating clearly, and helping each other improve.",
+      "Great software is never created in isolation. Diverse perspectives ask sharper questions, uncover overlooked edge cases, and spark superior solutions. We cultivate an ego-free environment centered around rigorous peer code reviews, transparent architectural discussions, and empathetic mentorship, ensuring that when one builder levels up, the entire team succeeds together.",
     tag: 'Shared Ideas · Peer Code Reviews',
     category: 'COMMUNITY',
-    image: '/images/projects/community-sticky-notes.jpg',
+    image: '/Image-v1/Home_page/community-projects.jpg',
     icon: Users2,
   },
   {
@@ -72,10 +72,10 @@ const BELIEFS: BeliefItem[] = [
     title: '04. Solve real problems',
     headline: 'Purpose over hype.',
     description:
-      "We start by understanding the people and problems behind an idea. The aim isn't to use technology simply because it is new; it's to choose the right approach for a useful outcome.",
+      "We start every initiative by thoroughly understanding the humans and operational bottlenecks behind the idea. We refuse to adopt complex technologies simply because they are trending; instead, we prioritize architectural elegance, pragmatic trade-offs, and measurable utility to ensure our software delivers genuine business value and delightful end-user experiences.",
     tag: 'Human Needs · Purposeful Tech',
     category: 'PURPOSE',
-    image: '/images/services/website-dev.jpg',
+    image: '/Image-v1/Home_page/website-develop.jpg',
     icon: Target,
   },
   {
@@ -83,10 +83,10 @@ const BELIEFS: BeliefItem[] = [
     title: '05. Care about the details',
     headline: 'Enduring digital quality.',
     description:
-      'Thoughtful interfaces, accessible experiences, maintainable code, performance, and reliability all matter. Quality comes from the decisions we make throughout a project, not just how it looks at launch.',
+      'Enduring digital craft lives in the subtleties that users feel before they consciously notice. We obsess over 60fps micro-interactions, WCAG AAA accessibility standards, sub-second edge response times, and bulletproof TypeScript type safety. Quality isn’t a cosmetic layer added at launch—it is built into every architectural decision, commit, and interface design from day one.',
     tag: 'Accessible UX · Maintainable Code',
     category: 'ENGINEERING',
-    image: '/images/hero-coding-creative.jpg',
+    image: '/Image-v1/dev_page/Clear-Visual-Hierarchy.jpg',
     icon: Sparkles,
   },
   {
@@ -94,10 +94,10 @@ const BELIEFS: BeliefItem[] = [
     title: '06. Grow through feedback',
     headline: 'Listen. Iterate. Refine.',
     description:
-      'A first version is a starting point. We listen, test, learn from real use, and refine our work to make it more useful over time.',
+      'A production release is never the finish line; it is merely the first conversation with real users. We actively monitor performance telemetry, listen to authentic stakeholder feedback, and conduct transparent project retrospectives. By treating every product as a living ecosystem that iteratively improves, we build resilient software that compounds in value over time.',
     tag: 'Live Testing · Continuous Evolution',
     category: 'EVOLUTION',
-    image: '/Image-v1/Home_page/grow & lead.jpg',
+    image: '/Image-v1/about_page/deliver-improve.jpg',
     icon: TrendingUp,
   },
 ]

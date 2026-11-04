@@ -30,7 +30,7 @@ const PROCESS_STEPS: ProcessStep[] = [
     description:
       'We begin with conversations. We understand the business, its users, the challenges they face, and what success should look like.',
     badge: 'Discovery & Alignment',
-    image: '/Image-v1/Home_page/Learn-together.jpg',
+    image: '/Image-v1/about_page/discover.jpg',
     icon: Compass,
   },
   {
@@ -39,7 +39,7 @@ const PROCESS_STEPS: ProcessStep[] = [
     description:
       'We research possible approaches, share ideas, clarify requirements, and decide what is worth building first.',
     badge: 'Research & Feasibility',
-    image: '/images/projects/community-sticky-notes.jpg',
+    image: '/Image-v1/about_page/explore.jpg',
     icon: Search,
   },
   {
@@ -48,7 +48,7 @@ const PROCESS_STEPS: ProcessStep[] = [
     description:
       'We shape the experience through user flows, information architecture, interface design, and practical technical decisions.',
     badge: 'Architecture & UI/UX',
-    image: '/images/services/website-dev.jpg',
+    image: '/Image-v1/about_page/design.jpg',
     icon: Palette,
   },
   {
@@ -57,7 +57,7 @@ const PROCESS_STEPS: ProcessStep[] = [
     description:
       'We develop in manageable steps, follow sound engineering practices, and share progress so everyone can understand how the solution is taking shape.',
     badge: 'Clean Implementation',
-    image: '/Image-v1/Home_page/build-real-products.jpg',
+    image: '/Image-v1/about_page/build.jpg',
     icon: Code2,
   },
   {
@@ -66,7 +66,7 @@ const PROCESS_STEPS: ProcessStep[] = [
     description:
       'We check functionality, usability, responsiveness, accessibility, and performance. We use feedback to identify what needs improvement.',
     badge: 'QA & Accessibility',
-    image: '/images/projects/laptop-ai-desk.jpg',
+    image: '/Image-v1/about_page/test.jpg',
     icon: CheckCircle2,
   },
   {
@@ -75,7 +75,7 @@ const PROCESS_STEPS: ProcessStep[] = [
     description:
       'We prepare the agreed solution for launch, document the work, and identify opportunities for future improvements and support.',
     badge: 'Launch & Evolution',
-    image: '/Image-v1/Home_page/grow & lead.jpg',
+    image: '/Image-v1/about_page/deliver-improve.jpg',
     icon: Rocket,
   },
 ]
@@ -134,7 +134,7 @@ export function AboutProcessTimeline() {
       <div className="hidden lg:block relative min-h-[320vh]">
         {/* Sticky Stage pinned at viewport height */}
         <div className="sticky top-0 h-screen w-full flex flex-col justify-between py-10 sm:py-12 overflow-hidden">
-          
+
           {/* 1. Header Block */}
           <div className="w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-14 shrink-0">
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-2">
@@ -318,7 +318,7 @@ export function AboutProcessTimeline() {
                     className="object-cover object-center"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
-                  
+
                   <span className="absolute top-3.5 left-3.5 z-10 px-3 py-1 rounded-full bg-white/95 font-sans font-bold text-xs text-[#161413] shadow-xs">
                     Stage {step.step}
                   </span>

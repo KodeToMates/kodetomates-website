@@ -18,12 +18,12 @@ export function AboutWhyWeExist() {
       />
 
       <div className="w-full max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-14">
-        
+
         {/* ===================================================================
             UPPER SPLIT: Left Context & Right Editorial Image
            =================================================================== */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 xl:gap-16 items-center">
-          
+
           {/* LEFT SIDE: Narrative Context */}
           <motion.div
             initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, x: -24 }}
@@ -82,7 +82,7 @@ export function AboutWhyWeExist() {
           >
             <div className="relative w-full aspect-[4/3] sm:aspect-[16/11] rounded-[28px] sm:rounded-[32px] overflow-hidden border border-[#EAE4DC] shadow-[0_16px_40px_rgba(0,0,0,0.08)] bg-neutral-100 group">
               <Image
-                src="/images/contact-journey.jpg"
+                src="/Image-v1/about-us.jpg"
                 alt="KodeToMates team collaborating on ideas and technology"
                 fill
                 sizes="(max-width: 1024px) 100vw, 540px"
@@ -114,7 +114,7 @@ export function AboutWhyWeExist() {
            =================================================================== */}
         <div className="mt-14 sm:mt-18 pt-10 sm:pt-14 border-t border-[#F0EBE1]">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-            
+
             {/* 1. MISSION CARD */}
             <motion.div
               initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
