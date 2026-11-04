@@ -100,3 +100,10 @@ export { default as Blogs } from './blogs'
 export * from './404-page-not-found'
 export { default as NotFoundPage } from './404-page-not-found'
 
+// ==========================================
+// Spider Cursor Interactive Canvas
+// ==========================================
+export * from './spider-cursor'
+export { default as SpiderCursor } from './spider-cursor'
+
+

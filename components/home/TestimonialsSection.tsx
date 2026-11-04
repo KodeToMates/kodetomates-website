@@ -13,7 +13,7 @@ export type { Review } from './TestimonialSlider'
 export const TESTIMONIALS: Review[] = [
   {
     id: 1,
-    name: 'Soundarya',
+    name: 'Anjutha',
     role: 'Full-Stack Developer',
     affiliation: 'KodeToMates Community',
     quote:
@@ -37,39 +37,39 @@ export const TESTIMONIALS: Review[] = [
   },
   {
     id: 3,
-    name: 'Priya Sharma',
+    name: 'Jeevitha',
     role: 'AI/ML Engineer',
     affiliation: 'Sprint Participant',
     quote:
       'The sprint hackathons are incredible. Real deadlines, real teams, real shipping. My GitHub profile went from empty to proof-of-work that got me hired.',
     imageSrc:
-      'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=600&h=800&fit=crop&crop=face',
+      '/Image-v1/Home_page/testimonils/Jeevitha.jpg',
     thumbnailSrc:
-      'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&h=120&fit=crop&crop=face',
+      '/Image-v1/Home_page/testimonils/Jeevitha.jpg',
   },
   {
     id: 4,
-    name: 'Daniel Okafor',
+    name: 'Mithun',
     role: 'DevOps & Cloud Engineer',
     affiliation: 'Community Mentor',
     quote:
       'Being a mentor here pushed me to articulate what I know and learn what I don\'t. The multiplayer approach to engineering is exactly what the industry needs.',
     imageSrc:
-      'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600&h=800&fit=crop&crop=face',
+      '/Image-v1/Home_page/testimonils/Mithun.jpg',
     thumbnailSrc:
-      'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=120&fit=crop&crop=face',
+      '/Image-v1/Home_page/testimonils/Mithun.jpg',
   },
   {
     id: 5,
-    name: 'Sarah Kim',
+    name: 'Deepika',
     role: 'Frontend Engineer',
     affiliation: 'KodeToMates Alumni',
     quote:
       'This is the design-engineering bridge I\'ve been looking for. Building pixel-perfect UIs with real backend integration, reviewed by peers who actually care.',
     imageSrc:
-      'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&h=800&fit=crop&crop=face',
+      '/Image-v1/Home_page/testimonils/Deepika.jpg',
     thumbnailSrc:
-      'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=120&fit=crop&crop=face',
+      '/Image-v1/Home_page/testimonils/Deepika.jpg',
   },
 ]
 
