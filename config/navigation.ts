@@ -13,6 +13,14 @@ export interface NavSubItem {
 }
 
 /**
+ * Column grouping for multi-column dropdowns
+ */
+export interface NavSubMenuColumn {
+  title: string
+  items: NavSubItem[]
+}
+
+/**
  * Top-level navigation menu item
  */
 export interface NavMenuItem {
@@ -20,6 +28,7 @@ export interface NavMenuItem {
   href: string
   hasDropdown: boolean
   dropdownItems?: NavSubItem[]
+  subMenus?: NavSubMenuColumn[]
 }
 
 /**
@@ -44,6 +53,46 @@ export const MAIN_NAV_ITEMS: NavMenuItem[] = [
     title: 'What We Do',
     href: '/what-we-do',
     hasDropdown: true,
+    subMenus: [
+      {
+        title: 'Engineering & Architecture',
+        items: [
+          {
+            icon: Code2,
+            title: 'Website Development',
+            description: 'Modern, high-performance web applications built on Next.js & React',
+            href: '/what-we-do/website-dev',
+            color: '#E4521B',
+          },
+          {
+            icon: Palette,
+            title: 'Website Redesign',
+            description: 'Transform legacy sites into sleek, modern digital experiences with zero downtime',
+            href: '/what-we-do/website-redesign',
+            color: '#E4521B',
+          },
+        ],
+      },
+      {
+        title: 'Growth & Experiences',
+        items: [
+          {
+            icon: TrendingUp,
+            title: 'SEO & Digital Growth',
+            description: 'Technical site audits, high-intent keyword strategies & search ranking growth',
+            href: '/what-we-do/seo',
+            color: '#E4521B',
+          },
+          {
+            icon: MailOpen,
+            title: 'Digital Invitations',
+            description: 'Interactive event experiences with real-time RSVP & mobile coordination',
+            href: '/what-we-do/digital-invitation',
+            color: '#E4521B',
+          },
+        ],
+      },
+    ],
     dropdownItems: [
       {
         icon: Code2,
@@ -75,11 +124,6 @@ export const MAIN_NAV_ITEMS: NavMenuItem[] = [
       },
     ],
   },
-  // {
-  //   title: 'Projects',
-  //   href: '/projects',
-  //   hasDropdown: false,
-  // },
   {
     title: 'About Us',
     href: '/about',

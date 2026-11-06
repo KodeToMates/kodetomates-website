@@ -1,0 +1,26 @@
+# ========================================================
+# KodeToMates Robots.txt (https://www.kodetomates.in)
+# ========================================================
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /debug-overlay/
+
+User-agent: Googlebot
+Allow: /
+Disallow: /api/
+Disallow: /debug-overlay/
+
+User-agent: Googlebot-Image
+Allow: /Image-v1/
+Allow: /
+Disallow: /api/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /api/
+Disallow: /debug-overlay/
+
+Host: https://www.kodetomates.in
+Sitemap: https://www.kodetomates.in/sitemap.xml

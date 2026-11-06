@@ -1,0 +1,31 @@
+import type { MetadataRoute } from 'next'
+import { siteConfig } from '@/config/site'
+
+export default function robots(): MetadataRoute.Robots {
+  return {
+    rules: [
+      {
+        userAgent: '*',
+        allow: '/',
+        disallow: ['/api/', '/debug-overlay/'],
+      },
+      {
+        userAgent: 'Googlebot',
+        allow: '/',
+        disallow: ['/api/', '/debug-overlay/'],
+      },
+      {
+        userAgent: 'Googlebot-Image',
+        allow: ['/Image-v1/', '/'],
+        disallow: ['/api/'],
+      },
+      {
+        userAgent: 'Bingbot',
+        allow: '/',
+        disallow: ['/api/', '/debug-overlay/'],
+      },
+    ],
+    sitemap: `${siteConfig.url}/sitemap.xml`,
+    host: siteConfig.url,
+  }
+}
