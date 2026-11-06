@@ -1,6 +1,6 @@
 import { ContactRequestPayload, ContactSuccessResponse } from '@/types/contact'
 
-const PRODUCTION_API_URL = 'https://kodetomates-backend.onrender.com/api/v1'
+const PRODUCTION_API_URL = 'https://api.kodetomates.in/api/v1'
 const LOCAL_API_URL = 'http://localhost:8081/api/v1'
 
 /**
@@ -8,7 +8,7 @@ const LOCAL_API_URL = 'http://localhost:8081/api/v1'
  * 
  * Resolution order:
  * 1. process.env.NEXT_PUBLIC_API_BASE_URL (if configured in Vercel or .env.local)
- * 2. If running in production (e.g. Vercel deployment): https://kodetomates-backend.onrender.com/api/v1
+ * 2. If running in production (e.g. Vercel deployment): https://api.kodetomates.in/api/v1
  * 3. If running in local development: http://localhost:8081/api/v1
  */
 export function getApiBaseUrl(): string {
