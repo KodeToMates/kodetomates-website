@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from 'react'
 import { getAllArticles, getAllCategories } from '@/lib/blogs'
 import { Blogs } from '@/components/ui/blogs'
+import { BlogListingSchema } from '@/components/schema'
 
 export default function BlogPage() {
   const allArticles = useMemo(() => getAllArticles(), [])
@@ -18,6 +19,9 @@ export default function BlogPage() {
 
   return (
     <main className="relative w-full min-h-screen bg-white overflow-x-clip selection:bg-[#E4521B]/20 selection:text-[#161413] pt-28 sm:pt-36 pb-24">
+      {/* Search Engine Optimization: Structured Data JSON-LD Graph */}
+      <BlogListingSchema />
+
       {/* Editorial Page Header */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mb-10 sm:mb-14">
         <div className="max-w-3xl">

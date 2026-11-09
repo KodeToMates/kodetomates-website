@@ -3,13 +3,11 @@ import {
   TrendingUp,
   Palette,
   MailOpen,
-  Zap,
   Gauge,
   Sparkles,
   Search,
   Layers,
   ShieldCheck,
-  CheckCircle2,
 } from 'lucide-react'
 import type { ElementType } from 'react'
 

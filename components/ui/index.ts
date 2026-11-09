@@ -112,4 +112,18 @@ export { default as SpiderCursor } from './spider-cursor'
 export * from './dropdown-navigation'
 export { default as DropdownNavigation } from './dropdown-navigation'
 
+// ==========================================
+// Dish Orbit Carousel Animation Primitive
+// ==========================================
+export * from './dish-orbit-carousel'
+export { default as DishOrbitCarousel } from './dish-orbit-carousel'
+
+// ==========================================
+// Cinematic Text Block Revealer Animation
+// ==========================================
+export * from './text-block-animation'
+export { default as TextBlockAnimation } from './text-block-animation'
+
+
+
 

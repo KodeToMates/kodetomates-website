@@ -11,6 +11,7 @@ import {
 } from '@/components/what-we-do'
 import { HeroTicker } from '@/components/home/HeroTicker'
 import { TestimonialsSection } from '@/components/home/TestimonialsSection'
+import { WhatWeDoSchema } from '@/components/schema'
 import { WHAT_WE_DO_TICKER_PHRASES } from '@/config/what-we-do'
 
 export const metadata: Metadata = {
@@ -21,7 +22,10 @@ export const metadata: Metadata = {
 
 export default function WhatWeDoPage() {
   return (
-    <main className="relative w-full min-h-screen bg-white text-[#161413] overflow-x-clip selection:bg-[#E4521B]/20 selection:text-[#161413]">
+    <main suppressHydrationWarning className="relative w-full min-h-screen bg-white text-[#161413] overflow-x-clip selection:bg-[#E4521B]/20 selection:text-[#161413]">
+      {/* Search Engine Optimization: Structured Data JSON-LD Graph */}
+      <WhatWeDoSchema />
+
       {/* 1. Master Editorial Hero with Live Metrics & Quick Switcher */}
       <WhatWeDoHero />
 
@@ -29,6 +33,7 @@ export default function WhatWeDoPage() {
       <HeroTicker
         phrases={WHAT_WE_DO_TICKER_PHRASES}
         theme="light"
+        className="my-0"
       />
 
       {/* 3. The 4 Core Service Pillars (Alternating Showcases) */}

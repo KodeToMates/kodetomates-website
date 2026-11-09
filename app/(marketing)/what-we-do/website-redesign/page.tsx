@@ -9,6 +9,7 @@ import {
   WebsiteRedesignFAQ,
   WebsiteRedesignFinalCTA,
 } from '@/components/website-redesign'
+import { ServiceSchema } from '@/components/schema'
 
 export const metadata: Metadata = {
   title: 'Website Redesign & Modernization | KodeToMates',
@@ -19,6 +20,15 @@ export const metadata: Metadata = {
 export default function WebsiteRedesignPage() {
   return (
     <main className="relative w-full min-h-screen bg-[#0C0B0A] overflow-x-clip selection:bg-[#E4521B]/30 selection:text-white">
+      {/* Search Engine Optimization: Structured Data JSON-LD Graph */}
+      <ServiceSchema
+        name="Website Redesign & Modernization"
+        serviceType="UI/UX Redesign & Modernization"
+        description="Revamp slow, outdated websites into modern Next.js digital experiences with bespoke UI/UX, sub-second Core Web Vitals, zero downtime, and preserved SEO equity."
+        slug="what-we-do/website-redesign"
+        faqKey="website-redesign"
+      />
+
       {/* 1. 3D Perspective Image Stream Corridor Hero Section */}
       <WebsiteRedesignHero />
 

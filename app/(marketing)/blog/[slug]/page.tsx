@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { ArrowLeft, Clock, Calendar, Tag } from 'lucide-react'
 import { getArticleBySlug, getAllArticles } from '@/lib/blogs'
 import { BlogSectionRenderer } from '@/components/blog'
+import { BlogPostSchema } from '@/components/schema'
 
 interface PageProps {
   params: Promise<{
@@ -56,6 +57,9 @@ export default async function BlogPostPage({ params }: PageProps) {
 
   return (
     <main className="relative w-full min-h-screen bg-white selection:bg-[#E4521B]/20 selection:text-[#161413] pt-28 sm:pt-36 pb-24">
+      {/* Search Engine Optimization: Structured Data JSON-LD Graph */}
+      <BlogPostSchema article={article} />
+
       <article className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         {/* Navigation Breadcrumb */}
         <div className="mb-6 flex items-center justify-between">
