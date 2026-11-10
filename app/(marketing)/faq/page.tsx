@@ -1,6 +1,7 @@
 import React from 'react'
 import type { Metadata } from 'next'
 import { AllPagesFAQ } from '@/components/faq'
+import { FAQPageSchema } from '@/components/schema'
 
 export const metadata: Metadata = {
   title: 'Frequently Asked Questions — Knowledge Base | KodeToMates',
@@ -11,6 +12,9 @@ export const metadata: Metadata = {
 export default function FAQPage() {
   return (
     <main className="relative w-full min-h-screen bg-white overflow-x-clip selection:bg-[#E4521B]/20 selection:text-[#161413]">
+      {/* Search Engine Optimization: Structured Data JSON-LD Graph */}
+      <FAQPageSchema />
+
       <AllPagesFAQ />
     </main>
   )

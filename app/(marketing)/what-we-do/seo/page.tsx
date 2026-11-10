@@ -10,6 +10,7 @@ import {
   SeoFinalCTA,
   SeoFAQ,
 } from '@/components/seo'
+import { ServiceSchema } from '@/components/schema'
 
 export const metadata: Metadata = {
   title: 'Search Engine Optimization (SEO) | KodeToMates',
@@ -20,6 +21,15 @@ export const metadata: Metadata = {
 export default function SEOPage() {
   return (
     <main className="relative w-full min-h-screen bg-[#0C0B0A] overflow-x-clip selection:bg-[#E4521B]/30 selection:text-white">
+      {/* Search Engine Optimization: Structured Data JSON-LD Graph */}
+      <ServiceSchema
+        name="Technical SEO & Digital Growth"
+        serviceType="Search Engine Optimization"
+        description="Engineering-first technical SEO, sub-second Core Web Vitals optimization, semantic topical authority, schema markup, and high-intent keyword strategies to dominate Google search."
+        slug="what-we-do/seo"
+        faqKey="seo"
+      />
+
       {/* 1. Hero Section with Animated Left Editorial & Right Wall-Mounted Floating Enquiry Form */}
       <SeoHero />
 

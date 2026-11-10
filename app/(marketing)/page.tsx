@@ -8,11 +8,14 @@ import { TestimonialsSection } from '@/components/home/TestimonialsSection'
 import { TechnologiesSection } from '@/components/home/TechnologiesSection'
 import { FinalCTASection } from '@/components/home/FinalCTASection'
 import { FAQSection } from '@/components/home/FAQSection'
+import { HomePageSchema } from '@/components/schema'
 import { LazySection } from '@/components/ui'
 
 export default function HomePage() {
   return (
     <div className="relative min-h-screen w-full bg-[linear-gradient(135deg,#FEF3E5_0%,#FDE6D0_100%)] overflow-x-clip overflow-y-visible selection:bg-[#E4521B]/20 selection:text-[#E4521B]">
+      {/* Search Engine Optimization: Structured Data JSON-LD Graph */}
+      <HomePageSchema />
 
       {/* Dynamic Background with Ambient Glows & Noise Texture */}
       <FloatingBackground />

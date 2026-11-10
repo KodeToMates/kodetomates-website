@@ -2,6 +2,7 @@ import React from 'react'
 import type { Metadata } from 'next'
 import { ContactForm } from '@/components/contact/ContactForm'
 import { ContactInfo } from '@/components/contact/ContactInfo'
+import { ContactPageSchema } from '@/components/schema'
 
 export const metadata: Metadata = {
   title: 'Contact Us | KodeToMates',
@@ -12,6 +13,9 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <div className="relative min-h-screen w-full bg-white pt-24 sm:pt-32 lg:pt-36 pb-20 sm:pb-28 overflow-x-clip selection:bg-[#E4521B]/20 selection:text-[#E4521B]">
+      {/* Search Engine Optimization: Structured Data JSON-LD Graph */}
+      <ContactPageSchema />
+
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Main 2-Column Contact Card matching reference design */}
         <ContactForm />

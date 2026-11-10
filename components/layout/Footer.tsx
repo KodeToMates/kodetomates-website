@@ -81,7 +81,10 @@ export function Footer() {
   }, [activeNotice])
 
   return (
-    <footer className="relative w-full bg-[#0C0B0A] text-[#A69B92] overflow-hidden selection:bg-[#E4521B]/35 selection:text-white">
+    <footer
+      suppressHydrationWarning
+      className="relative w-full bg-[#0C0B0A] text-[#A69B92] overflow-hidden selection:bg-[#E4521B]/35 selection:text-white"
+    >
 
       {/* ========================================================
           AMBIENT RADIANT BRAND ORANGE GLOWS (Subtle & Luxurious)
@@ -307,6 +310,9 @@ export function Footer() {
               </Link>
               <Link href="/privacy" className="hover:text-[#E4521B] transition-colors">
                 Privacy Policy
+              </Link>
+              <Link href="/llms.txt" className="hover:text-[#E4521B] transition-colors">
+                LLMs.txt
               </Link>
               <Link href="/contact" className="hover:text-[#E4521B] transition-colors">
                 Support

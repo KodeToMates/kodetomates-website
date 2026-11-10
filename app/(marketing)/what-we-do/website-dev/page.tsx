@@ -10,6 +10,7 @@ import {
   WebsiteDevFAQ,
 } from '@/components/website-dev'
 import { HeroTicker } from '@/components/home/HeroTicker'
+import { ServiceSchema } from '@/components/schema'
 
 const WEBSITE_DEV_TICKER_PHRASES = [
   'STATIC & DYNAMIC ARCHITECTURE',
@@ -40,6 +41,15 @@ export const metadata: Metadata = {
 export default function WebsiteDevPage() {
   return (
     <main className="relative w-full min-h-screen bg-dark-bg overflow-x-clip selection:bg-primary-orange/30 selection:text-white">
+      {/* Search Engine Optimization: Structured Data JSON-LD Graph */}
+      <ServiceSchema
+        name="Bespoke Website Development"
+        serviceType="Web Application Engineering"
+        description="Custom high-performance web applications, interactive 3D WebGL experiences, and scalable modern web architecture engineered with Next.js 16 and TypeScript."
+        slug="what-we-do/website-dev"
+        faqKey="website-dev"
+      />
+
       {/* 1. 3D Perspective Tunnel Hero Section */}
       <PerspectiveTunnelHero
         titleLine1="WEBSITE"

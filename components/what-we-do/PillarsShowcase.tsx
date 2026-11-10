@@ -14,7 +14,8 @@ export function PillarsShowcase() {
   return (
     <section
       id="pillars"
-      className="relative w-full py-16 sm:py-20 md:py-24 bg-white text-[#161413] overflow-hidden scroll-mt-20"
+      suppressHydrationWarning
+      className="relative w-full pt-8 sm:pt-12 pb-16 sm:pb-20 md:pb-24 bg-white text-[#161413] overflow-hidden scroll-mt-20"
       aria-label="Core Service Pillars"
     >
       <div className="relative max-w-[1360px] mx-auto px-5 sm:px-8 lg:px-12 z-10">

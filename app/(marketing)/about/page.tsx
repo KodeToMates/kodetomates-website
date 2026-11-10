@@ -8,9 +8,9 @@ import {
   AboutWhyWeExist,
   AboutBeliefsStackedCards,
   AboutWhoWeWorkWith,
-  AboutTeamSection,
   AboutFAQ,
 } from '@/components/about'
+import { AboutPageSchema } from '@/components/schema'
 
 export const metadata: Metadata = {
   title: 'About Us — A Community of Builders | KodeToMates',
@@ -21,6 +21,9 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <main className="relative w-full min-h-screen bg-white overflow-x-clip selection:bg-[#E4521B]/20 selection:text-[#161413]">
+      {/* Search Engine Optimization: Structured Data JSON-LD Graph */}
+      <AboutPageSchema />
+
       {/* 1. Hero — A Community of Builders */}
       <AboutHero />
 
