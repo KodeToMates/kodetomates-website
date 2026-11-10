@@ -13,7 +13,7 @@ import {
 import { AboutPageSchema } from '@/components/schema'
 
 export const metadata: Metadata = {
-  title: 'About Us — A Community of Builders | KodeToMates',
+  title: 'About Us - A Community of Builders | KodeToMates',
   description:
     'KodeToMates is a growing technology community built around a simple idea: learn together, build together, and create things that make a difference.',
 }

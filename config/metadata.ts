@@ -55,16 +55,19 @@ export const baseMetadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/Image-v1/KTM_Logos/favicon_io/favicon.ico?v=2' },
-      { url: '/Image-v1/KTM_Logos/favicon_io/favicon-32x32.png?v=2', sizes: '32x32', type: 'image/png' },
-      { url: '/Image-v1/KTM_Logos/favicon_io/favicon-16x16.png?v=2', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon-48x48.png', sizes: '48x48', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/android-chrome-192x192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/android-chrome-512x512.png', sizes: '512x512', type: 'image/png' },
     ],
-    shortcut: '/Image-v1/KTM_Logos/favicon_io/favicon.ico?v=2',
+    shortcut: '/favicon.ico',
     apple: [
-      { url: '/Image-v1/KTM_Logos/favicon_io/apple-touch-icon.png?v=2', sizes: '180x180', type: 'image/png' },
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
     ],
   },
-  manifest: '/Image-v1/KTM_Logos/favicon_io/site.webmanifest',
+  manifest: '/site.webmanifest',
   verification: {
     google: 'X_gZv45hh9t4oBkEngeNTeq-I-nyjFS1urQgD1dXwBc',
   },
