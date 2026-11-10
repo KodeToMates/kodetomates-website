@@ -108,24 +108,86 @@ export interface BlogsJsonData {
 const data = blogsData as BlogsJsonData
 
 /**
- * Retrieve all blog articles
+ * Synchronous local retrieval of blog articles (fallback)
  */
-export function getAllArticles(): BlogArticle[] {
+export function getAllArticlesSync(): BlogArticle[] {
+  return data.articles
+}
+
+export function getArticleBySlugSync(slug: string): BlogArticle | undefined {
+  return data.articles.find((a) => a.slug === slug)
+}
+
+/**
+ * Asynchronous retrieval of all published articles from Spring Boot API with Next.js ISR.
+ * Falls back to static blogs.json if the backend is asleep or during offline builds.
+ */
+export async function getAllArticles(): Promise<BlogArticle[]> {
+  const backendBaseUrl =
+    process.env.NEXT_PUBLIC_API_BASE_URL ||
+    (process.env.NODE_ENV === 'production'
+      ? 'https://api.kodetomates.in/api/v1'
+      : 'http://localhost:8081/api/v1')
+
+  try {
+    const res = await fetch(`${backendBaseUrl.replace(/\/+$/, '')}/public/blogs`, {
+      next: { tags: ['blogs'], revalidate: 0 },
+      cache: 'no-store', // Ensures immediate reflection in dev mode
+      signal: AbortSignal.timeout(4000),
+    })
+
+    if (res.ok) {
+      const remoteArticles: BlogArticle[] = await res.json()
+      if (Array.isArray(remoteArticles) && remoteArticles.length > 0) {
+        // Prepend remote database articles (newest first), then any remaining static articles
+        const remoteSlugs = new Set(remoteArticles.map((a) => a.slug))
+        const remainingStatic = data.articles.filter((a) => !remoteSlugs.has(a.slug))
+        return [...remoteArticles, ...remainingStatic]
+      }
+    }
+  } catch (err) {
+    // Backend asleep or unreachable - safely use static fallback
+  }
+
   return data.articles
 }
 
 /**
- * Retrieve a single article by its URL slug
+ * Asynchronous retrieval of a single article by slug with Next.js ISR.
  */
-export function getArticleBySlug(slug: string): BlogArticle | undefined {
+export async function getArticleBySlug(slug: string): Promise<BlogArticle | undefined> {
+  const backendBaseUrl =
+    process.env.NEXT_PUBLIC_API_BASE_URL ||
+    (process.env.NODE_ENV === 'production'
+      ? 'https://api.kodetomates.in/api/v1'
+      : 'http://localhost:8081/api/v1')
+
+  try {
+    const res = await fetch(`${backendBaseUrl.replace(/\/+$/, '')}/public/blogs/${slug}`, {
+      next: { tags: ['blogs', `blog-${slug}`], revalidate: 0 },
+      cache: 'no-store',
+      signal: AbortSignal.timeout(4000),
+    })
+
+    if (res.ok) {
+      const article = await res.json()
+      if (article && article.slug) {
+        return article
+      }
+    }
+  } catch (err) {
+    // Backend asleep or unreachable - safely use static fallback
+  }
+
   return data.articles.find((a) => a.slug === slug)
 }
 
 /**
  * Retrieve unique list of all categories across all articles
  */
-export function getAllCategories(): string[] {
+export function getAllCategories(articles?: BlogArticle[]): string[] {
+  const list = articles || data.articles
   const set = new Set<string>()
-  data.articles.forEach((a) => set.add(a.category))
+  list.forEach((a) => set.add(a.category))
   return Array.from(set)
 }

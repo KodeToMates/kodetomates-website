@@ -8,6 +8,9 @@ import { getArticleBySlug, getAllArticles } from '@/lib/blogs'
 import { BlogSectionRenderer } from '@/components/blog'
 import { BlogPostSchema } from '@/components/schema'
 
+export const dynamicParams = true
+export const revalidate = 0
+
 interface PageProps {
   params: Promise<{
     slug: string
@@ -16,7 +19,7 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
-  const article = getArticleBySlug(slug)
+  const article = await getArticleBySlug(slug)
 
   if (!article) {
     return {
@@ -38,7 +41,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export async function generateStaticParams() {
-  const articles = getAllArticles()
+  const articles = await getAllArticles()
   return articles.map((a) => ({
     slug: a.slug,
   }))
@@ -46,13 +49,13 @@ export async function generateStaticParams() {
 
 export default async function BlogPostPage({ params }: PageProps) {
   const { slug } = await params
-  const article = getArticleBySlug(slug)
+  const article = await getArticleBySlug(slug)
 
   if (!article) {
     notFound()
   }
 
-  const allArticles = getAllArticles()
+  const allArticles = await getAllArticles()
   const relatedArticles = allArticles.filter((a) => a.slug !== slug).slice(0, 3)
 
   return (
