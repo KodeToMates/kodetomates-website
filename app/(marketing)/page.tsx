@@ -4,6 +4,7 @@ import { FloatingBackground } from '@/components/home/FloatingBackground'
 import { WhatIsKodeToMates } from '@/components/home/WhatIsKodeToMates'
 import { WhatWeDo } from '@/components/home/WhatWeDo'
 import { BuiltByKodeToMates } from '@/components/home/BuiltByKodeToMates'
+import { OurClientsWebsites } from '@/components/home/OurClientsWebsites'
 import { TestimonialsSection } from '@/components/home/TestimonialsSection'
 import { TechnologiesSection } from '@/components/home/TechnologiesSection'
 import { FinalCTASection } from '@/components/home/FinalCTASection'
@@ -52,6 +53,16 @@ export default function HomePage() {
       {/* Section 3: Built by KodeToMates */}
       <BuiltByKodeToMates />
 
+      {/* Section 3.5: Our Clients' Websites */}
+      <LazySection
+        title="Our Clients' Websites"
+        tag="CLIENTS:SHOWCASE"
+        minHeight="520px"
+        skeletonCards={2}
+      >
+        <OurClientsWebsites />
+      </LazySection>
+
       {/* Section 4: Testimonials */}
       <LazySection
         title="Testimonials"
@@ -59,7 +70,7 @@ export default function HomePage() {
         minHeight="600px"
         skeletonCards={1}
       >
-        <TestimonialsSection />
+        <TestimonialsSection wrapperBg="bg-[#12111A]" />
       </LazySection>
       {/* Section 6: Join KodeToMates CTA */}
       <LazySection

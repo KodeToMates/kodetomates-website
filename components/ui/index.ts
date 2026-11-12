@@ -124,6 +124,12 @@ export { default as DishOrbitCarousel } from './dish-orbit-carousel'
 export * from './text-block-animation'
 export { default as TextBlockAnimation } from './text-block-animation'
 
+// ==========================================
+// Interactive Physics Team & Clients Lanyard Rail
+// ==========================================
+export * from './team-lanyard-rail'
+export { default as TeamLanyardRail } from './team-lanyard-rail'
+
 
 
 

@@ -36,6 +36,16 @@
   --color-dark-bg: #0C0B0A;
   --color-terminal-navy: #161B26;
 
+  --color-card: #FFFFFF;
+  --color-card-foreground: #161413;
+  --color-muted: #F5F2EB;
+  --color-ring: #E4521B;
+  --color-chart-1: #E4521B;
+  --color-chart-2: #FF914D;
+  --color-chart-3: #059669;
+  --color-chart-4: #2563EB;
+  --color-chart-5: #AB003E;
+
   --font-sans: var(--font-jakarta), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-hero: var(--font-jakarta), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-jakarta), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
@@ -60,6 +70,18 @@
 }
 
 @layer base {
+  :root {
+    --color-card: #FFFFFF;
+    --color-card-foreground: #161413;
+    --color-muted: #F5F2EB;
+    --color-ring: #E4521B;
+    --color-chart-1: #E4521B;
+    --color-chart-2: #FF914D;
+    --color-chart-3: #059669;
+    --color-chart-4: #2563EB;
+    --color-chart-5: #AB003E;
+  }
+
   body {
     @apply bg-background-sand text-text-primary font-sans antialiased;
   }
