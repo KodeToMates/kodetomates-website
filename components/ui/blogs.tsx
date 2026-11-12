@@ -4,7 +4,7 @@ import React from 'react'
 import { ArrowRight } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { getAllArticles, BlogArticle } from '@/lib/blogs'
+import { getAllArticlesSync, BlogArticle } from '@/lib/blogs'
 
 export interface BlogsProps {
   articles?: BlogArticle[]
@@ -21,7 +21,7 @@ export function Blogs({
   showHeading = true,
   className = '',
 }: BlogsProps) {
-  const articlesList = articles ?? getAllArticles()
+  const articlesList = articles ?? getAllArticlesSync()
 
   return (
     <section className={`bg-white px-4 py-8 sm:py-12 md:py-16 ${className}`}>

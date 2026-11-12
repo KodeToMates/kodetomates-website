@@ -1,11 +1,15 @@
 import React from 'react'
 import { siteConfig } from '@/config/site'
-import { getAllArticles } from '@/lib/blogs'
+import { getAllArticlesSync, BlogArticle } from '@/lib/blogs'
 
-export function BlogListingSchema() {
+interface BlogListingSchemaProps {
+  articles?: BlogArticle[]
+}
+
+export function BlogListingSchema({ articles: providedArticles }: BlogListingSchemaProps = {}) {
   const baseUrl = siteConfig.url
   const pageUrl = `${baseUrl}/blog`
-  const articles = getAllArticles()
+  const articles = providedArticles || getAllArticlesSync()
 
   const blogEntity = {
     '@type': 'Blog',
