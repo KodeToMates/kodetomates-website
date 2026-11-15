@@ -1,8 +1,9 @@
 'use client'
 
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
+import type { Variants } from 'framer-motion'
 import {
   Smartphone,
   Tablet,
@@ -15,6 +16,8 @@ import {
   Palette,
   ArrowUpRight,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   Play,
   Sliders,
   Check,
@@ -749,17 +752,70 @@ const FILTER_ITEMS: DesignFilterItem[] = [
   { id: 'authentic-identity', label: 'Authentic Identity', icon: Palette },
 ]
 
+const cardVariants: Variants = {
+  enter: (dir: number) => ({
+    x: dir > 0 ? 60 : dir < 0 ? -60 : 0,
+    opacity: 0,
+    scale: 0.98,
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+    scale: 1,
+    transition: {
+      x: { type: 'spring', stiffness: 320, damping: 32, mass: 0.8 },
+      opacity: { duration: 0.28, ease: 'easeOut' },
+      scale: { duration: 0.28, ease: 'easeOut' },
+    },
+  },
+  exit: (dir: number) => ({
+    x: dir > 0 ? -60 : dir < 0 ? 60 : 0,
+    opacity: 0,
+    scale: 0.98,
+    transition: {
+      x: { type: 'spring', stiffness: 320, damping: 32, mass: 0.8 },
+      opacity: { duration: 0.18, ease: 'easeIn' },
+      scale: { duration: 0.18, ease: 'easeIn' },
+    },
+  }),
+}
+
+const reducedMotionVariants: Variants = {
+  enter: { opacity: 0 },
+  center: { opacity: 1, transition: { duration: 0.2 } },
+  exit: { opacity: 0, transition: { duration: 0.15 } },
+}
+
 // ============================================================================
 // Main ModernDesignPurpose Section
 // ============================================================================
 export function ModernDesignPurpose() {
   const shouldReduceMotion = useReducedMotion()
   const [activeFilter, setActiveFilter] = useState<string>('adaptive-architecture')
+  const [direction, setDirection] = useState<number>(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState<boolean>(true)
   const [isInView, setIsInView] = useState<boolean>(false)
   const sectionRef = useRef<HTMLElement>(null)
   const filterScrollRef = useRef<HTMLDivElement>(null)
   const buttonRefs = useRef<{ [key: string]: HTMLButtonElement | null }>({})
+  const dragHandledRef = useRef<boolean>(false)
+  const touchStartXRef = useRef<number | null>(null)
+  const touchStartYRef = useRef<number | null>(null)
+
+  const currentIndex = Math.max(
+    0,
+    FILTER_ITEMS.findIndex((item) => item.id === activeFilter)
+  )
+
+  const paginate = useCallback((newDirection: number) => {
+    setIsAutoPlaying(false)
+    setDirection(newDirection)
+    setActiveFilter((current) => {
+      const currIdx = FILTER_ITEMS.findIndex((item) => item.id === current)
+      const nextIdx = (currIdx + newDirection + FILTER_ITEMS.length) % FILTER_ITEMS.length
+      return FILTER_ITEMS[nextIdx].id
+    })
+  }, [])
 
   // Track viewport visibility to only auto-cycle when user is viewing this section
   useEffect(() => {
@@ -778,38 +834,65 @@ export function ModernDesignPurpose() {
     return () => observer.disconnect()
   }, [])
 
-  // Auto-switch filter on a smooth cadence until the user clicks any filter
+  // Auto-switch filter on a smooth cadence until the user clicks or swipes
   useEffect(() => {
     if (!isAutoPlaying || !isInView || shouldReduceMotion) return
 
-    const filterIds = FILTER_ITEMS.map((item) => item.id)
-
     const timer = setTimeout(() => {
+      setDirection(1)
       setActiveFilter((current) => {
-        const currentIndex = filterIds.indexOf(current)
-        const nextIndex = (currentIndex + 1) % filterIds.length
-        return filterIds[nextIndex]
+        const currIdx = FILTER_ITEMS.findIndex((item) => item.id === current)
+        const nextIdx = (currIdx + 1) % FILTER_ITEMS.length
+        return FILTER_ITEMS[nextIdx].id
       })
-    }, 3800)
+    }, 4000)
 
     return () => clearTimeout(timer)
   }, [activeFilter, isAutoPlaying, isInView, shouldReduceMotion])
 
-  // Keep active pill centered in horizontal container on mobile only when actively viewing
+  // Keep active pill centered in horizontal container on mobile whenever activeFilter changes
   useEffect(() => {
-    if (!isAutoPlaying || !isInView) return
     const container = filterScrollRef.current
     const el = buttonRefs.current[activeFilter]
     if (container && el && container.scrollWidth > container.clientWidth) {
       const scrollLeft = el.offsetLeft - container.clientWidth / 2 + el.clientWidth / 2
       container.scrollTo({ left: scrollLeft, behavior: 'smooth' })
     }
-  }, [activeFilter, isAutoPlaying, isInView])
+  }, [activeFilter])
 
-  // Stop automation as soon as user clicks ANY filter
+  // Stop automation and transition with proper direction when clicking any filter
   const handleFilterClick = (filterId: string) => {
     setIsAutoPlaying(false)
-    setActiveFilter(filterId)
+    const targetIdx = FILTER_ITEMS.findIndex((item) => item.id === filterId)
+    const currIdx = FILTER_ITEMS.findIndex((item) => item.id === activeFilter)
+    if (targetIdx !== currIdx) {
+      setDirection(targetIdx > currIdx ? 1 : -1)
+      setActiveFilter(filterId)
+    }
+  }
+
+  // Fallback touch swipe detection to guarantee seamless swiping on all mobile touchscreens
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartXRef.current = e.touches[0].clientX
+    touchStartYRef.current = e.touches[0].clientY
+  }
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (dragHandledRef.current) return
+    if (touchStartXRef.current === null || touchStartYRef.current === null) return
+    const diffX = e.changedTouches[0].clientX - touchStartXRef.current
+    const diffY = e.changedTouches[0].clientY - touchStartYRef.current
+
+    // If horizontal swipe distance is clear and dominates vertical scrolling
+    if (Math.abs(diffX) > 40 && Math.abs(diffX) > Math.abs(diffY) * 1.2) {
+      if (diffX < 0) {
+        paginate(1)
+      } else {
+        paginate(-1)
+      }
+    }
+    touchStartXRef.current = null
+    touchStartYRef.current = null
   }
 
   const filteredPrinciples = DESIGN_PRINCIPLES.filter((p) => p.id === activeFilter)
@@ -826,7 +909,7 @@ export function ModernDesignPurpose() {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1200px] h-[400px] bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(255,255,255,0.18),transparent)] pointer-events-none" />
 
         {/* 1. Section Header: Single Clean Headline Matching User Edit */}
-        <div className="relative z-10 w-full max-w-[1380px] mx-auto px-6 sm:px-8 lg:px-10 xl:px-12 text-center mb-10 sm:mb-14">
+        <div className="relative z-10 w-full max-w-[1380px] mx-auto px-6 sm:px-8 lg:px-10 xl:px-12 text-center mb-8 sm:mb-14">
           {/* Eyebrow Badge */}
 
 
@@ -890,21 +973,69 @@ export function ModernDesignPurpose() {
           </div>
         </div>
 
-        {/* 2. Focused Interactive Principle Card */}
-        <div className="relative z-10 w-full max-w-[1380px] mx-auto px-6 sm:px-8 lg:px-10 xl:px-12">
-          <div className="max-w-4xl mx-auto w-full">
-            <AnimatePresence mode="wait">
+        {/* 2. Focused Interactive Principle Card (Swipe-enabled on Mobile & Draggable) */}
+        <div className="relative z-10 w-full max-w-[1380px] mx-auto px-4 sm:px-8 lg:px-10 xl:px-12">
+          {/* Mobile Swipe Guidance Badge */}
+          <div className="sm:hidden flex items-center justify-center mb-3">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 backdrop-blur-xs border border-white/20 text-white text-[11px] font-sans font-medium">
+              <ChevronLeft className="w-3 h-3 text-white/80 animate-pulse" />
+              <span>Swipe card left/right to change category</span>
+              <ChevronRight className="w-3 h-3 text-white/80 animate-pulse" />
+            </div>
+          </div>
+
+          <div className="relative max-w-4xl mx-auto w-full">
+            {/* Desktop Floating Left / Right Navigation Chevrons */}
+            <button
+              type="button"
+              onClick={() => paginate(-1)}
+              className="hidden lg:flex absolute -left-5 xl:-left-7 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white text-heading-dark hover:text-primary-orange shadow-lg hover:shadow-xl border border-white/50 items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer"
+              aria-label="Previous principle"
+              title="Previous principle"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+
+            <button
+              type="button"
+              onClick={() => paginate(1)}
+              className="hidden lg:flex absolute -right-5 xl:-right-7 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white text-heading-dark hover:text-primary-orange shadow-lg hover:shadow-xl border border-white/50 items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer"
+              aria-label="Next principle"
+              title="Next principle"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+
+            <AnimatePresence mode="wait" custom={direction} initial={false}>
               {filteredPrinciples.map((principle) => {
                 const CardComponent = principle.component
 
                 return (
                   <motion.div
                     key={principle.id}
-                    initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, scale: 0.97, y: 14 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.97, y: -14 }}
-                    transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                    className="rounded-[28px] bg-white text-heading-dark border border-white/30 p-6 sm:p-8 shadow-[0_12px_36px_rgba(0,0,0,0.12)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.22)] transition-all duration-300"
+                    custom={direction}
+                    variants={shouldReduceMotion ? reducedMotionVariants : cardVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    drag="x"
+                    dragConstraints={{ left: 0, right: 0 }}
+                    dragElastic={0.2}
+                    onDragEnd={(e, { offset, velocity }) => {
+                      dragHandledRef.current = true
+                      setTimeout(() => {
+                        dragHandledRef.current = false
+                      }, 350)
+                      const swipePower = Math.abs(offset.x) * velocity.x
+                      if (swipePower < -4000 || offset.x < -40) {
+                        paginate(1)
+                      } else if (swipePower > 4000 || offset.x > 40) {
+                        paginate(-1)
+                      }
+                    }}
+                    onTouchStart={handleTouchStart}
+                    onTouchEnd={handleTouchEnd}
+                    className="rounded-[28px] bg-white text-heading-dark border border-white/30 p-5 sm:p-8 shadow-[0_12px_36px_rgba(0,0,0,0.12)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.22)] transition-shadow duration-300 touch-pan-y cursor-grab active:cursor-grabbing will-change-transform select-none"
                   >
                     <CardComponent />
                   </motion.div>
@@ -912,23 +1043,77 @@ export function ModernDesignPurpose() {
               })}
             </AnimatePresence>
 
-            {/* Sub-bar: Principle Progress Counter & Auto-tour Status */}
-            <div className="mt-4 flex items-center justify-between py-3 px-5 sm:px-6 rounded-2xl bg-white text-heading-dark border border-white/30 shadow-md text-xs font-sans">
-              <div className="flex items-center gap-2 text-body-muted font-mono text-[11px]">
-                <span className={cn('w-2 h-2 rounded-full', isAutoPlaying ? 'bg-primary-orange animate-pulse' : 'bg-body-muted')} />
-                <span>
-                  {isAutoPlaying
-                    ? 'Auto-tour active · Click any filter to pause'
-                    : 'Principle locked · Click any tab to explore'}
-                </span>
+            {/* Sub-bar: Principle Progress Counter, Auto-tour Status & Navigation Controls */}
+            <div className="mt-4 flex flex-col sm:flex-row items-center justify-between gap-3 py-3 px-4 sm:px-6 rounded-2xl bg-white text-heading-dark border border-white/30 shadow-md text-xs font-sans">
+              <div className="flex items-center justify-between sm:justify-start w-full sm:w-auto gap-2 text-body-muted font-mono text-[11px]">
+                <div className="flex items-center gap-2">
+                  <span className={cn('w-2 h-2 rounded-full shrink-0', isAutoPlaying ? 'bg-primary-orange animate-pulse' : 'bg-body-muted')} />
+                  <span>
+                    {isAutoPlaying
+                      ? 'Auto-tour active · Swipe to explore'
+                      : 'Principle locked · Swipe or tap tabs'}
+                  </span>
+                </div>
+                <div className="sm:hidden flex items-center gap-1 font-mono text-[11px] text-body-muted font-semibold">
+                  <span className="text-primary-orange font-bold">
+                    0{currentIndex + 1}
+                  </span>
+                  <span>/</span>
+                  <span>0{FILTER_ITEMS.length}</span>
+                </div>
               </div>
 
-              <div className="flex items-center gap-1.5 font-mono text-[11px] text-body-muted font-semibold">
-                <span className="text-primary-orange font-bold">
-                  0{FILTER_ITEMS.findIndex((item) => item.id === activeFilter) + 1}
-                </span>
-                <span>/</span>
-                <span>0{FILTER_ITEMS.length}</span>
+              {/* Navigation Controls: Dots + Arrows + Counter */}
+              <div className="flex items-center justify-between sm:justify-end gap-3 w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-border-warm/60">
+                {/* Dots indicator */}
+                <div className="flex items-center gap-1.5" role="tablist" aria-label="Category pagination">
+                  {FILTER_ITEMS.map((item) => (
+                    <button
+                      key={item.id}
+                      type="button"
+                      role="tab"
+                      onClick={() => handleFilterClick(item.id)}
+                      className={cn(
+                        'h-2 rounded-full transition-all duration-300 cursor-pointer',
+                        item.id === activeFilter
+                          ? 'w-6 bg-primary-orange'
+                          : 'w-2 bg-border-warm hover:bg-body-muted/60'
+                      )}
+                      aria-label={`Go to ${item.label}`}
+                      aria-selected={item.id === activeFilter}
+                    />
+                  ))}
+                </div>
+
+                {/* Left / Right chevron navigation */}
+                <div className="flex items-center gap-1">
+                  <button
+                    type="button"
+                    onClick={() => paginate(-1)}
+                    className="p-1.5 rounded-lg bg-surface-dim hover:bg-surface-sand text-heading-dark hover:text-primary-orange transition-all cursor-pointer border border-border-warm active:scale-95"
+                    aria-label="Previous principle"
+                    title="Previous principle"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => paginate(1)}
+                    className="p-1.5 rounded-lg bg-surface-dim hover:bg-surface-sand text-heading-dark hover:text-primary-orange transition-all cursor-pointer border border-border-warm active:scale-95"
+                    aria-label="Next principle"
+                    title="Next principle"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+
+                <div className="hidden sm:flex items-center gap-1.5 font-mono text-[11px] text-body-muted font-semibold">
+                  <span className="text-primary-orange font-bold">
+                    0{currentIndex + 1}
+                  </span>
+                  <span>/</span>
+                  <span>0{FILTER_ITEMS.length}</span>
+                </div>
               </div>
             </div>
           </div>
