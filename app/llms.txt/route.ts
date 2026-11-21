@@ -1,18 +1,19 @@
 import { siteConfig } from '@/config/site'
-import blogsData from '@/data/blogs.json'
+import { getAllArticles } from '@/lib/blogs'
 import { SERVICE_PILLARS } from '@/config/what-we-do'
 
-export const dynamic = 'force-static'
+export const revalidate = 3600
 
 export async function GET() {
   const baseUrl = siteConfig.url
+  const articles = await getAllArticles()
 
   const servicesMarkdown = SERVICE_PILLARS.map(
     (pillar) =>
       `- [${pillar.shortTitle}](${baseUrl}${pillar.href}): ${pillar.headline}. Key capabilities: ${pillar.tags.slice(0, 3).join(', ')}.`
   ).join('\n')
 
-  const blogsMarkdown = (blogsData.articles || [])
+  const blogsMarkdown = (articles || [])
     .map(
       (article) => `- [${article.title}](${baseUrl}/blog/${article.slug}): ${article.description}`
     )

@@ -10,6 +10,7 @@ export function SeoDeliverablesTimeline() {
         title="Our SEO approach"
         description="Learn how we uncover opportunities, prioritise high-impact scope, execute changes, and continuously measure search performance."
         className="bg-white text-[#161413]"
+        showProgressDot={false}
       />
     </div>
   )

@@ -31,8 +31,8 @@ export interface TickerProps {
   textColor?: string
   /** Custom background color override */
   bgColor?: string
-  /** Theme mode for brand styling: 'light' (default) | 'dark' (brand obsidian #0C0B0A with coral dots) */
-  theme?: 'light' | 'dark'
+  /** Theme mode for brand styling: 'light' (default) | 'dark' (brand obsidian #0C0B0A with coral dots) | 'brand' / 'orange' (signature brand orange #E4521B with white text) */
+  theme?: 'light' | 'dark' | 'brand' | 'orange'
   /**
    * If true, moving direction responds to user scroll:
    * scrolling down moves forward (left), scrolling up reverts direction (right).
@@ -73,6 +73,7 @@ export function Ticker({
   const [isHovered, setIsHovered] = useState(false)
 
   const isDark = theme === 'dark'
+  const isBrand = theme === 'brand' || theme === 'orange'
 
   // Default reverseOnScrollUp to true for 'hero' variant
   const shouldReverseOnScrollUp =
@@ -81,19 +82,27 @@ export function Ticker({
   // Variant-based styling presets
   // 'hero' has increased height (py-7 sm:py-8 lg:py-10), while 'faq' remains py-2.5
   const variantStyles = {
-    hero: isDark
+    hero: isBrand
+      ? 'w-full bg-[#E4521B] border-y border-[#CC420F] py-7 sm:py-8 lg:py-10 text-white selection:bg-white/30 selection:text-white'
+      : isDark
       ? 'w-full bg-[#0C0B0A] border-y border-white/10 py-7 sm:py-8 lg:py-10 text-white'
       : 'w-full bg-[#FAF7F2] border-y border-[#EDE8DF] py-7 sm:py-8 lg:py-10',
     faq: isDark
       ? 'w-full bg-transparent border-y border-white/10 py-2.5 my-4 sm:my-6 text-white'
       : 'w-full bg-transparent border-y border-[#F0EBE1] py-2.5 my-4 sm:my-6',
-    banner: 'w-full bg-[#141210] border-y border-white/10 py-3 text-white',
+    banner: isBrand
+      ? 'w-full bg-[#E4521B] border-y border-[#CC420F] py-3 text-white selection:bg-white/30 selection:text-white'
+      : 'w-full bg-[#141210] border-y border-white/10 py-3 text-white',
     clean: 'w-full bg-transparent py-2',
   }[variant]
 
-  const defaultTextColor = isDark ? '#FFFFFF' : '#E4521B'
+  const defaultTextColor = isBrand ? '#FFFFFF' : isDark ? '#FFFFFF' : '#E4521B'
   const activeTextColor = textColor || defaultTextColor
-  const dotColor = isDark ? '#E4521B' : (textColor || '#E4521B')
+  const dotColor = isBrand
+    ? (textColor && textColor !== '#FFFFFF' ? textColor : '#FFFFFF')
+    : isDark
+    ? '#E4521B'
+    : (textColor || '#E4521B')
 
   const animDirection = direction === 'right' ? 'kt-ticker-slide-right' : 'kt-ticker-slide-left'
 
@@ -419,7 +428,11 @@ export function Ticker({
         {showToggle && (
           <button
             type="button"
-            className="flex-none grid place-items-center w-8 h-8 rounded-full bg-[#FAF7F2] text-[#E4521B] hover:bg-[#E4521B] hover:text-white transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-[#E4521B] focus-visible:outline-offset-2 cursor-pointer mr-2 shrink-0 border border-[#EDE8DF]"
+            className={`flex-none grid place-items-center w-8 h-8 rounded-full ${
+              isBrand
+                ? 'bg-white/20 text-white hover:bg-white hover:text-[#E4521B] border-white/30'
+                : 'bg-[#FAF7F2] text-[#E4521B] hover:bg-[#E4521B] hover:text-white border-[#EDE8DF]'
+            } transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-[#E4521B] focus-visible:outline-offset-2 cursor-pointer mr-2 shrink-0 border`}
             aria-label={isPaused ? 'Play the moving ticker' : 'Pause the moving ticker'}
             aria-pressed={isPaused}
             onClick={() => setIsPaused((prev) => !prev)}

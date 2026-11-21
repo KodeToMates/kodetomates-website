@@ -98,8 +98,11 @@ export function SpiderCursor({
           const fy = ty + selfMoveY
 
           const currW = w || window.innerWidth
-          x += min(currW / 100, (fx - x) / 10)
-          y += min(currW / 100, (fy - y) / 10)
+          const maxSpeed = currW / 80
+          const stepX = (fx - x) / 10
+          const stepY = (fy - y) / 10
+          x += max(-maxSpeed, min(maxSpeed, stepX))
+          y += max(-maxSpeed, min(maxSpeed, stepY))
 
           let i = 0
           pts.forEach((p) => {
@@ -125,11 +128,24 @@ export function SpiderCursor({
 
     const handlePointerMove = (e: PointerEvent) => {
       const rect = canvas.getBoundingClientRect()
-      const mouseX = e.clientX - rect.left
-      const mouseY = e.clientY - rect.top
-      spiders.forEach((spider) => {
-        spider.follow(mouseX, mouseY)
-      })
+      const px = e.clientX - rect.left
+      const py = e.clientY - rect.top
+
+      // Track whenever the cursor is inside or within reasonable margin of canvas
+      const pad = 240
+      const isNear =
+        px >= -pad &&
+        px <= rect.width + pad &&
+        py >= -pad &&
+        py <= rect.height + pad
+
+      if (isNear) {
+        const clampedX = max(0, min(rect.width, px))
+        const clampedY = max(0, min(rect.height, py))
+        spiders.forEach((spider) => {
+          spider.follow(clampedX, clampedY)
+        })
+      }
     }
 
     let animId: number

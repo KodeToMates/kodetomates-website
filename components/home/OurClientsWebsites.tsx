@@ -14,7 +14,7 @@ const CLIENT_WEBSITES: LanyardMember[] = [
     tone: 1, // Signature #E4521B Coral / Terracotta
     image: '/images/clients/datalive-intelligence.png',
     imageFit: 'contain',
-    bio: 'Enterprise BI dashboards, real-time SQL data pipelines, and digital RPA automation built for modern mid-market business intelligence.',
+    bio: 'High-performance Power BI dashboards, automated SQL pipelines, and custom RPA bots built for zero-manual reporting.',
     tags: ['Next.js 15', 'Power BI', 'Live Production'],
     links: [
       { label: 'Visit Website', href: 'https://dd-front-end.vercel.app/' },
@@ -29,7 +29,7 @@ const CLIENT_WEBSITES: LanyardMember[] = [
     tone: 2, // Brand #FF914D Sunset Orange
     image: '/images/clients/next-is-you.svg',
     imageFit: 'contain',
-    bio: 'Have an ambitious web platform, AI agent workflow, or high-converting product to build? Partner with KodeToMates to bring it to life.',
+    bio: 'Have an ambitious web platform, AI agent, or custom SaaS product to build? Partner with KodeToMates to launch.',
     tags: ['Custom Web Apps', 'Autonomous Agents', "Let's Build"],
     links: [
       { label: 'Start Project', href: '/contact' },
@@ -58,7 +58,9 @@ export function OurClientsWebsites() {
       <div className="relative max-w-[1380px] mx-auto px-4 sm:px-8 lg:px-10 xl:px-12 z-10">
         {/* Section Header adhering strictly to AGENTS.md Typography rules */}
         <div className="flex flex-col items-center text-center mb-6 sm:mb-10">
-
+          <span className="font-sans font-semibold text-xs sm:text-[13px] tracking-wider uppercase text-[#E4521B] mb-2 sm:mb-3">
+            Live Client Showcase
+          </span>
 
           <h2 className="font-sans font-bold tracking-[-0.03em] text-white text-3xl sm:text-4xl md:text-5xl leading-[1.12]">
             Our Clients&apos;{' '}
@@ -66,7 +68,7 @@ export function OurClientsWebsites() {
           </h2>
 
           <p className="mt-3 font-sans text-sm sm:text-base md:text-lg text-[#E0DCED] leading-relaxed max-w-2xl mx-auto">
-            Real software built for real businesses. Drag the badges along the rail, pull down to feel the spring tension, or click to flip the pass and visit the live website.
+            Production software engineered for growing businesses. Explore live platforms we&apos;ve built, or flip any lanyard pass to inspect the tech stack.
           </p>
         </div>
 
@@ -77,7 +79,7 @@ export function OurClientsWebsites() {
             cardWidth={215}
             autoplay={true}
             interval={3600}
-            caption="Pull down on a lanyard to test spring tension, or click to flip and reveal the live site link."
+            caption="Pull down on any lanyard pass to test spring physics, or click to flip and reveal live site details."
             labels={{
               flip: 'Click or press Enter to flip badge',
               back: 'Click again or press Esc to turn back',

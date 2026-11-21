@@ -5,10 +5,10 @@ import React, { useEffect, useRef, useState, useMemo } from 'react'
 export type SlitLineItem =
   | string
   | {
-      text: string
-      color?: string
-      className?: string
-    }
+    text: string
+    color?: string
+    className?: string
+  }
 
 export interface SlitHeadingProps {
   /** Lines of text to display. If string with \n is passed, it is split automatically. */

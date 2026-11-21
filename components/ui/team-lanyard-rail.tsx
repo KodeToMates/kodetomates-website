@@ -372,26 +372,45 @@ const BadgeFaces = React.memo(function BadgeFaces({ item, tone }: { item: Lanyar
       <span data-face="back" className="absolute inset-0 overflow-hidden rounded-[0.85em] border border-border bg-card text-card-foreground [backface-visibility:hidden]" style={{ transform: "rotateY(180deg) translateZ(1px)" }}>
         <Band tone={tone} />
         <Hole />
-        <span className="absolute inset-x-[0.85em] top-[2.6em] block">
-          <span className="block truncate text-[0.95em] font-semibold leading-tight font-sans">{item.name}</span>
-          <span className="block truncate text-[0.72em] leading-snug text-muted-foreground font-sans">{item.role}</span>
-        </span>
-        {item.bio && (
-          <span className="absolute inset-x-[0.85em] top-[5.1em] block">
-            <span data-bio className="line-clamp-4 block text-[0.74em] leading-[1.4] font-sans">{item.bio}</span>
-          </span>
-        )}
-        {tags.length > 0 && (
-          <span className="absolute inset-x-[0.85em] top-[9.8em] flex flex-wrap gap-[0.28em]">
-            {tags.map((tag) => <span key={tag} className="block rounded-full border border-border bg-muted/60 px-[0.6em] py-[0.16em] text-[0.6em] leading-tight text-muted-foreground font-sans">{tag}</span>)}
-          </span>
-        )}
+        <div className="absolute inset-x-[0.85em] top-[2.45em] bottom-[4.8em] flex flex-col justify-start overflow-hidden">
+          {/* Header */}
+          <div className="shrink-0">
+            <span className="block text-[0.86em] font-bold leading-tight font-sans tracking-tight text-foreground line-clamp-1">
+              {item.name}
+            </span>
+            <span className="block text-[0.68em] font-medium leading-tight text-muted-foreground font-sans line-clamp-1 mt-[0.14em]">
+              {item.role}
+            </span>
+          </div>
+
+          {/* Bio */}
+          {item.bio && (
+            <p className="mt-[0.45em] text-[0.72em] leading-[1.38] text-foreground/85 font-sans line-clamp-3">
+              {item.bio}
+            </p>
+          )}
+
+          {/* Tags */}
+          {tags.length > 0 && (
+            <div className="mt-auto pt-[0.25em] flex flex-wrap gap-[0.25em]">
+              {tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="inline-block rounded-full border border-border bg-muted/70 px-[0.55em] py-[0.14em] text-[0.58em] font-medium leading-tight text-muted-foreground font-sans"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+
         {links.length > 0 && (
           <span aria-hidden="true" className="absolute bottom-[0.75em] left-[0.6em] flex flex-col items-start gap-[0.1em] transition-opacity duration-150 motion-reduce:transition-none" style={{ opacity: "var(--drawn, 1)" }}>
             {links.map((link) => <span key={link.label} className={LINK_ROW}><LinkIcon label={link.label} />{link.label}</span>)}
           </span>
         )}
-        <svg aria-hidden="true" viewBox="-1 -1 23 23" className="absolute bottom-[0.8em] right-[0.8em] size-[3.9em] text-foreground">
+        <svg aria-hidden="true" viewBox="-1 -1 23 23" className="absolute bottom-[0.8em] right-[0.8em] size-[3.8em] text-foreground">
           <path d={qr} fill="currentColor" />
         </svg>
         <Finish />

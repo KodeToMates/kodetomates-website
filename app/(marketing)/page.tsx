@@ -9,6 +9,7 @@ import { TestimonialsSection } from '@/components/home/TestimonialsSection'
 import { TechnologiesSection } from '@/components/home/TechnologiesSection'
 import { FinalCTASection } from '@/components/home/FinalCTASection'
 import { FAQSection } from '@/components/home/FAQSection'
+import { HomeContactSection } from '@/components/home/HomeContactSection'
 import { HomePageSchema } from '@/components/schema'
 import { LazySection } from '@/components/ui'
 
@@ -90,6 +91,16 @@ export default function HomePage() {
         skeletonCards={2}
       >
         <FAQSection />
+      </LazySection>
+
+      {/* Section 8: Contact Us (Directly above/before the footer) */}
+      <LazySection
+        title="Contact Us"
+        tag="COMMUNITY:CONTACT"
+        minHeight="580px"
+        skeletonCards={1}
+      >
+        <HomeContactSection />
       </LazySection>
     </div>
   )

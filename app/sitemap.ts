@@ -1,8 +1,10 @@
 import type { MetadataRoute } from 'next'
-import blogsData from '@/data/blogs.json'
+import { getAllArticles } from '@/lib/blogs'
 import { siteConfig } from '@/config/site'
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export const revalidate = 3600 // Revalidate sitemap at most every hour or immediately on-demand via /api/revalidate
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = siteConfig.url
 
   // 1. Static Core Routes
@@ -99,8 +101,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ]
 
-  // 2. Dynamic Blog Slugs
-  const blogRoutes: MetadataRoute.Sitemap = (blogsData.articles || []).map((article) => ({
+  // 2. Dynamic Blog Slugs from live backend database (with static fallback)
+  const articles = await getAllArticles()
+  const blogRoutes: MetadataRoute.Sitemap = (articles || []).map((article) => ({
     url: `${baseUrl}/blog/${article.slug}`,
     lastModified: new Date(article.publishDate || Date.now()),
     changeFrequency: 'weekly',
