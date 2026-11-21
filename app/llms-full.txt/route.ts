@@ -1,5 +1,5 @@
 import { siteConfig } from '@/config/site'
-import blogsData from '@/data/blogs.json'
+import { getAllArticles, HeadingSection } from '@/lib/blogs'
 import {
   SERVICE_PILLARS,
   CAPABILITIES_MATRIX,
@@ -8,11 +8,12 @@ import {
 } from '@/config/what-we-do'
 import { getAllPagesFaq } from '@/data/faq'
 
-export const dynamic = 'force-static'
+export const revalidate = 3600
 
 export async function GET() {
   const baseUrl = siteConfig.url
   const { items: allFaqs } = getAllPagesFaq()
+  const articles = await getAllArticles()
 
   // 1. Service Pillars
   const servicesSection = SERVICE_PILLARS.map((pillar) => {
@@ -52,11 +53,11 @@ ${step.description}
   }).join('\n\n')
 
   // 5. Blog Articles with Full Section Summaries
-  const blogsSection = (blogsData.articles || [])
+  const blogsSection = (articles || [])
     .map((article) => {
       const headings = (article.sections || [])
-        .filter((s: { type: string; text?: string }) => s.type === 'heading' && s.text)
-        .map((s: { text?: string }) => `  - ${s.text}`)
+        .filter((s): s is HeadingSection => s.type === 'heading' && 'text' in s && Boolean((s as HeadingSection).text))
+        .map((s) => `  - ${s.text}`)
         .join('\n')
 
       return `### ${article.title}

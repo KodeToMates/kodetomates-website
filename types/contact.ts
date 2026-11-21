@@ -34,6 +34,7 @@ export interface ContactRequestPayload {
   subject?: string
   message: string
   leadSource?: string
+  tenantName?: string
 }
 
 export interface ContactSuccessResponse {

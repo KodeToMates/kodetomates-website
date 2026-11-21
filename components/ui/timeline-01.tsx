@@ -54,6 +54,7 @@ export interface TimelineBlock01Props {
   title?: string;
   description?: string;
   className?: string;
+  showProgressDot?: boolean;
 }
 
 export const TimelineBlock01 = ({
@@ -62,6 +63,7 @@ export const TimelineBlock01 = ({
   title = "Our SEO approach",
   description = "A disciplined 5-stage framework designed to uncover practical search opportunities, prioritise impactful changes, and deliver sustained organic performance.",
   className,
+  showProgressDot = false,
 }: TimelineBlock01Props) => {
   return (
     <section className={`overflow-hidden bg-background py-16 sm:py-24 lg:py-28 ${className || ""}`}>
@@ -93,7 +95,7 @@ export const TimelineBlock01 = ({
 
         {/* Timeline Items Track */}
         <div className="w-full">
-          <Timeline items={items} />
+          <Timeline items={items} showProgressDot={showProgressDot} />
         </div>
       </div>
     </section>

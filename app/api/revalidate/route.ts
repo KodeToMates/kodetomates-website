@@ -22,6 +22,11 @@ export async function POST(request: NextRequest) {
       revalidatePath(path)
     }
 
+    // Automatically revalidate sitemap and LLM index feeds when blog posts change
+    revalidatePath('/sitemap.xml')
+    revalidatePath('/llms.txt')
+    revalidatePath('/llms-full.txt')
+
     return NextResponse.json({
       revalidated: true,
       paths,

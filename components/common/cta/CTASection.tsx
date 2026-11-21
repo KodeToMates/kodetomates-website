@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
 import { SlitHeading } from '@/components/ui'
+import { SpiderCursor } from '@/components/ui/spider-cursor'
 
 export interface CTAButtonConfig {
   label: string
@@ -46,6 +47,14 @@ export interface CTASectionProps {
   sectionBgColor?: string
   /** Max width class for the card container (default 'max-w-[1280px]') */
   containerMaxWidth?: string
+  /** Whether to show the interactive SpiderCursor constellation effect (default true) */
+  showSpiderCursor?: boolean
+  /** SpiderCursor color (default '#ffffff') */
+  spiderCursorColor?: string
+  /** SpiderCursor count (default 2) */
+  spiderCursorCount?: number
+  /** SpiderCursor container opacity class (default 'opacity-40') */
+  spiderCursorOpacity?: string
   /** Additional classes for the outer <section> */
   className?: string
   /** Additional classes for the inner card <div> */
@@ -78,6 +87,10 @@ export function CTASection({
   dotColor = '#E4521B',
   sectionBgColor = 'bg-white',
   containerMaxWidth = 'max-w-[1280px]',
+  showSpiderCursor = true,
+  spiderCursorColor = '#ffffff',
+  spiderCursorCount = 2,
+  spiderCursorOpacity = 'opacity-40',
   className = '',
   cardClassName = '',
 }: CTASectionProps) {
@@ -120,6 +133,17 @@ export function CTASection({
 
               {/* Ambient warm brand coral glow */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[560px] h-[320px] bg-[#E4521B]/15 rounded-full blur-[130px] pointer-events-none z-10" />
+            </div>
+          )}
+
+          {/* --- INTERACTIVE SPIDER CURSOR / CONSTELLATION CANVAS EFFECT --- */}
+          {showSpiderCursor && (
+            <div className={`absolute inset-0 pointer-events-none overflow-hidden z-[5] ${spiderCursorOpacity}`}>
+              <SpiderCursor
+                color={spiderCursorColor}
+                bgColor="transparent"
+                count={spiderCursorCount}
+              />
             </div>
           )}
 

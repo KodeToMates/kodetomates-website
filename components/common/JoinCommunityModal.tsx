@@ -90,7 +90,8 @@ export function JoinCommunityModal({ isOpen, onClose }: JoinCommunityModalProps)
         company: formData.company.trim() || undefined,
         subject: formData.subject.trim() || undefined,
         message: formData.message.trim() || formData.subject.trim(),
-        leadSource: 'Enquiry Modal (Navbar)',
+        leadSource: 'KodeToMates Website (Navbar Modal)',
+        tenantName: 'Kodetomates Website',
       }
 
       await submitContactRequest(payload)

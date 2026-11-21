@@ -343,3 +343,17 @@ export function TeamLanyardRailDemo({ autoplay = true }: { autoplay?: boolean })
   );
 }
 
+// ==========================================
+// Doodle Crew Footer Demo
+// ==========================================
+import DoodleCrewFooter from "@/components/ui/doodle-crew-footer"
+
+export function DoodleCrewFooterDemo() {
+  return (
+    <div className="w-full">
+      <DoodleCrewFooter />
+    </div>
+  )
+}
+
+

@@ -15,9 +15,10 @@ export interface TimelineItem {
 export interface TimelineProps {
   items: TimelineItem[];
   className?: string;
+  showProgressDot?: boolean;
 }
 
-export function Timeline({ items, className }: TimelineProps) {
+export function Timeline({ items, className, showProgressDot = false }: TimelineProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
@@ -41,6 +42,7 @@ export function Timeline({ items, className }: TimelineProps) {
             index={index}
             totalItems={items.length}
             isImageLeft={isImageLeft}
+            showProgressDot={showProgressDot}
           />
         );
       })}
@@ -53,25 +55,28 @@ interface TimelineItemRowProps {
   index: number;
   totalItems: number;
   isImageLeft: boolean;
+  showProgressDot?: boolean;
 }
 
 function TimelineItemRow({
   item,
   index,
-  totalItems,
   isImageLeft,
+  showProgressDot = false,
 }: TimelineItemRowProps) {
   // Content block
   const contentBlock = (
     <div className="space-y-4 md:space-y-5">
-      {/* Milestone Phase / Date Tag + Animated Node */}
+      {/* Milestone Phase / Date Tag */}
       <div className="flex items-center gap-3">
-        <div className="relative flex items-center justify-center shrink-0">
-          {/* Outer Pulse Ring */}
-          <span className="absolute w-5 h-5 rounded-full bg-primary-orange/20 animate-ping opacity-60" />
-          {/* Center Core Node */}
-          <span className="relative w-3.5 h-3.5 rounded-full bg-primary-orange shadow-[0_0_10px_rgba(228,82,27,0.7)] border-2 border-white" />
-        </div>
+        {showProgressDot && (
+          <div className="relative flex items-center justify-center shrink-0">
+            {/* Outer Pulse Ring */}
+            <span className="absolute w-5 h-5 rounded-full bg-primary-orange/20 animate-ping opacity-60" />
+            {/* Center Core Node */}
+            <span className="relative w-3.5 h-3.5 rounded-full bg-primary-orange shadow-[0_0_10px_rgba(228,82,27,0.7)] border-2 border-white" />
+          </div>
+        )}
 
         <span className="font-mono text-xs sm:text-[13px] font-bold uppercase tracking-wider text-primary-orange">
           {item.date}

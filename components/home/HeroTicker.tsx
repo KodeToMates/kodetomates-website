@@ -8,7 +8,7 @@ export interface HeroTickerProps {
   className?: string
   duration?: number
   pauseOnHover?: boolean
-  theme?: 'light' | 'dark'
+  theme?: 'light' | 'dark' | 'brand' | 'orange'
   textColor?: string
 }
 
@@ -30,8 +30,8 @@ export function HeroTicker({
   className = '',
   duration = 65,
   pauseOnHover = true,
-  theme = 'light',
-  textColor,
+  theme = 'brand',
+  textColor = '#FFFFFF',
 }: HeroTickerProps) {
   return (
     <Ticker
